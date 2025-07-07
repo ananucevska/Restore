@@ -1,4 +1,4 @@
-﻿import { Product } from "../../models/product"
+﻿import { Product } from "../../app/models/product"
 import {Box} from "@mui/material";
 import ProductCard from "./ProductCard";
 
