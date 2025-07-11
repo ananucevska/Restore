@@ -26,17 +26,15 @@ public class BasketController(StoreContext context) : BaseApiController
         basket ??= CreateBasket();
         /* get product */
         var product = await context.Products.FindAsync(productId);
-        if (product == null) return BadRequest("Problem adding item to Basket");
+        if (product == null) return BadRequest("Problem adding item to basket");
         /* add item to basket */
         basket.AddItem(product, quantity);
         /* save changes */
         
         var result = await context.SaveChangesAsync() > 0;
         
-        Console.WriteLine($"Saving basket {basket.BasketId} with {basket.Items.Count} item(s)");
-        
         if (result) return CreatedAtAction(nameof(GetBasket), basket.ToDto());
-        return BadRequest("Problem updating Basket");
+        return BadRequest("Problem updating basket");
     }
 
     [HttpDelete]
@@ -57,7 +55,11 @@ public class BasketController(StoreContext context) : BaseApiController
     {
         var basketId = Guid.NewGuid().ToString();
         var cookieOptions = new CookieOptions
-        { 
+        {
+            /*HttpOnly = true,
+            SameSite = SameSiteMode.None,
+            Secure = true,
+            Path = "/",*/
             IsEssential = true,
             Expires = DateTime.UtcNow.AddDays(30)
         };

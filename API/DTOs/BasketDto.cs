@@ -1,4 +1,6 @@
-﻿namespace API.DTOs;
+﻿using System;
+
+namespace API.DTOs;
 
 public class BasketDto
 {

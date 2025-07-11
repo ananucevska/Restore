@@ -1,6 +1,4 @@
-﻿using API.Entities;
-
-namespace API.DTOs;
+﻿namespace API.DTOs;
 
 public class BasketItemDto
 {
@@ -11,5 +9,4 @@ public class BasketItemDto
     public required string Brand { get; set; }
     public required string Type { get; set; }
     public int Quantity { get; set; }
-    
 }

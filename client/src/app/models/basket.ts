@@ -1,9 +1,9 @@
 ﻿/*generated with json to ts website*/
 
-import {Product} from "./product.ts";
+import { Product } from "./product"
 
 export type Basket = {
-    basketId: string;
+    basketId: string
     items: Item[]
 }
 
@@ -17,11 +17,12 @@ export class Item {
         this.type = product.type;
         this.quantity = quantity;
     }
-    productId: number;
-    name: string;
-    price: number;
-    pictureUrl: string;
-    brand: string;
-    type: string;
-    quantity: number;
+
+    productId: number
+    name: string
+    price: number
+    pictureUrl: string
+    brand: string
+    type: string
+    quantity: number
 }
