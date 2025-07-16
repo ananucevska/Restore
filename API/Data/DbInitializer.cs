@@ -1,4 +1,5 @@
 ﻿using API.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 // ReSharper disable ArrangeObjectCreationWhenTypeEvident
 
@@ -12,12 +13,36 @@ public class DbInitializer
 
         var context = scope.ServiceProvider.GetRequiredService<StoreContext>()
             ?? throw new InvalidOperationException("Store context is null");
-        SeedData(context);
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>()
+                      ?? throw new InvalidOperationException("Failed to retrieve user manager");
+        SeedData(context, userManager);
     }
 
-    private static void SeedData(StoreContext context)
+    private static async void SeedData(StoreContext context, UserManager<User> userManager)
     {
         context.Database.Migrate(); //sekad se povikuva
+
+        if (!userManager.Users.Any())
+        {
+            var user = new User
+            {
+                UserName = "bob@test.com",
+                Email = "bob@test.com"
+            };
+            
+            await userManager.CreateAsync(user, "Pa$$w0rd");
+            await userManager.AddToRoleAsync(user, "Member");
+            
+            var admin = new User
+            {
+                UserName = "admin@test.com", //mora da se isti takov im e od tamu metodot inace ke treba da pisuvame svoj
+                Email = "admin@test.com"
+            };
+            
+            await userManager.CreateAsync(admin, "Pa$$w0rd");
+            await userManager.AddToRolesAsync(admin, ["Member", "Admin"]);
+        }
+        
         if (context.Products.Any()) return; // if there is any, return them
         var products = new List<Product> //create list of products adn save to database -- do it before app gets started vo program.cs so DbInitializer
         {

@@ -7,7 +7,7 @@ export default function Search() {
     const {searchTerm} = useAppSelector(state => state.catalog);
     const dispatch = useAppDispatch();
     //search not after every letter but when user stops typing
-    const [term, setTerm] = useState(searchTerm);
+    const [term, setTerm] = useState(searchTerm); // store value of input in local component state
     
     useEffect(() => {
         setTerm(searchTerm)
