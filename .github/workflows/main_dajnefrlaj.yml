@@ -24,9 +24,9 @@ jobs:
           node-version: '20'
           
       - name: Install deps and build client app
-        run: 
+        run: |
           cd client
-          npm install
+          npm install --legacy-peer-deps
           npm run build
 
       - name: Set up .NET Core
@@ -49,6 +49,9 @@ jobs:
   deploy:
     runs-on: windows-latest
     needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write #This is required for requesting the JWT
       contents: read #This is required for actions/checkout
