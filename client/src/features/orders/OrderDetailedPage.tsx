@@ -95,7 +95,7 @@ export default function OrderDetailedPage() {
             <TableContainer>
                 <Table>
                     <TableBody>
-                        {order?.orderItems.map((item) => (
+                        {order.orderItems.map((item) => (
                             <TableRow key={item.productId}
                                       sx={{borderBottom: '1px solid rgba(224, 224, 224, 1)'}}>
                                 <TableCell sx={{py: 4}}>
