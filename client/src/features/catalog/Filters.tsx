@@ -1,4 +1,4 @@
-﻿import {Box, Button, Paper, Typography} from "@mui/material";
+﻿import {Box, Button, Paper} from "@mui/material";
 import Search from "./Search.tsx";
 import RadioButtonGroup from "../../app/shared/components/RadioButtonGroup.tsx";
 import {useAppDispatch, useAppSelector} from "../../app/store/store.ts";
@@ -12,15 +12,13 @@ const sortOptions = [
 ]
 
 type Props = {
-    data: { brands: string[]; types: string[]; }
+    filtersData: {brands: string[]; types: string[];}
 }
 
-export default function Filters({data}: Props) {
-      const {orderBy, types, brands} = useAppSelector(state => state.catalog);
+export default function Filters({filtersData: data}: Props) {
+    const {orderBy, types, brands} = useAppSelector(state => state.catalog);
       const dispatch = useAppDispatch();
-
-      if (!data?.brands || !data.types) return <Typography>Loading...</Typography>
-
+      
     return (
           <Box display='flex' flexDirection='column' gap={3}>
                 <Paper>

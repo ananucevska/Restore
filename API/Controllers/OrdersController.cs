@@ -87,7 +87,7 @@ public class OrdersController(StoreContext context) : BaseApiController // store
         return subtotal > 10000 ? 0 : 500; //500 equates to 5$
     }
 
-    private List<OrderItem> CreateOrderItems(List<BasketItem> items)
+    private List<OrderItem>? CreateOrderItems(List<BasketItem> items)
     {
         var orderItems = new List<OrderItem>();
 
