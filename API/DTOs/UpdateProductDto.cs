@@ -15,7 +15,6 @@ public class UpdateProductDto
 
     [Required]
     [Range(100, double.PositiveInfinity)]
-    public long Price { get; set; }
 
     public IFormFile? File { get; set; }
 

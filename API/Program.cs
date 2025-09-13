@@ -13,15 +13,14 @@ builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection(
 builder.Services.AddControllers();
 builder.Services.AddDbContext<StoreContext>(opt => 
 {
-    /*
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
-*/
+    /*
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+*/
 });
 builder.Services.AddCors();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddTransient<ExceptionMiddleware>();
-builder.Services.AddScoped<PaymentsService>();
 builder.Services.AddScoped<ImageService>();
 builder.Services.AddIdentityApiEndpoints<User>(opt =>
     {

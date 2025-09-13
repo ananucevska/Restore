@@ -13,7 +13,7 @@ import {
     Typography
 } from "@mui/material";
 import {format} from "date-fns";
-import {currencyFormat, formatAddressString, formatPaymentString} from "../../lib/util.ts";
+import {formatAddressString} from "../../lib/util.ts";
 
 export default function OrderDetailedPage() {
     const {id} = useParams();
@@ -38,7 +38,7 @@ export default function OrderDetailedPage() {
             
             <Box>
                 <Typography variant="h6" fontWeight='bold'>
-                    Billing and delivery information
+                    Delivery information
                 </Typography>
                 <Box component='dl'>
                     <Typography component='dt' variant='subtitle1' fontWeight='500'> {/*data type*/}
@@ -46,14 +46,6 @@ export default function OrderDetailedPage() {
                     </Typography>
                     <Typography component='dd' variant='body2' fontWeight='300'>
                         {formatAddressString(order.shippingAddress)}
-                    </Typography>
-                </Box>
-                <Box component='dl'>
-                    <Typography component='dt' variant='subtitle1' fontWeight='500'>
-                        Payment info
-                    </Typography>
-                    <Typography component='dd' variant='body2' fontWeight='300'>
-                        {formatPaymentString(order.paymentSummary)}
                     </Typography>
                 </Box>
             </Box>
@@ -112,49 +104,11 @@ export default function OrderDetailedPage() {
                                 <TableCell align='center' sx={{p: 4}}>
                                     x {item.quantity}
                                 </TableCell>
-                                <TableCell align='right' sx={{p: 4}}>
-                                    {currencyFormat(item.price)}
-                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
-            
-            <Box mx={3}>
-                <Box component='dl' display='flex' justifyContent='space-between'> {/*definition list*/}
-                    <Typography component='dt' variant='subtitle1' fontWeight='500'> {/*data type*/}
-                        Subtotal
-                    </Typography>
-                    <Typography component='dd' variant='body2' fontWeight='300'>
-                        {currencyFormat(order.subtotal)}
-                    </Typography>
-                </Box>
-                <Box component='dl' display='flex' justifyContent='space-between'>
-                    <Typography component='dt' variant='subtitle1' fontWeight='500'>
-                        Discount
-                    </Typography>
-                    <Typography component='dd' variant='body2' fontWeight='300' color='green'>
-                        {currencyFormat(order.discount)}
-                    </Typography>
-                </Box>
-                <Box component='dl' display='flex' justifyContent='space-between'>
-                    <Typography component='dt' variant='subtitle1' fontWeight='500'>
-                        Delivery fee
-                    </Typography>
-                    <Typography component='dd' variant='body2' fontWeight='300'>
-                        {currencyFormat(order.deliveryFee)}
-                    </Typography>
-                </Box>
-            </Box>
-            <Box component='dl' display='flex' justifyContent='space-between' mx={3}> 
-                <Typography component='dt' variant='subtitle1' fontWeight='500'> 
-                    Total
-                </Typography>
-                <Typography component='dd' variant='body2' fontWeight='700'>
-                    {currencyFormat(order.total)}
-                </Typography>
-            </Box>
         </Card>
   );
 }

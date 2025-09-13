@@ -14,17 +14,12 @@ public static class OrderExtensions
             BuyerEmail = order.BuyerEmail,
             OrderDate = order.OrderDate,
             ShippingAddress = order.ShippingAddress,
-            PaymentSummary = order.PaymentSummary,
-            DeliveryFee = order.DeliveryFee,
-            Subtotal = order.Subtotal,
             OrderStatus = order.OrderStatus.ToString(),
-            Total = order.GetTotal(),
             OrderItems = order.OrderItems.Select(item => new OrderItemDto
             {
                 ProductId = item.ItemOrdered.ProductId,
                 Name = item.ItemOrdered.Name,
                 PictureUrl = item.ItemOrdered.PictureUrl,
-                Price = item.Price,
                 Quantity = item.Quantity
             }).ToList()
         }).AsNoTracking();
@@ -38,17 +33,12 @@ public static class OrderExtensions
             BuyerEmail = order.BuyerEmail,
             OrderDate = order.OrderDate,
             ShippingAddress = order.ShippingAddress,
-            PaymentSummary = order.PaymentSummary,
-            DeliveryFee = order.DeliveryFee,
-            Subtotal = order.Subtotal,
             OrderStatus = order.OrderStatus.ToString(),
-            Total = order.GetTotal(),
             OrderItems = order.OrderItems.Select(item => new OrderItemDto
             {
                 ProductId = item.ItemOrdered.ProductId,
                 Name = item.ItemOrdered.Name,
                 PictureUrl = item.ItemOrdered.PictureUrl,
-                Price = item.Price,
                 Quantity = item.Quantity
             }).ToList()
         };

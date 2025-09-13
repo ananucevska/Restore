@@ -12,7 +12,6 @@ import {
     TableRow,
     Typography
 } from "@mui/material";
-import {currencyFormat} from "../../lib/util.ts";
 import {Delete, Edit} from "@mui/icons-material";
 import AppPagination from "../../app/shared/components/AppPagination.tsx";
 import {setPageNumber} from "../catalog/catalogSlice.ts";
@@ -90,7 +89,6 @@ export default function inventoryPage() {
                                         <span>{product.name}</span>
                                     </Box>
                                 </TableCell>
-                                <TableCell align="right">{currencyFormat(product.price)}</TableCell>
                                 <TableCell align="center">{product.type}</TableCell>
                                 <TableCell align="center">{product.brand}</TableCell>
                                 <TableCell align="center">{product.quantityInStock}</TableCell>

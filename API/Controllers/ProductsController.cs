@@ -19,7 +19,9 @@ namespace API.Controllers
         public async Task<ActionResult<List<Product>>> GetProducts([FromQuery]ProductParams productParams) // ? znaci optional
         {
             var query = context.Products
+                /*
                 .Sort(productParams.OrderBy)
+                */
                 .Search(productParams.SearchTerm)
                 .Filter(productParams.Brands, productParams.Types)
                 .AsQueryable();
@@ -49,7 +51,9 @@ namespace API.Controllers
             return Ok(new {brands, types});
         }
 
+        /*
         [Authorize(Roles = "Admin")]
+        */
         [HttpPost]
         public async Task<ActionResult<Product>> CreateProduct(CreateProductDto productDto)
         {
@@ -77,7 +81,9 @@ namespace API.Controllers
             return BadRequest("Problem creating new product");
         }
 
+        /*
         [Authorize(Roles = "Admin")]
+        */
         [HttpPut]
         public async Task<ActionResult<Product>> UpdateProduct(UpdateProductDto updateProductDto)
         {
@@ -108,7 +114,9 @@ namespace API.Controllers
             return BadRequest("Problem updating product");
         }
 
+        /*
         [Authorize(Roles = "Admin")]
+        */
         [HttpDelete("{id:int}")]
         public async Task<ActionResult<Product>> DeleteProduct(int id)
         {

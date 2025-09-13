@@ -6,10 +6,10 @@ export type CounterState = {
 
 const initialState: CounterState = {
     data: 42
-} 
+}
 
 export const counterSlice = createSlice({
-    name: "counter",
+    name: 'counter',
     initialState,
     reducers: {
         increment: (state, action) => {
@@ -22,6 +22,7 @@ export const counterSlice = createSlice({
 })
 
 export const {increment, decrement} = counterSlice.actions;
+
 
 export function incrementLegacy(amount = 1) {
     return {
@@ -36,9 +37,11 @@ export function decrementLegacy(amount = 1) {
         payload: amount
     }
 }
-export default function counterReducer(state = initialState, action: {type: string, payload: number}) {
-    switch(action.type) {
-        case 'increment':  
+
+export default function counterReducer(state = initialState,
+                                       action: {type: string, payload: number}) {
+    switch (action.type) {
+        case 'increment':
             return {
                 ...state,
                 data: state.data + action.payload
@@ -48,7 +51,7 @@ export default function counterReducer(state = initialState, action: {type: stri
                 ...state,
                 data: state.data - action.payload
             }
-        default: 
+        default:
             return state;
     }
 }

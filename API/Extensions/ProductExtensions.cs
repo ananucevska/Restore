@@ -4,7 +4,7 @@ namespace API.Extensions;
 
 public static class ProductExtensions
 {
-    public static IQueryable<Product> Sort(this IQueryable<Product> query, string? orderBy)
+    /*public static IQueryable<Product> Sort(this IQueryable<Product> query, string? orderBy)
     {
         query = orderBy switch
         {
@@ -14,7 +14,7 @@ public static class ProductExtensions
         };
         
         return query;
-    }
+    }*/
 
     public static IQueryable<Product> Search(this IQueryable<Product> query, string? searchTerm)
     {

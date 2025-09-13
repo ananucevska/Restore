@@ -4,12 +4,9 @@
     shippingAddress: ShippingAddress
     orderDate: string
     orderItems: OrderItem[]
-    subtotal: number
-    deliveryFee: number
     discount: number
     total: number
     orderStatus: string
-    paymentSummary: PaymentSummary
 }
 
 export interface ShippingAddress {
@@ -30,14 +27,6 @@ export interface OrderItem {
     quantity: number
 }
 
-export interface PaymentSummary {
-    last4: number | string
-    brand: string
-    exp_month: number
-    exp_year: number
-}
-
 export interface CreateOrder {
     shippingAddress: ShippingAddress
-    paymentSummary: PaymentSummary
 }
