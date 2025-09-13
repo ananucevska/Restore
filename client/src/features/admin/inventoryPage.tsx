@@ -1,5 +1,5 @@
-﻿import {useAppDispatch, useAppSelector} from "../../app/store/store.ts";
-import {useFetchProductsQuery} from "../catalog/catalogApi.ts";
+import {useAppDispatch, useAppSelector} from "../../app/store/store.ts";
+import {useGetMyProductsQuery} from "./adminApi.ts";
 import {
     Box,
     Button,
@@ -22,7 +22,7 @@ import {useDeleteProductMutation} from "./adminApi.ts";
 
 export default function inventoryPage() {
     const productParams = useAppSelector(state => state.catalog);
-    const {data, refetch} = useFetchProductsQuery(productParams);
+    const {data, refetch, isLoading, error} = useGetMyProductsQuery(productParams);
     const dispatch = useAppDispatch();
     const [editMode, setEditMode] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -49,6 +49,9 @@ export default function inventoryPage() {
         setSelectedProduct={setSelectedProduct}
     />
     
+    if (isLoading) return <div>Loading...</div>
+    if (error) return <div>Error loading products</div>
+    
     return (
         <>
             <Box display="flex" justifyContent="space-between">
@@ -61,7 +64,6 @@ export default function inventoryPage() {
                         <TableRow>
                             <TableCell>#</TableCell>
                             <TableCell align="left">Product</TableCell>
-                            <TableCell align="right">Price</TableCell>
                             <TableCell align="center">Type</TableCell>
                             <TableCell align="center">Brand</TableCell>
                             <TableCell align="center">Quantity</TableCell>
@@ -69,7 +71,7 @@ export default function inventoryPage() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {data && data.items.map(product => (
+                        {data && data.items && data.items.length > 0 ? data.items.map((product: Product) => (
                             <TableRow 
                                 key={product.id}
                                 sx={{
@@ -97,7 +99,13 @@ export default function inventoryPage() {
                                     <Button onClick={() => handleDeleteProduct(product.id)} startIcon={<Delete />} color="error" />
                                 </TableCell>
                             </TableRow>
-                        ))}
+                        )) : (
+                            <TableRow>
+                                <TableCell colSpan={6} align="center">
+                                    <Typography variant="body1">No products found. Create your first product!</Typography>
+                                </TableCell>
+                            </TableRow>
+                        )}
                     </TableBody>
                 </Table>
                 <Box sx={{p: 3}}>

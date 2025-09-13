@@ -10,4 +10,6 @@ public class Product
     public required string Brand { get; set; }
     public int QuantityInStock { get; set; }
     public string? PublicId { get; set; }
+    public string? UserId { get; set; }
+    public User? User { get; set; }
 }

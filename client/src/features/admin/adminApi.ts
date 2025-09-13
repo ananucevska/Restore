@@ -1,11 +1,25 @@
-﻿import {createApi} from "@reduxjs/toolkit/query/react";
+import {createApi} from "@reduxjs/toolkit/query/react";
 import {baseQueryWithErrorHandling} from "../../app/api/baseApi.ts";
 import {Product} from "../../app/models/product.ts";
+import {ProductParams} from "../../app/models/productParams.ts";
+import {Pagination} from "../../app/models/pagination.ts";
+import {filterEmptyValues} from "../../lib/util.ts";
 
 export const adminApi = createApi({
     reducerPath: 'adminApi',
     baseQuery: baseQueryWithErrorHandling,
     endpoints: (builder) => ({
+        getMyProducts: builder.query<{items: Product[], pagination: Pagination}, ProductParams>({
+            query: (productParams) => ({
+                url: 'products/my-products',
+                params: filterEmptyValues(productParams)
+            }),
+            transformResponse: (items: Product[], meta) => {
+                const paginationHeader = meta?.response?.headers.get('Pagination');
+                const pagination = paginationHeader ? JSON.parse(paginationHeader) : null;
+                return {items, pagination}
+            }
+        }),
         createProduct: builder.mutation<Product, FormData>({
             query: (data: FormData) => {
                 return {
@@ -37,4 +51,4 @@ export const adminApi = createApi({
     })
 });
 
-export const {useCreateProductMutation, useUpdateProductMutation, useDeleteProductMutation} = adminApi;
+export const {useGetMyProductsQuery, useCreateProductMutation, useUpdateProductMutation, useDeleteProductMutation} = adminApi;

@@ -1,4 +1,4 @@
-﻿import {createProductSchema, CreateProductSchema} from "../../lib/schemas/createProductSchema.ts";
+import {createProductSchema, CreateProductSchema} from "../../lib/schemas/createProductSchema.ts";
 import {FieldValues, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Box, Button, Paper, Typography} from "@mui/material";
@@ -22,7 +22,7 @@ type Props = {
 export default function ProductForm({setEditMode, product, refetch, setSelectedProduct}: Props) {
   const {control, handleSubmit, watch, reset, setError, formState: {isSubmitting}} = useForm<CreateProductSchema>({
     mode: 'onTouched',
-    resolver: zodResolver(createProductSchema)
+    resolver: zodResolver(createProductSchema) as any
   })
   const watchFile = watch('file');
   const {data} = useFetchFiltersQuery();
@@ -57,7 +57,7 @@ export default function ProductForm({setEditMode, product, refetch, setSelectedP
       refetch();
     } catch (error) {
       console.log(error);
-      handleApiError<CreateProductSchema>(error, setError, ['brand', 'description', 'file', 'name', 'pictureUrl', 'price', 'quantityInStock', 'type']);
+      handleApiError<CreateProductSchema>(error, setError, ['brand', 'description', 'file', 'name', 'pictureUrl', 'quantityInStock', 'type']);
     }
   }
   
@@ -66,16 +66,16 @@ export default function ProductForm({setEditMode, product, refetch, setSelectedP
       <Typography variant="h4" sx={{mb: 4}}>
         Product details
       </Typography>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit as any)}>
         <Grid container spacing={3}>
           <Grid size={12}>
-            <AppTextInput control={control} label="Product name" name="name" />
+            <AppTextInput control={control as any} label="Product name" name="name" />
           </Grid>
           <Grid size={6}>
             {data?.brands &&
             <AppSelectInput 
                 items={data.brands}
-                control={control}
+                control={control as any}
                 label="Brand"                          
                 name="brand"
             />}
@@ -84,27 +84,24 @@ export default function ProductForm({setEditMode, product, refetch, setSelectedP
             {data?.types &&
                 <AppSelectInput
                     items={data.types}
-                    control={control}
+                    control={control as any}
                     label="Type"
                     name="type"
                 />}
           </Grid>
           <Grid size={6}>
-            <AppTextInput type="number" control={control} label="Price in cents" name="price" />
-          </Grid>
-          <Grid size={6}>
-            <AppTextInput type="number" control={control} label="Quantity in stock" name="quantityInStock" />
+            <AppTextInput type="number" control={control as any} label="Quantity in stock" name="quantityInStock" />
           </Grid>
           <Grid size={12}>
             <AppTextInput 
-                control={control}
+                control={control as any}
                 multiline
                 rows={4}
                 label="Description" 
                 name="description" />
           </Grid>
           <Grid size={12} display='flex' justifyContent='space-between' alignItems='center'>
-            <AppDropzone name = "file" control={control} />
+            <AppDropzone name = "file" control={control as any} />
             {watchFile?.preview ? (
                 <img src={watchFile.preview} alt='preview of image' style={{ maxHeight: 200 }} />
             ) : product?.pictureUrl ? (

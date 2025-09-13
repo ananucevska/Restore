@@ -13,8 +13,6 @@ public class UpdateProductDto
     [Required]
     public string Description { get; set; } = string.Empty;
 
-    [Required]
-    [Range(100, double.PositiveInfinity)]
 
     public IFormFile? File { get; set; }
 

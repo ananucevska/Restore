@@ -19,9 +19,9 @@ export const router = createBrowserRouter([
         children: [
             {element: <RequireAuth/>, children: [
                 {path: 'orders', element: <OrdersPage/>},
-                {path: 'orders/:id', element: <OrderDetailedPage/>},
-                {path: 'inventory', element: <InventoryPage/>}
+                {path: 'orders/:id', element: <OrderDetailedPage/>}
             ]},
+            {path: 'inventory', element: <InventoryPage/>},
             {path: '', element: <HomePage />},
             {path: 'catalog', element: <Catalog />},
             {path: 'catalog/:id', element: <ProductDetails />},

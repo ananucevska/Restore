@@ -32,15 +32,6 @@ public class DbInitializer
             
             await userManager.CreateAsync(user, "Pa$$w0rd");
             await userManager.AddToRoleAsync(user, "Member");
-            
-            var admin = new User
-            {
-                UserName = "admin@test.com", //mora da se isti takov im e od tamu metodot inace ke treba da pisuvame svoj
-                Email = "admin@test.com"
-            };
-            
-            await userManager.CreateAsync(admin, "Pa$$w0rd");
-            await userManager.AddToRolesAsync(admin, ["Member", "Admin"]);
         }
         
         if (context.Products.Any()) return; // if there is any, return them

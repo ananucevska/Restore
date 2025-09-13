@@ -17,8 +17,13 @@ public class StoreContext(DbContextOptions options) : IdentityDbContext<User>(op
 
         builder.Entity<IdentityRole>()
             .HasData(
-                new IdentityRole {Id = "7c8a27aa-05b5-4bfd-ae31-23fe20c3ddc0", Name = "Member", NormalizedName = "MEMBER" },
-                new IdentityRole {Id = "05c2d88e-224e-42bc-9f94-a425dd3a365d", Name = "Admin", NormalizedName = "ADMIN" }
-            );    
+                new IdentityRole {Id = "7c8a27aa-05b5-4bfd-ae31-23fe20c3ddc0", Name = "Member", NormalizedName = "MEMBER" }
+            );
+
+        builder.Entity<Product>()
+            .HasOne(p => p.User)
+            .WithMany()
+            .HasForeignKey(p => p.UserId)
+            .OnDelete(DeleteBehavior.SetNull);
     }
 }

@@ -1,12 +1,11 @@
 ﻿import {FieldValues, useController, UseControllerProps} from "react-hook-form";
 import {FormControl, FormHelperText, InputLabel, MenuItem, Select} from "@mui/material";
-import {SelectInputProps} from "@mui/material/Select/SelectInput";
 
 type Props<T extends FieldValues> = {
     label: string
     name: keyof T
     items: string[]
-} & UseControllerProps<T> & Partial<SelectInputProps>
+} & UseControllerProps<T>
 
 export default function AppSelectInput<T extends FieldValues>(props: Props<T>) {
     const {fieldState, field} = useController({...props});
@@ -18,7 +17,7 @@ export default function AppSelectInput<T extends FieldValues>(props: Props<T>) {
                 label={props.label}
                 onChange={field.onChange}
             >
-                {props.items.map((item, index) => (
+                {props.items.map((item: string, index: number) => (
                     <MenuItem value={item} key={index}>{item}</MenuItem>
                 ))}
             </Select>

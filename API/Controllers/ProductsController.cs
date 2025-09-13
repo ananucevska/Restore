@@ -6,6 +6,7 @@ using API.RequestHelpers;
 using API.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +14,7 @@ namespace API.Controllers
 {
     /*[Route("api/[controller]")] // https://localhost:5004/api/products
     [ApiController]*/
-    public class ProductsController(StoreContext context, IMapper mapper, ImageService imageService) : BaseApiController
+    public class ProductsController(StoreContext context, IMapper mapper, ImageService imageService, UserManager<User> userManager) : BaseApiController
     {
         [HttpGet]
         public async Task<ActionResult<List<Product>>> GetProducts([FromQuery]ProductParams productParams) // ? znaci optional
@@ -51,13 +52,35 @@ namespace API.Controllers
             return Ok(new {brands, types});
         }
 
-        /*
-        [Authorize(Roles = "Admin")]
-        */
+        [Authorize]
+        [HttpGet("my-products")]
+        public async Task<ActionResult<List<Product>>> GetMyProducts([FromQuery]ProductParams productParams)
+        {
+            var user = await userManager.GetUserAsync(User);
+            if (user == null) return Unauthorized();
+
+            var query = context.Products
+                .Where(p => p.UserId == user.Id)
+                .Search(productParams.SearchTerm)
+                .Filter(productParams.Brands, productParams.Types)
+                .AsQueryable();
+            
+            var products = await PagedList<Product>.ToPagedList(query, 
+                productParams.PageNumber, productParams.PageSize);
+            
+            Response.AddPaginationHeader(products.Metadata);
+            return products;
+        }
+
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Product>> CreateProduct(CreateProductDto productDto)
         {
+            var user = await userManager.GetUserAsync(User);
+            if (user == null) return Unauthorized();
+
             var product = mapper.Map<Product>(productDto);
+            product.UserId = user.Id;
 
             if (productDto.File != null)
             {
@@ -81,15 +104,17 @@ namespace API.Controllers
             return BadRequest("Problem creating new product");
         }
 
-        /*
-        [Authorize(Roles = "Admin")]
-        */
+        [Authorize]
         [HttpPut]
         public async Task<ActionResult<Product>> UpdateProduct(UpdateProductDto updateProductDto)
         {
+            var user = await userManager.GetUserAsync(User);
+            if (user == null) return Unauthorized();
+
             var product = await context.Products.FindAsync(updateProductDto.Id);
             
             if (product == null) return NotFound();
+            if (product.UserId != user.Id) return Forbid();
             
             mapper.Map(updateProductDto, product);
 
@@ -114,15 +139,17 @@ namespace API.Controllers
             return BadRequest("Problem updating product");
         }
 
-        /*
-        [Authorize(Roles = "Admin")]
-        */
+        [Authorize]
         [HttpDelete("{id:int}")]
         public async Task<ActionResult<Product>> DeleteProduct(int id)
         {
+            var user = await userManager.GetUserAsync(User);
+            if (user == null) return Unauthorized();
+
             var product = await context.Products.FindAsync(id);
             
             if (product == null) return NotFound();
+            if (product.UserId != user.Id) return Forbid();
             
             if (!string.IsNullOrEmpty(product.PublicId))
                 await imageService.DeleteImageAsync(product.PublicId);
