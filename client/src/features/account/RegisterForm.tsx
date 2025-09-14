@@ -22,12 +22,16 @@ export default function RegisterForm() {
                 const errorArray = apiError.message.split(',');
                 
                 errorArray.forEach(e => {
-                    if(e.includes('Password')) {
+                    if(e.includes('Name')) {
+                        setError('name', {message: e})
+                    } else if(e.includes('Password')) {
                         setError('password', {message: e})
                     } else if (e.includes('Email')) {
                         setError('email', {message: e})
                     } else if (e.includes('ConfirmPassword')) {
                         setError('confirmPassword', {message: e})
+                    } else if (e.includes('City')) {
+                        setError('city', {message: e})
                     }
                 })
             }
@@ -52,8 +56,15 @@ export default function RegisterForm() {
                 >
                     <TextField
                         fullWidth
-                        label="Email"
+                        label="Name"
                         autoFocus
+                        {...register('name')}
+                        error={!!errors.name}
+                        helperText={errors.name?.message}
+                    />
+                    <TextField
+                        fullWidth
+                        label="Email"
                         {...register('email')}
                         error={!!errors.email}
                         helperText={errors.email?.message}
@@ -73,6 +84,13 @@ export default function RegisterForm() {
                         {...register('confirmPassword')}
                         error={!!errors.confirmPassword}
                         helperText={errors.confirmPassword?.message}
+                    />
+                    <TextField
+                        fullWidth
+                        label="City"
+                        {...register('city')}
+                        error={!!errors.city}
+                        helperText={errors.city?.message}
                     />
                     <Button disabled={isLoading || !isValid} variant="contained" type='submit'>
                         Register

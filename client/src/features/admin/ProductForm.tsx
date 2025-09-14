@@ -57,7 +57,7 @@ export default function ProductForm({setEditMode, product, refetch, setSelectedP
       refetch();
     } catch (error) {
       console.log(error);
-      handleApiError<CreateProductSchema>(error, setError, ['brand', 'description', 'file', 'name', 'pictureUrl', 'quantityInStock', 'type']);
+      handleApiError<CreateProductSchema>(error, setError, ['description', 'file', 'name', 'pictureUrl', 'quantityInStock', 'type']);
     }
   }
   
@@ -72,15 +72,6 @@ export default function ProductForm({setEditMode, product, refetch, setSelectedP
             <AppTextInput control={control as any} label="Product name" name="name" />
           </Grid>
           <Grid size={6}>
-            {data?.brands &&
-            <AppSelectInput 
-                items={data.brands}
-                control={control as any}
-                label="Brand"                          
-                name="brand"
-            />}
-          </Grid>
-          <Grid size={6}>
             {data?.types &&
                 <AppSelectInput
                     items={data.types}
@@ -90,7 +81,7 @@ export default function ProductForm({setEditMode, product, refetch, setSelectedP
                 />}
           </Grid>
           <Grid size={6}>
-            <AppTextInput type="number" control={control as any} label="Quantity in stock" name="quantityInStock" />
+            <AppTextInput type="number" control={control as any} label="Quantity" name="quantityInStock" />
           </Grid>
           <Grid size={12}>
             <AppTextInput 

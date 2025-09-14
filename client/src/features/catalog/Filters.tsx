@@ -2,7 +2,7 @@
 import Search from "./Search.tsx";
 import RadioButtonGroup from "../../app/shared/components/RadioButtonGroup.tsx";
 import {useAppDispatch, useAppSelector} from "../../app/store/store.ts";
-import {resetParams, setBrands, setOrderBy, setTypes} from "./catalogSlice.ts";
+import {resetParams, setOrderBy, setTypes} from "./catalogSlice.ts";
 import CheckboxButtons from "../../app/shared/components/CheckboxButtons.tsx";
 
 const sortOptions = [
@@ -12,11 +12,11 @@ const sortOptions = [
 ]
 
 type Props = {
-    filtersData: {brands: string[]; types: string[];}
+    filtersData: {types: string[];}
 }
 
 export default function Filters({filtersData: data}: Props) {
-    const {orderBy, types, brands} = useAppSelector(state => state.catalog);
+    const {orderBy, types} = useAppSelector(state => state.catalog);
       const dispatch = useAppDispatch();
       
     return (
@@ -30,13 +30,6 @@ export default function Filters({filtersData: data}: Props) {
                           onChange={e => dispatch(setOrderBy(e.target.value))} 
                           selectedValue={orderBy}
                       />
-                </Paper>
-                <Paper sx={{p: 3}}>
-                    <CheckboxButtons 
-                        items={data.brands} 
-                        checked={brands}
-                        onChange={(items: string[]) => dispatch(setBrands(items))}
-                    />
                 </Paper>
                 <Paper sx={{p: 3}}>
                     <CheckboxButtons

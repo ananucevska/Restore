@@ -80,7 +80,7 @@ export const catalogApi = createApi({
             },
             providesTags: ['SavedProducts']
         }),
-        fetchFilters: builder.query<{brands: string[], types: string[]}, void> ({
+        fetchFilters: builder.query<{types: string[]}, void> ({
             query: () => 'products/filters'
         })
     })

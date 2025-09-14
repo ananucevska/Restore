@@ -1,6 +1,5 @@
 ﻿import { createBrowserRouter, Navigate } from "react-router-dom";
 import App from "../layout/App";
-import HomePage from "../../features/home/HomePage";
 import Catalog from "../../features/catalog/Catalog";
 import ProductDetails from "../../features/catalog/ProductDetails";
 import AboutPage from "../../features/about/AboutPage";
@@ -24,9 +23,8 @@ export const router = createBrowserRouter([
                 {path: 'saved-products', element: <SavedProductsPage/>}
             ]},
             {path: 'inventory', element: <InventoryPage/>},
-            {path: '', element: <HomePage />},
-            {path: 'catalog', element: <Catalog />},
-            {path: 'catalog/:id', element: <ProductDetails />},
+            {path: '', element: <Catalog />},
+            {path: ':id', element: <ProductDetails />},
             {path: 'about', element: <AboutPage />},
             {path: 'contact', element: <ContactPage />},
             {path: 'login', element: <LoginForm />},

@@ -80,10 +80,14 @@ export default function SavedProductsPage() {
                                     </Typography>
                                     <Box sx={{ display: 'flex', gap: 1, mb: 1, flexWrap: 'wrap' }}>
                                         <Chip label={product.type} size="small" variant="outlined" />
-                                        <Chip label={product.brand} size="small" variant="outlined" />
                                     </Box>
                                     <Typography variant="body2" color="text.secondary">
                                         Added by: {product.creatorName || 'Unknown'}
+                                        {product.creatorCity && (
+                                            <Typography component="span" variant="body2" color="text.secondary" sx={{ ml: 1 }}>
+                                                from {product.creatorCity}
+                                            </Typography>
+                                        )}
                                     </Typography>
                                     <Typography variant="caption" color="text.secondary">
                                         {formatDate(product.createdDate)}
@@ -92,7 +96,7 @@ export default function SavedProductsPage() {
                                 <CardActions sx={{ justifyContent: 'space-between' }}>
                                     <Button
                                         component={Link}
-                                        to={`/catalog/${product.id}`}
+                                        to={`/${product.id}`}
                                         startIcon={<Visibility />}
                                         variant="contained"
                                         size="small"
@@ -131,7 +135,7 @@ export default function SavedProductsPage() {
                     </Typography>
                     <Button
                         component={Link}
-                        to="/catalog"
+                        to="/"
                         variant="contained"
                         sx={{ mt: 2 }}
                     >

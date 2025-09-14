@@ -32,7 +32,7 @@ export default function ProductCard({product}: Props) {
             <CardActions 
                 sx={{justifyContent: "space-between"}}
             >
-                <Button component={Link} to={`/catalog/${product.id}`}>View</Button>
+                <Button component={Link} to={`/${product.id}`}>View</Button>
             </CardActions>
         </Card>
     )

@@ -20,7 +20,7 @@ public class AccountController(SignInManager<User> signInManager) : BaseApiContr
             return ValidationProblem();
         }
 
-        var user = new User{UserName = registerDto.Email, Email = registerDto.Email};
+        var user = new User{UserName = registerDto.Email, Email = registerDto.Email, City = registerDto.City, Name = registerDto.Name};
 
         var result = await signInManager.UserManager.CreateAsync(user, registerDto.Password);
 
@@ -66,36 +66,4 @@ public class AccountController(SignInManager<User> signInManager) : BaseApiContr
         return NoContent();
     }
 
-    [Authorize]
-    [HttpPost("address")]
-    public async Task<ActionResult<Address>> CreateOrUpdateAddress(Address address)
-    {
-        var user = await signInManager.UserManager.Users
-            .Include(x => x.Address)
-            .FirstOrDefaultAsync(x => x.UserName == User.Identity!.Name);
-
-        if (user == null) return Unauthorized();
-        
-        user.Address = address;
-        
-        var result = await signInManager.UserManager.UpdateAsync(user);
-        
-        if (!result.Succeeded) return BadRequest("Problem updating user address");
-        
-        return Ok(user.Address);
-    }
-
-    [Authorize]
-    [HttpGet("address")]
-    public async Task<ActionResult<Address>> GetSavedAddress()
-    {
-        var address = await signInManager.UserManager.Users
-            .Where(x => x.UserName == User.Identity!.Name)
-            .Select(x => x.Address)
-            .FirstOrDefaultAsync();
-        
-        if  (address == null) return NoContent();
-        
-        return address;
-    }
 }

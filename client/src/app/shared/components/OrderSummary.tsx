@@ -28,7 +28,7 @@ export function OrderSummary() {
                     </Button>}
                     <Button
                         component={Link}
-                        to='/catalog'
+                        to='/'
                         fullWidth
                     >
                         Continue Shopping

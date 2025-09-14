@@ -19,8 +19,6 @@ public class UpdateProductDto
     [Required]
     public required string Type { get; set; }
 
-    [Required]
-    public required string Brand { get; set; }
 
     [Required]
     [Range(0, 200)]

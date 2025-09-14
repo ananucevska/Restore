@@ -24,7 +24,7 @@ namespace API.Controllers
                 .Sort(productParams.OrderBy)
                 */
                 .Search(productParams.SearchTerm)
-                .Filter(productParams.Brands, productParams.Types)
+                .Filter(productParams.Types)
                 .AsQueryable();
             var products = await PagedList<Product>.ToPagedList(query, 
                 productParams.PageNumber, productParams.PageSize);
@@ -59,11 +59,11 @@ namespace API.Controllers
                 Description = product.Description,
                 PictureUrl = product.PictureUrl,
                 Type = product.Type,
-                Brand = product.Brand,
                 QuantityInStock = product.QuantityInStock,
                 PublicId = product.PublicId,
                 UserId = product.UserId,
-                CreatorName = product.User?.UserName,
+                CreatorName = product.User?.Name,
+                CreatorCity = product.User?.City,
                 CreatedDate = product.CreatedDate,
                 IsSaved = isSaved,
                 SaveCount = saveCount
@@ -75,10 +75,9 @@ namespace API.Controllers
         [HttpGet("filters")]
         public async Task<ActionResult> GetFilters()
         {
-            var brands = await context.Products.Select(x => x.Brand).Distinct().ToListAsync();
             var types = await context.Products.Select(x => x.Type).Distinct().ToListAsync();
 
-            return Ok(new {brands, types});
+            return Ok(new {types});
         }
 
         [Authorize]
@@ -91,7 +90,7 @@ namespace API.Controllers
             var query = context.Products
                 .Where(p => p.UserId == user.Id)
                 .Search(productParams.SearchTerm)
-                .Filter(productParams.Brands, productParams.Types)
+                .Filter(productParams.Types)
                 .AsQueryable();
             
             var products = await PagedList<Product>.ToPagedList(query, 
@@ -256,7 +255,7 @@ namespace API.Controllers
                 .ThenInclude(p => p.User)
                 .Select(s => s.Product)
                 .Search(productParams.SearchTerm)
-                .Filter(productParams.Brands, productParams.Types)
+                .Filter(productParams.Types)
                 .AsQueryable();
 
             var products = await PagedList<Product>.ToPagedList(query, 
@@ -269,11 +268,11 @@ namespace API.Controllers
                 Description = p.Description,
                 PictureUrl = p.PictureUrl,
                 Type = p.Type,
-                Brand = p.Brand,
                 QuantityInStock = p.QuantityInStock,
                 PublicId = p.PublicId,
                 UserId = p.UserId,
-                CreatorName = p.User?.UserName,
+                CreatorName = p.User?.Name,
+                CreatorCity = p.User?.City,
                 CreatedDate = p.CreatedDate,
                 IsSaved = true,
                 SaveCount = context.Saves.Count(s => s.ProductId == p.Id)

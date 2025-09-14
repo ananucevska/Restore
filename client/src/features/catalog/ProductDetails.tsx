@@ -69,8 +69,7 @@ export default function ProductDetails() {
     {label: 'Name', value: product.name},    
     {label: 'Description', value: product.description},
     {label: 'Type', value: product.type},
-    {label: 'Brand', value: product.brand},
-    {label: 'Quantity In Stock', value: product.quantityInStock}
+    {label: 'Quantity', value: product.quantityInStock}
 /*
     {label: 'By', value: user.name}
 */
@@ -105,6 +104,11 @@ export default function ProductDetails() {
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
               <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
                 Added by: {product.creatorName || 'Unknown'}
+                {product.creatorCity && (
+                  <Typography component="span" variant="body2" color="text.secondary" sx={{ ml: 1 }}>
+                    from {product.creatorCity}
+                  </Typography>
+                )}
               </Typography>
               <Chip 
                 label={formatDate(product.createdDate)} 
