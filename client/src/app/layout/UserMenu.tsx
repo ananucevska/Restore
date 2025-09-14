@@ -1,7 +1,7 @@
 ﻿import { Button, Menu, Fade, MenuItem, ListItemIcon, ListItemText, Divider } from "@mui/material";
 import { useState } from "react";
 import { User } from "../models/user";
-import {History, Inventory, Logout, Person} from "@mui/icons-material";
+import {History, Inventory, Logout, Person, Bookmark} from "@mui/icons-material";
 import { useLogoutMutation } from "../../features/account/accountApi";
 import {Link} from "react-router-dom";
 
@@ -57,6 +57,12 @@ export default function UserMenu({ user }: Props) {
                         <Inventory />
                     </ListItemIcon>
                     <ListItemText>Inventory</ListItemText>
+                </MenuItem>
+                <MenuItem component={Link} to='/saved-products'>
+                    <ListItemIcon>
+                        <Bookmark />
+                    </ListItemIcon>
+                    <ListItemText>Saved Products</ListItemText>
                 </MenuItem>
                 <Divider />
                 <MenuItem onClick={logout}>

@@ -13,6 +13,13 @@ public class AccountController(SignInManager<User> signInManager) : BaseApiContr
 
     public async Task<ActionResult> RegisterUser(RegisterDto registerDto)
     {
+        // Validate password confirmation
+        if (registerDto.Password != registerDto.ConfirmPassword)
+        {
+            ModelState.AddModelError("ConfirmPassword", "Password and confirm password do not match.");
+            return ValidationProblem();
+        }
+
         var user = new User{UserName = registerDto.Email, Email = registerDto.Email};
 
         var result = await signInManager.UserManager.CreateAsync(user, registerDto.Password);

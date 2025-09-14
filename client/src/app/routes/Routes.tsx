@@ -11,6 +11,7 @@ import RequireAuth from "./RequireAuth.tsx";
 import OrdersPage from "../../features/orders/OrdersPage.tsx";
 import OrderDetailedPage from "../../features/orders/OrderDetailedPage.tsx";
 import InventoryPage from "../../features/admin/inventoryPage.tsx";
+import SavedProductsPage from "../../features/catalog/SavedProductsPage.tsx";
 
 export const router = createBrowserRouter([
     {
@@ -19,7 +20,8 @@ export const router = createBrowserRouter([
         children: [
             {element: <RequireAuth/>, children: [
                 {path: 'orders', element: <OrdersPage/>},
-                {path: 'orders/:id', element: <OrderDetailedPage/>}
+                {path: 'orders/:id', element: <OrderDetailedPage/>},
+                {path: 'saved-products', element: <SavedProductsPage/>}
             ]},
             {path: 'inventory', element: <InventoryPage/>},
             {path: '', element: <HomePage />},

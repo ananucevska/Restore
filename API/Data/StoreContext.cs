@@ -10,6 +10,7 @@ public class StoreContext(DbContextOptions options) : IdentityDbContext<User>(op
 {
     public required DbSet<Product> Products { get; set; }
     public required  DbSet<Order> Orders { get; set; }
+    public required DbSet<Save> Saves { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -25,5 +26,21 @@ public class StoreContext(DbContextOptions options) : IdentityDbContext<User>(op
             .WithMany()
             .HasForeignKey(p => p.UserId)
             .OnDelete(DeleteBehavior.SetNull);
+
+        builder.Entity<Save>()
+            .HasOne(s => s.User)
+            .WithMany()
+            .HasForeignKey(s => s.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Entity<Save>()
+            .HasOne(s => s.Product)
+            .WithMany()
+            .HasForeignKey(s => s.ProductId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Entity<Save>()
+            .HasIndex(s => new { s.UserId, s.ProductId })
+            .IsUnique();
     }
 }

@@ -6,4 +6,9 @@
     type: string
     brand: string
     quantityInStock: number
+    userId?: string
+    creatorName?: string
+    createdDate: string
+    isSaved: boolean
+    saveCount: number
 }

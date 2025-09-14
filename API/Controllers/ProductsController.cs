@@ -34,13 +34,42 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")] // api/products/2
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<ActionResult<ProductWithCreatorDto>> GetProduct(int id)
         {
-            var product = await context.Products.FindAsync(id);
+            var product = await context.Products
+                .Include(p => p.User)
+                .FirstOrDefaultAsync(p => p.Id == id);
 
             if (product == null) return NotFound();
 
-            return product;
+            var currentUser = await userManager.GetUserAsync(User);
+            var isSaved = false;
+            var saveCount = await context.Saves.CountAsync(s => s.ProductId == id);
+
+            if (currentUser != null)
+            {
+                isSaved = await context.Saves
+                    .AnyAsync(s => s.UserId == currentUser.Id && s.ProductId == id);
+            }
+
+            var productDto = new ProductWithCreatorDto
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                PictureUrl = product.PictureUrl,
+                Type = product.Type,
+                Brand = product.Brand,
+                QuantityInStock = product.QuantityInStock,
+                PublicId = product.PublicId,
+                UserId = product.UserId,
+                CreatorName = product.User?.UserName,
+                CreatedDate = product.CreatedDate,
+                IsSaved = isSaved,
+                SaveCount = saveCount
+            };
+
+            return productDto;
         }
 
         [HttpGet("filters")]
@@ -161,6 +190,97 @@ namespace API.Controllers
             if (result) return Ok();
             
             return BadRequest("Problem deleting the product");
+        }
+
+        [Authorize]
+        [HttpPost("{id}/save")]
+        public async Task<ActionResult> SaveProduct(int id)
+        {
+            var user = await userManager.GetUserAsync(User);
+            if (user == null) return Unauthorized();
+
+            var product = await context.Products.FindAsync(id);
+            if (product == null) return NotFound();
+
+            var existingSave = await context.Saves
+                .FirstOrDefaultAsync(s => s.UserId == user.Id && s.ProductId == id);
+
+            if (existingSave != null)
+            {
+                return BadRequest("Product already saved");
+            }
+
+            var save = new Save
+            {
+                UserId = user.Id,
+                ProductId = id
+            };
+
+            context.Saves.Add(save);
+            await context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpDelete("{id}/save")]
+        public async Task<ActionResult> UnsaveProduct(int id)
+        {
+            var user = await userManager.GetUserAsync(User);
+            if (user == null) return Unauthorized();
+
+            var save = await context.Saves
+                .FirstOrDefaultAsync(s => s.UserId == user.Id && s.ProductId == id);
+
+            if (save == null)
+            {
+                return BadRequest("Product not saved");
+            }
+
+            context.Saves.Remove(save);
+            await context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpGet("saved")]
+        public async Task<ActionResult<List<ProductWithCreatorDto>>> GetSavedProducts([FromQuery]ProductParams productParams)
+        {
+            var user = await userManager.GetUserAsync(User);
+            if (user == null) return Unauthorized();
+
+            var query = context.Saves
+                .Where(s => s.UserId == user.Id)
+                .Include(s => s.Product)
+                .ThenInclude(p => p.User)
+                .Select(s => s.Product)
+                .Search(productParams.SearchTerm)
+                .Filter(productParams.Brands, productParams.Types)
+                .AsQueryable();
+
+            var products = await PagedList<Product>.ToPagedList(query, 
+                productParams.PageNumber, productParams.PageSize);
+
+            var productDtos = products.Select(p => new ProductWithCreatorDto
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Description = p.Description,
+                PictureUrl = p.PictureUrl,
+                Type = p.Type,
+                Brand = p.Brand,
+                QuantityInStock = p.QuantityInStock,
+                PublicId = p.PublicId,
+                UserId = p.UserId,
+                CreatorName = p.User?.UserName,
+                CreatedDate = p.CreatedDate,
+                IsSaved = true,
+                SaveCount = context.Saves.Count(s => s.ProductId == p.Id)
+            }).ToList();
+
+            Response.AddPaginationHeader(products.Metadata);
+            return productDtos;
         }
     }
 }

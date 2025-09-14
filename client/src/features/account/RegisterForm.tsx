@@ -26,6 +26,8 @@ export default function RegisterForm() {
                         setError('password', {message: e})
                     } else if (e.includes('Email')) {
                         setError('email', {message: e})
+                    } else if (e.includes('ConfirmPassword')) {
+                        setError('confirmPassword', {message: e})
                     }
                 })
             }
@@ -63,6 +65,14 @@ export default function RegisterForm() {
                         {...register('password')}
                         error={!!errors.password}
                         helperText={errors.password?.message}
+                    />
+                    <TextField
+                        fullWidth
+                        label="Confirm Password"
+                        type="password"
+                        {...register('confirmPassword')}
+                        error={!!errors.confirmPassword}
+                        helperText={errors.confirmPassword?.message}
                     />
                     <Button disabled={isLoading || !isValid} variant="contained" type='submit'>
                         Register
