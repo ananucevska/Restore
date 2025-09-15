@@ -50,6 +50,25 @@ export const accountApi = createApi({
             query: () => 'account/user-info',
             providesTags: ['UserInfo']
         }),
+        updateProfile: builder.mutation<void, object>({
+            query: (profileData) => {
+                return {
+                    url: 'account/update-profile',
+                    method: 'PUT',
+                    body: profileData
+                }
+            },
+            async onQueryStarted(_, {dispatch, queryFulfilled}) {
+                try {
+                    await queryFulfilled;
+                    dispatch(accountApi.util.invalidateTags(['UserInfo']));
+                    toast.success('Profile updated successfully!')
+                } catch(error) {
+                    console.log(error);
+                    throw error;
+                }
+            }
+        }),
         logout: builder.mutation({
             query:  () => ({
                 url: 'account/logout',
@@ -65,4 +84,4 @@ export const accountApi = createApi({
 });
 
 export const {useLoginMutation, useRegisterMutation, useLogoutMutation, 
-    useUserInfoQuery, useLazyUserInfoQuery} = accountApi;
+    useUserInfoQuery, useLazyUserInfoQuery, useUpdateProfileMutation} = accountApi;

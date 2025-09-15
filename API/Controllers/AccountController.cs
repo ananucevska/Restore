@@ -20,7 +20,15 @@ public class AccountController(SignInManager<User> signInManager) : BaseApiContr
             return ValidationProblem();
         }
 
-        var user = new User{UserName = registerDto.Email, Email = registerDto.Email, City = registerDto.City, Name = registerDto.Name};
+        var user = new User
+        {
+            UserName = registerDto.Email, 
+            Email = registerDto.Email, 
+            City = registerDto.City, 
+            Name = registerDto.Name,
+            Municipality = registerDto.Municipality,
+            Naselba = registerDto.Naselba
+        };
 
         var result = await signInManager.UserManager.CreateAsync(user, registerDto.Password);
 
@@ -54,8 +62,39 @@ public class AccountController(SignInManager<User> signInManager) : BaseApiContr
         {
             user.Email,
             user.UserName,
+            user.Name,
+            user.City,
+            user.Municipality,
+            user.Naselba,
             Roles = roles
         });
+    }
+
+    [Authorize]
+    [HttpPut("update-profile")]
+    public async Task<ActionResult> UpdateProfile(UpdateProfileDto updateProfileDto)
+    {
+        var user = await signInManager.UserManager.GetUserAsync(User);
+        
+        if (user == null) return Unauthorized();
+        
+        user.Name = updateProfileDto.Name;
+        user.City = updateProfileDto.City;
+        user.Municipality = updateProfileDto.Municipality;
+        user.Naselba = updateProfileDto.Naselba;
+        
+        var result = await signInManager.UserManager.UpdateAsync(user);
+        
+        if (!result.Succeeded)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(error.Code, error.Description);
+            }
+            return ValidationProblem();
+        }
+        
+        return Ok();
     }
 
     [HttpPost("logout")]

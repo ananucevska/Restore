@@ -64,6 +64,8 @@ namespace API.Controllers
                 UserId = product.UserId,
                 CreatorName = product.User?.Name,
                 CreatorCity = product.User?.City,
+                CreatorMunicipality = product.User?.Municipality,
+                CreatorNaselba = product.User?.Naselba,
                 CreatedDate = product.CreatedDate,
                 IsSaved = isSaved,
                 SaveCount = saveCount
@@ -273,6 +275,8 @@ namespace API.Controllers
                 UserId = p.UserId,
                 CreatorName = p.User?.Name,
                 CreatorCity = p.User?.City,
+                CreatorMunicipality = p.User?.Municipality,
+                CreatorNaselba = p.User?.Naselba,
                 CreatedDate = p.CreatedDate,
                 IsSaved = true,
                 SaveCount = context.Saves.Count(s => s.ProductId == p.Id)

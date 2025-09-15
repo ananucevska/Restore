@@ -8,6 +8,8 @@
     userId?: string
     creatorName?: string
     creatorCity?: string
+    creatorMunicipality?: string
+    creatorNaselba?: string
     createdDate: string
     isSaved: boolean
     saveCount: number

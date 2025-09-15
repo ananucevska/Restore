@@ -40,7 +40,7 @@ export default function UserMenu({ user }: Props) {
                 onClose={handleClose}
                 TransitionComponent={Fade}
             >
-                <MenuItem>
+                <MenuItem component={Link} to='/profile' onClick={handleClose}>
                     <ListItemIcon>
                         <Person />
                     </ListItemIcon>

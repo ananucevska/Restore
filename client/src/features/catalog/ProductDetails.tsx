@@ -107,6 +107,8 @@ export default function ProductDetails() {
                 {product.creatorCity && (
                   <Typography component="span" variant="body2" color="text.secondary" sx={{ ml: 1 }}>
                     from {product.creatorCity}
+                    {product.creatorMunicipality && `, ${product.creatorMunicipality}`}
+                    {product.creatorNaselba && `, ${product.creatorNaselba}`}
                   </Typography>
                 )}
               </Typography>

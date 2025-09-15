@@ -32,6 +32,10 @@ export default function RegisterForm() {
                         setError('confirmPassword', {message: e})
                     } else if (e.includes('City')) {
                         setError('city', {message: e})
+                    } else if (e.includes('Municipality')) {
+                        setError('municipality', {message: e})
+                    } else if (e.includes('Naselba')) {
+                        setError('naselba', {message: e})
                     }
                 })
             }
@@ -91,6 +95,20 @@ export default function RegisterForm() {
                         {...register('city')}
                         error={!!errors.city}
                         helperText={errors.city?.message}
+                    />
+                    <TextField
+                        fullWidth
+                        label="Municipality (Optional)"
+                        {...register('municipality')}
+                        error={!!errors.municipality}
+                        helperText={errors.municipality?.message}
+                    />
+                    <TextField
+                        fullWidth
+                        label="Naselba (Optional)"
+                        {...register('naselba')}
+                        error={!!errors.naselba}
+                        helperText={errors.naselba?.message}
                     />
                     <Button disabled={isLoading || !isValid} variant="contained" type='submit'>
                         Register
