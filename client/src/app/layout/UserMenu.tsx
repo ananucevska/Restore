@@ -1,8 +1,9 @@
-﻿import { Button, Menu, Fade, MenuItem, ListItemIcon, ListItemText, Divider } from "@mui/material";
-import { useState } from "react";
+﻿import { Button, Menu, Fade, MenuItem, ListItemIcon, ListItemText, Divider, Badge } from "@mui/material";
+import { useState, useEffect } from "react";
 import { User } from "../models/user";
-import {History, Inventory, Logout, Person, Bookmark} from "@mui/icons-material";
+import {History, Inventory, Logout, Person, Bookmark, Message} from "@mui/icons-material";
 import { useLogoutMutation } from "../../features/account/accountApi";
+import { useFetchConversationsQuery } from "../../features/messages/messagesApi";
 import {Link} from "react-router-dom";
 
 type Props = {
@@ -11,8 +12,28 @@ type Props = {
 
 export default function UserMenu({ user }: Props) {
     const [logout] = useLogoutMutation();
+    const { data: conversations = [], refetch: refetchConversations } = useFetchConversationsQuery();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+    
+    // Calculate total unread messages
+    const unreadCount = conversations.reduce((total, conversation) => {
+        return total + (conversation.hasUnreadMessages ? 1 : 0);
+    }, 0);
+
+    // Listen for cross-tab message notifications
+    useEffect(() => {
+        const handleStorageChange = (e: StorageEvent) => {
+            if (e.key === 'messageSent' && e.newValue) {
+                console.log('UserMenu: Message sent event received via localStorage, refetching conversations...');
+                refetchConversations();
+            }
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+        return () => window.removeEventListener('storage', handleStorageChange);
+    }, [refetchConversations]);
+    
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -45,6 +66,14 @@ export default function UserMenu({ user }: Props) {
                         <Person />
                     </ListItemIcon>
                     <ListItemText>My profile</ListItemText>
+                </MenuItem>
+                <MenuItem component={Link} to='/messages' onClick={handleClose}>
+                    <ListItemIcon>
+                        <Badge badgeContent={unreadCount} color="error" max={99}>
+                            <Message />
+                        </Badge>
+                    </ListItemIcon>
+                    <ListItemText>Messages</ListItemText>
                 </MenuItem>
                 <MenuItem component={Link} to='/orders'>
                     <ListItemIcon>

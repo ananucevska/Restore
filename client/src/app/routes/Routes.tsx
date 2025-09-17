@@ -12,6 +12,7 @@ import OrdersPage from "../../features/orders/OrdersPage.tsx";
 import OrderDetailedPage from "../../features/orders/OrderDetailedPage.tsx";
 import InventoryPage from "../../features/admin/inventoryPage.tsx";
 import SavedProductsPage from "../../features/catalog/SavedProductsPage.tsx";
+import Messenger from "../../features/messages/Messenger.tsx";
 
 export const router = createBrowserRouter([
     {
@@ -22,7 +23,8 @@ export const router = createBrowserRouter([
                 {path: 'profile', element: <ProfilePage/>},
                 {path: 'orders', element: <OrdersPage/>},
                 {path: 'orders/:id', element: <OrderDetailedPage/>},
-                {path: 'saved-products', element: <SavedProductsPage/>}
+                {path: 'saved-products', element: <SavedProductsPage/>},
+                {path: 'messages', element: <Messenger/>}
             ]},
             {path: 'inventory', element: <InventoryPage/>},
             {path: '', element: <Catalog />},

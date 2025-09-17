@@ -60,6 +60,7 @@ public class AccountController(SignInManager<User> signInManager) : BaseApiContr
 
         return Ok(new
         {
+            user.Id,
             user.Email,
             user.UserName,
             user.Name,

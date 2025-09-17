@@ -15,6 +15,7 @@ import {
 import { Bookmark, BookmarkBorder } from "@mui/icons-material";
 import { useFetchProductDetailsQuery, useSaveProductMutation, useUnsaveProductMutation } from "./catalogApi";
 import { useState, useEffect } from "react";
+import MessageButton from "../messages/MessageButton";
 export default function ProductDetails() {
   const {id} = useParams();
   const [isSaved, setIsSaved] = useState(false);
@@ -120,7 +121,7 @@ export default function ProductDetails() {
               />
             </Box>
             
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
               <IconButton 
                 onClick={handleSaveToggle}
                 color={isSaved ? 'primary' : 'default'}
@@ -132,6 +133,11 @@ export default function ProductDetails() {
                 {saveCount} {saveCount === 1 ? 'save' : 'saves'}
               </Typography>
             </Box>
+            
+            <Box sx={{ display: 'flex', gap: 2 }}>
+              <MessageButton product={product} />
+            </Box>
+            
           </Box>
         </Grid>
       </Grid>

@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom";
 import { Product } from "../../app/models/product"
 import {Button, Card, CardActions, CardContent, CardMedia, Typography} from "@mui/material";
+import MessageButton from "../messages/MessageButton";
 
 type Props = {
     product: Product
@@ -33,6 +34,7 @@ export default function ProductCard({product}: Props) {
                 sx={{justifyContent: "space-between"}}
             >
                 <Button component={Link} to={`/${product.id}`}>View</Button>
+                <MessageButton product={product} variant="outlined" size="small" />
             </CardActions>
         </Card>
     )

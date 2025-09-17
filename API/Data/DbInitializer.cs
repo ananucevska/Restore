@@ -22,9 +22,10 @@ public class DbInitializer
     {
         context.Database.Migrate(); //sekad se povikuva
 
+        User? user = null;
         if (!userManager.Users.Any())
         {
-            var user = new User
+            user = new User
             {
                 UserName = "bob@test.com",
                 Email = "bob@test.com",
@@ -34,6 +35,10 @@ public class DbInitializer
             
             await userManager.CreateAsync(user, "Pa$$w0rd");
             await userManager.AddToRoleAsync(user, "Member");
+        }
+        else
+        {
+            user = await userManager.Users.FirstAsync();
         }
         
         if (context.Products.Any()) return; // if there is any, return them
@@ -200,6 +205,12 @@ public class DbInitializer
                 QuantityInStock = 100
             },
         };
+        
+        // Assign the user to all products
+        foreach (var product in products)
+        {
+            product.UserId = user.Id;
+        }
         
         context.Products.AddRange(products); //tracking list of products in memory
         context.SaveChanges(); //request to the database

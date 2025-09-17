@@ -11,6 +11,8 @@ public class StoreContext(DbContextOptions options) : IdentityDbContext<User>(op
     public required DbSet<Product> Products { get; set; }
     public required  DbSet<Order> Orders { get; set; }
     public required DbSet<Save> Saves { get; set; }
+    public required DbSet<Conversation> Conversations { get; set; }
+    public required DbSet<Message> Messages { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -42,5 +44,41 @@ public class StoreContext(DbContextOptions options) : IdentityDbContext<User>(op
         builder.Entity<Save>()
             .HasIndex(s => new { s.UserId, s.ProductId })
             .IsUnique();
+
+        // Conversation configurations
+        builder.Entity<Conversation>()
+            .HasOne(c => c.User1)
+            .WithMany()
+            .HasForeignKey(c => c.User1Id)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<Conversation>()
+            .HasOne(c => c.User2)
+            .WithMany()
+            .HasForeignKey(c => c.User2Id)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<Conversation>()
+            .HasOne(c => c.Product)
+            .WithMany()
+            .HasForeignKey(c => c.ProductId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        builder.Entity<Conversation>()
+            .HasIndex(c => new { c.User1Id, c.User2Id, c.ProductId })
+            .IsUnique();
+
+        // Message configurations
+        builder.Entity<Message>()
+            .HasOne(m => m.Conversation)
+            .WithMany(c => c.Messages)
+            .HasForeignKey(m => m.ConversationId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Entity<Message>()
+            .HasOne(m => m.Sender)
+            .WithMany()
+            .HasForeignKey(m => m.SenderId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }
