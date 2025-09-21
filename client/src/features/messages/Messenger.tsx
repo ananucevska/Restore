@@ -13,9 +13,7 @@ import {
     Badge,
 } from '@mui/material';
 import { Send, Message as MessageIcon, Refresh } from '@mui/icons-material';
-import { useFetchConversationsQuery, useFetchMessagesQuery, useSendMessageMutation, messagesApi } from './messagesApi';
-import { useDispatch } from 'react-redux';
-import { Conversation, Message } from '../../app/models/conversation';
+import { useFetchConversationsQuery, useFetchMessagesQuery, useSendMessageMutation } from './messagesApi';
 import ProductCard from './ProductCard';
 import { Product } from '../../app/models/product';
 import { useUserInfoQuery } from '../account/accountApi';
@@ -24,23 +22,14 @@ export default function Messenger() {
     const [selectedConversation, setSelectedConversation] = useState<number | null>(null);
     const [newMessage, setNewMessage] = useState('');
     const messagesEndRef = useRef<HTMLDivElement>(null);
-    const dispatch = useDispatch();
 
     const { data: user } = useUserInfoQuery();
     const { data: conversations = [], isLoading: conversationsLoading, refetch: refetchConversations } = useFetchConversationsQuery(undefined, {
-        pollingInterval: 500, // Poll every 500ms to check for new messages more frequently
         refetchOnMountOrArgChange: true, // Always refetch when component mounts or args change
         refetchOnFocus: true, // Refetch when window regains focus
         refetchOnReconnect: true // Refetch when network reconnects
     });
     
-    // Debug logging for conversations
-    useEffect(() => {
-        console.log('Conversations updated:', conversations.length, 'conversations');
-        conversations.forEach(conv => {
-            console.log(`Conversation ${conv.id}: ${conv.otherUserName}, unread: ${conv.hasUnreadMessages}`);
-        });
-    }, [conversations]);
     const { data: messages = [], isLoading: messagesLoading } = useFetchMessagesQuery(selectedConversation!, {
         skip: !selectedConversation
     });
@@ -69,19 +58,14 @@ export default function Messenger() {
     useEffect(() => {
         if (messages.length > 0 && selectedConversation) {
             // Messages were fetched, which means they were marked as read on the backend
-            // Invalidate conversations to refresh the unread count
-            dispatch(messagesApi.util.invalidateTags(['Conversation']));
+            // Only refetch conversations if there were unread messages
+            const conversation = conversations.find(c => c.id === selectedConversation);
+            if (conversation?.hasUnreadMessages) {
+                refetchConversations();
+            }
         }
-    }, [messages, selectedConversation, dispatch]);
+    }, [messages, selectedConversation, conversations, refetchConversations]);
 
-    // Add a more aggressive refetch strategy
-    useEffect(() => {
-        const interval = setInterval(() => {
-            refetchConversations();
-        }, 3000); // Refetch every 3 seconds as backup
-
-        return () => clearInterval(interval);
-    }, [refetchConversations]);
 
     // Listen for custom events to trigger immediate refetch
     useEffect(() => {
@@ -92,7 +76,6 @@ export default function Messenger() {
         // Listen for localStorage changes (cross-tab communication)
         const handleStorageChange = (e: StorageEvent) => {
             if (e.key === 'messageSent' && e.newValue) {
-                console.log('Message sent event received via localStorage, refetching conversations...');
                 refetchConversations();
             }
         };
@@ -116,17 +99,13 @@ export default function Messenger() {
             }).unwrap();
             setNewMessage('');
             
-            // Force immediate refetch of conversations
+            // Only refetch conversations after sending a message
             refetchConversations();
-            
-            // Also invalidate the cache to ensure fresh data
-            dispatch(messagesApi.util.invalidateTags(['Conversation']));
             
             // Dispatch custom event to trigger refetch in other components
             window.dispatchEvent(new CustomEvent('messageSent'));
             
             // Use localStorage to communicate across browser tabs
-            console.log('Message sent, triggering cross-tab notification...');
             localStorage.setItem('messageSent', Date.now().toString());
         } catch (error) {
             console.error('Error sending message:', error);
@@ -203,13 +182,22 @@ export default function Messenger() {
                         conversations.map((conversation) => (
                             <ListItem
                                 key={conversation.id}
-                                button
-                                selected={conversation.id === selectedConversation}
+                                component="div"
                                 onClick={() => setSelectedConversation(conversation.id)}
                                 sx={{ 
                                     borderBottom: 1, 
                                     borderColor: 'divider',
-                                    backgroundColor: conversation.hasUnreadMessages ? '#f5f5f5' : 'transparent'
+                                    backgroundColor: conversation.id === selectedConversation 
+                                        ? 'primary.light' 
+                                        : conversation.hasUnreadMessages 
+                                            ? '#f5f5f5' 
+                                            : 'transparent',
+                                    cursor: 'pointer',
+                                    '&:hover': {
+                                        backgroundColor: conversation.id === selectedConversation 
+                                            ? 'primary.light' 
+                                            : 'action.hover'
+                                    }
                                 }}
                             >
                                 <ListItemAvatar>
@@ -291,7 +279,7 @@ export default function Messenger() {
                                         userId: selectedConversationData.otherUserId || '',
                                         creatorCity: selectedConversationData.otherUserCity || '',
                                         creatorMunicipality: '',
-                                        creatorNaselba: '',
+                                        creatorNeighborhood: '',
                                         createdDate: '', // Will be handled gracefully by ProductCard
                                         isSaved: false,
                                         saveCount: 0

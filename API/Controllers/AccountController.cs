@@ -27,7 +27,7 @@ public class AccountController(SignInManager<User> signInManager) : BaseApiContr
             City = registerDto.City, 
             Name = registerDto.Name,
             Municipality = registerDto.Municipality,
-            Naselba = registerDto.Naselba
+            Neighborhood = registerDto.Neighborhood
         };
 
         var result = await signInManager.UserManager.CreateAsync(user, registerDto.Password);
@@ -66,7 +66,7 @@ public class AccountController(SignInManager<User> signInManager) : BaseApiContr
             user.Name,
             user.City,
             user.Municipality,
-            user.Naselba,
+            user.Neighborhood,
             Roles = roles
         });
     }
@@ -82,7 +82,7 @@ public class AccountController(SignInManager<User> signInManager) : BaseApiContr
         user.Name = updateProfileDto.Name;
         user.City = updateProfileDto.City;
         user.Municipality = updateProfileDto.Municipality;
-        user.Naselba = updateProfileDto.Naselba;
+        user.Neighborhood = updateProfileDto.Neighborhood;
         
         var result = await signInManager.UserManager.UpdateAsync(user);
         

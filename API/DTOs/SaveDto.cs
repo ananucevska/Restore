@@ -21,7 +21,7 @@ public class ProductWithCreatorDto
     public string? CreatorName { get; set; }
     public string? CreatorCity { get; set; }
     public string? CreatorMunicipality { get; set; }
-    public string? CreatorNaselba { get; set; }
+    public string? CreatorNeighborhood { get; set; }
     public DateTime CreatedDate { get; set; }
     public bool IsSaved { get; set; }
     public int SaveCount { get; set; }

@@ -21,7 +21,7 @@ export default function ProfileForm() {
             setValue('name', user.name);
             setValue('city', user.city);
             setValue('municipality', user.municipality || '');
-            setValue('naselba', user.naselba || '');
+            setValue('neighborhood', user.neighborhood || '');
         }
     }, [user, setValue]);
     
@@ -40,8 +40,8 @@ export default function ProfileForm() {
                         setError('city', {message: e})
                     } else if (e.includes('Municipality')) {
                         setError('municipality', {message: e})
-                    } else if (e.includes('Naselba')) {
-                        setError('naselba', {message: e})
+                    } else if (e.includes('Neighborhood')) {
+                        setError('neighborhood', {message: e})
                     }
                 })
             }
@@ -103,10 +103,10 @@ export default function ProfileForm() {
                     />
                     <TextField
                         fullWidth
-                        label="Naselba (Optional)"
-                        {...register('naselba')}
-                        error={!!errors.naselba}
-                        helperText={errors.naselba?.message}
+                        label="Neighborhood (Optional)"
+                        {...register('neighborhood')}
+                        error={!!errors.neighborhood}
+                        helperText={errors.neighborhood?.message}
                     />
                     <Button 
                         disabled={isSubmitting || !isValid} 

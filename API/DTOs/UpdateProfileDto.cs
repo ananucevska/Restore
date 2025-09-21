@@ -9,5 +9,5 @@ public class UpdateProfileDto
     [Required]
     public required string City { get; set; } = string.Empty;
     public string? Municipality { get; set; }
-    public string? Naselba { get; set; }
+    public string? Neighborhood { get; set; }
 }

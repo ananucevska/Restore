@@ -5,5 +5,5 @@
     city: string;
     name: string;
     municipality?: string;
-    naselba?: string;
+    neighborhood?: string;
 }
