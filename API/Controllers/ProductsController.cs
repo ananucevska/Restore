@@ -25,6 +25,7 @@ namespace API.Controllers
                 */
                 .Search(productParams.SearchTerm)
                 .Filter(productParams.Types)
+                .FilterByCategories(productParams.SelectedCategories)
                 .AsQueryable();
             var products = await PagedList<Product>.ToPagedList(query, 
                 productParams.PageNumber, productParams.PageSize);
@@ -59,7 +60,6 @@ namespace API.Controllers
                 Description = product.Description,
                 PictureUrl = product.PictureUrl,
                 Type = product.Type,
-                QuantityInStock = product.QuantityInStock,
                 PublicId = product.PublicId,
                 UserId = product.UserId,
                 CreatorName = product.User?.Name,
@@ -93,6 +93,7 @@ namespace API.Controllers
                 .Where(p => p.UserId == user.Id)
                 .Search(productParams.SearchTerm)
                 .Filter(productParams.Types)
+                .FilterByCategories(productParams.SelectedCategories)
                 .AsQueryable();
             
             var products = await PagedList<Product>.ToPagedList(query, 
@@ -258,6 +259,7 @@ namespace API.Controllers
                 .Select(s => s.Product)
                 .Search(productParams.SearchTerm)
                 .Filter(productParams.Types)
+                .FilterByCategories(productParams.SelectedCategories)
                 .AsQueryable();
 
             var products = await PagedList<Product>.ToPagedList(query, 
@@ -270,7 +272,6 @@ namespace API.Controllers
                 Description = p.Description,
                 PictureUrl = p.PictureUrl,
                 Type = p.Type,
-                QuantityInStock = p.QuantityInStock,
                 PublicId = p.PublicId,
                 UserId = p.UserId,
                 CreatorName = p.User?.Name,

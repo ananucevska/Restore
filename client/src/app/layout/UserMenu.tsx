@@ -1,7 +1,7 @@
 ﻿import { Button, Menu, Fade, MenuItem, ListItemIcon, ListItemText, Divider, Badge } from "@mui/material";
 import { useState, useEffect } from "react";
 import { User } from "../models/user";
-import {History, Inventory, Logout, Person, Bookmark, Message} from "@mui/icons-material";
+import {Inventory, Logout, Person, Bookmark, Message} from "@mui/icons-material";
 import { useLogoutMutation } from "../../features/account/accountApi";
 import { useFetchConversationsQuery } from "../../features/messages/messagesApi";
 import {Link} from "react-router-dom";
@@ -65,7 +65,7 @@ export default function UserMenu({ user }: Props) {
                     <ListItemIcon>
                         <Person />
                     </ListItemIcon>
-                    <ListItemText>My profile</ListItemText>
+                    <ListItemText>Профил</ListItemText>
                 </MenuItem>
                 <MenuItem component={Link} to='/messages' onClick={handleClose}>
                     <ListItemIcon>
@@ -73,32 +73,26 @@ export default function UserMenu({ user }: Props) {
                             <Message />
                         </Badge>
                     </ListItemIcon>
-                    <ListItemText>Messages</ListItemText>
-                </MenuItem>
-                <MenuItem component={Link} to='/orders'>
-                    <ListItemIcon>
-                        <History />
-                    </ListItemIcon>
-                    <ListItemText>My orders</ListItemText>
+                    <ListItemText>Пораки</ListItemText>
                 </MenuItem>
                 <MenuItem component={Link} to='/inventory'>
                     <ListItemIcon>
                         <Inventory />
                     </ListItemIcon>
-                    <ListItemText>Inventory</ListItemText>
+                    <ListItemText>Мои продукти</ListItemText>
                 </MenuItem>
                 <MenuItem component={Link} to='/saved-products'>
                     <ListItemIcon>
                         <Bookmark />
                     </ListItemIcon>
-                    <ListItemText>Saved Products</ListItemText>
+                    <ListItemText>Зачувани продукти</ListItemText>
                 </MenuItem>
                 <Divider />
                 <MenuItem onClick={logout}>
                     <ListItemIcon>
                         <Logout />
                     </ListItemIcon>
-                    <ListItemText>Logout</ListItemText>
+                    <ListItemText>Одјави се</ListItemText>
                 </MenuItem>
             </Menu>
         </div>

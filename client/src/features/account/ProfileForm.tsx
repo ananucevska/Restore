@@ -2,8 +2,7 @@ import { useUpdateProfileMutation, useUserInfoQuery } from "./accountApi.ts";
 import { useForm } from "react-hook-form";
 import { profileSchema, ProfileSchema } from "../../lib/schemas/profileSchema.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, Container, Paper, TextField, Typography, CircularProgress } from "@mui/material";
-import { Person } from "@mui/icons-material";
+import { Box, Button, Container, Paper, TextField, CircularProgress } from "@mui/material";
 import { useEffect } from "react";
 
 export default function ProfileForm() {
@@ -59,10 +58,6 @@ export default function ProfileForm() {
     return (
         <Container component={Paper} maxWidth="sm" sx={{ borderRadius: 3, mt: 4 }}>
             <Box display='flex' flexDirection='column' alignItems='center' marginTop='8'>
-                <Person sx={{mt: 3, color: 'secondary.main', fontSize: 40 }} />
-                <Typography variant="h5">
-                    My Profile
-                </Typography>
                 <Box
                     component='form'
                     onSubmit={handleSubmit(onSubmit)}

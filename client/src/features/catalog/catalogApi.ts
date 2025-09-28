@@ -12,15 +12,20 @@ export const catalogApi = createApi({
     endpoints: (builder) => ({
         fetchProducts: builder.query<{items: Product[], pagination: Pagination }, ProductParams> ({
             query: (productParams) => {
+                const params = { ...productParams };
+                // Serialize selectedCategories to JSON string
+                if (params.selectedCategories && params.selectedCategories.length > 0) {
+                    (params as any).selectedCategories = JSON.stringify(params.selectedCategories);
+                }
                 return {
                     url: 'products',
-                    params: filterEmptyValues(productParams)
+                    params: filterEmptyValues(params)
                 }
             },
-            transformResponse: (items: Product[], meta) => {
+            transformResponse: (response: Product[], meta) => {
                 const paginationHeader = meta?.response?.headers.get('Pagination');
                 const pagination = paginationHeader ? JSON.parse(paginationHeader) : null;
-                return {items, pagination}
+                return {items: response, pagination}
             },
             providesTags: ['Product']
         }),
@@ -69,14 +74,21 @@ export const catalogApi = createApi({
             }
         }),
         fetchSavedProducts: builder.query<{items: Product[], pagination: Pagination}, ProductParams>({
-            query: (productParams) => ({
-                url: 'products/saved',
-                params: filterEmptyValues(productParams)
-            }),
-            transformResponse: (items: Product[], meta) => {
+            query: (productParams) => {
+                const params = { ...productParams };
+                // Serialize selectedCategories to JSON string
+                if (params.selectedCategories && params.selectedCategories.length > 0) {
+                    (params as any).selectedCategories = JSON.stringify(params.selectedCategories);
+                }
+                return {
+                    url: 'products/saved',
+                    params: filterEmptyValues(params)
+                }
+            },
+            transformResponse: (response: Product[], meta) => {
                 const paginationHeader = meta?.response?.headers.get('Pagination');
                 const pagination = paginationHeader ? JSON.parse(paginationHeader) : null;
-                return {items, pagination}
+                return {items: response, pagination}
             },
             providesTags: ['SavedProducts']
         }),

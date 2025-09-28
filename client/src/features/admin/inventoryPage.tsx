@@ -65,7 +65,6 @@ export default function inventoryPage() {
                             <TableCell>#</TableCell>
                             <TableCell align="left">Product</TableCell>
                             <TableCell align="center">Type</TableCell>
-                            <TableCell align="center">Quantity</TableCell>
                             <TableCell align="right"></TableCell>
                         </TableRow>
                     </TableHead>
@@ -81,17 +80,14 @@ export default function inventoryPage() {
                                     {product.id}
                                 </TableCell>
                                 <TableCell align="left">
-                                    <Box display="flex" alignItems="center">
-                                        <img 
-                                            src={product.pictureUrl} 
-                                            alt={product.name}
-                                            style={{height: 50, marginRight:20}}
-                                        />
-                                        <span>{product.name}</span>
-                                    </Box>
+                                    <img 
+                                        src={product.pictureUrl} 
+                                        alt={product.name}
+                                        style={{height: 50, width: 50, marginRight: 10, verticalAlign: 'middle'}}
+                                    />
+                                    {product.name}
                                 </TableCell>
                                 <TableCell align="center">{product.type}</TableCell>
-                                <TableCell align="center">{product.quantityInStock}</TableCell>
                                 <TableCell align="right">
                                     <Button onClick={() => handleSelectProduct(product)} startIcon={<Edit />} />
                                     <Button onClick={() => handleDeleteProduct(product.id)} startIcon={<Delete />} color="error" />
@@ -99,7 +95,7 @@ export default function inventoryPage() {
                             </TableRow>
                         )) : (
                             <TableRow>
-                                <TableCell colSpan={6} align="center">
+                                <TableCell colSpan={4} align="center">
                                     <Typography variant="body1">No products found. Create your first product!</Typography>
                                 </TableCell>
                             </TableRow>

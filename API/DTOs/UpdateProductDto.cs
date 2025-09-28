@@ -18,9 +18,4 @@ public class UpdateProductDto
 
     [Required]
     public required string Type { get; set; }
-
-
-    [Required]
-    [Range(0, 200)]
-    public int QuantityInStock { get; set; }
 }

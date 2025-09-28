@@ -46,163 +46,166 @@ public class DbInitializer
         {
             new()
             {
-                Name = "Angular Speedster Board 2000",
+                Name = "Samsung Smart TV 55\"",
                 Description =
                     "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                 PictureUrl = "/images/products/sb-ang1.png",
-                Type = "Boards",
-                QuantityInStock = 100
+                Type = "TV"
             },
             new()
             {
-                Name = "Green Angular Board 3000",
+                Name = "LG OLED TV 65\"",
                 Description = "Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.",
                 PictureUrl = "/images/products/sb-ang2.png",
-                Type = "Boards",
-                QuantityInStock = 100
+                Type = "TV"
             },
             new()
             {
-                Name = "Core Board Speed Rush 3",
+                Name = "Sony Bluetooth Speaker",
                 Description =
                     "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
                 PictureUrl = "/images/products/sb-core1.png",
-                Type = "Boards",
-                QuantityInStock = 100
+                Type = "Audio"
             },
             new()
             {
-                Name = "Net Core Super Board",
+                Name = "JBL Wireless Headphones",
                 Description =
                     "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
                 PictureUrl = "/images/products/sb-core2.png",
-                Type = "Boards",
-                QuantityInStock = 100
+                Type = "Audio"
             },
             new()
             {
-                Name = "React Board Super Whizzy Fast",
+                Name = "Dell Laptop Inspiron",
                 Description =
                     "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                 PictureUrl = "/images/products/sb-react1.png",
-                Type = "Boards",
-                QuantityInStock = 100
+                Type = "Computers"
             },
             new()
             {
-                Name = "Typescript Entry Board",
+                Name = "MacBook Pro 13\"",
                 Description =
                     "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                 PictureUrl = "/images/products/sb-ts1.png",
-                Type = "Boards",
-                QuantityInStock = 100
+                Type = "Computers"
             },
             new()
             {
-                Name = "Core Blue Hat",
+                Name = "NVIDIA RTX 4080",
                 Description =
                     "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                 PictureUrl = "/images/products/hat-core1.png",
-                Type = "Hats",
-                QuantityInStock = 100
+                Type = "Computer components",
             },
             new()
             {
-                Name = "Green React Woolen Hat",
+                Name = "Intel Core i7 Processor",
                 Description =
                     "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                 PictureUrl = "/images/products/hat-react1.png",
-                Type = "Hats",
-                QuantityInStock = 100
+                Type = "Computer components",
             },
             new()
             {
-                Name = "Purple React Woolen Hat",
+                Name = "iPhone 15 Pro",
                 Description =
                     "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                 PictureUrl = "/images/products/hat-react2.png",
-                Type = "Hats",
-                QuantityInStock = 100
+                Type = "Phones",
             },
             new()
             {
-                Name = "Blue Code Gloves",
+                Name = "Samsung Galaxy S24",
                 Description =
                     "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                 PictureUrl = "/images/products/glove-code1.png",
-                Type = "Gloves",
-                QuantityInStock = 100
+                Type = "Phones",
             },
             new()
             {
-                Name = "Green Code Gloves",
+                Name = "Bosch Refrigerator",
                 Description =
                     "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                 PictureUrl = "/images/products/glove-code2.png",
-                Type = "Gloves",
-                QuantityInStock = 100
+                Type = "Major Appliances - Fridges",
             },
             new()
             {
-                Name = "Purple React Gloves",
+                Name = "Whirlpool Washing Machine",
                 Description =
                     "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                 PictureUrl = "/images/products/glove-react1.png",
-                Type = "Gloves",
-                QuantityInStock = 100
+                Type = "Major Appliances - Washers/Dryers",
             },
             new()
             {
-                Name = "Green React Gloves",
+                Name = "Nike Air Max - Male",
                 Description =
                     "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                 PictureUrl = "/images/products/glove-react2.png",
-                Type = "Gloves",
-                QuantityInStock = 100
+                Type = "Shoes - male",
             },
             new()
             {
-                Name = "Redis Red Boots",
+                Name = "Adidas Running Shoes - Female",
                 Description =
                     "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
                 PictureUrl = "/images/products/boot-redis1.png",
-                Type = "Boots",
-                QuantityInStock = 100
+                Type = "Shoes - female",
             },
             new()
             {
-                Name = "Core Red Boots",
+                Name = "Levi's Jeans - Male",
                 Description =
                     "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                 PictureUrl = "/images/products/boot-core2.png",
-                Type = "Boots",
-                QuantityInStock = 100
+                Type = "Clothing - male",
             },
             new()
             {
-                Name = "Core Purple Boots",
+                Name = "Zara Dress - Female",
                 Description =
                     "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
                 PictureUrl = "/images/products/boot-core1.png",
-                Type = "Boots",
-                QuantityInStock = 100
+                Type = "Clothing - female",
             },
             new()
             {
-                Name = "Angular Purple Boots",
+                Name = "IKEA Bed Frame",
                 Description = "Aenean nec lorem. In porttitor. Donec laoreet nonummy augue.",
                 PictureUrl = "/images/products/boot-ang2.png",
-                Type = "Boots",
-                QuantityInStock = 100
+                Type = "Furniture - Bedroom",
             },
             new()
             {
-                Name = "Angular Blue Boots",
+                Name = "Sofa Set Living Room",
                 Description =
                     "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
                 PictureUrl = "/images/products/boot-ang1.png",
-                Type = "Boots",
-                QuantityInStock = 100
+                Type = "Furniture - Living Room",
+            },
+            new()
+            {
+                Name = "Garden Table Set",
+                Description = "Perfect outdoor dining set for your garden. Weather resistant and durable.",
+                PictureUrl = "/images/products/boot-core1.png",
+                Type = "Furniture - Garden",
+            },
+            new()
+            {
+                Name = "Decorative Wall Art",
+                Description = "Beautiful abstract wall art to enhance your home decor.",
+                PictureUrl = "/images/products/boot-ang2.png",
+                Type = "Home decor",
+            },
+            new()
+            {
+                Name = "Garden Chairs",
+                Description = "Comfortable outdoor chairs perfect for garden relaxation.",
+                PictureUrl = "/images/products/sb-ang1.png",
+                Type = "Furniture - Garden",
             },
         };
         

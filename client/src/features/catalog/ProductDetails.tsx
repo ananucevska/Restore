@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { Bookmark, BookmarkBorder } from "@mui/icons-material";
 import { useFetchProductDetailsQuery, useSaveProductMutation, useUnsaveProductMutation } from "./catalogApi";
+import { useUserInfoQuery } from "../account/accountApi";
 import { useState, useEffect } from "react";
 import MessageButton from "../messages/MessageButton";
 export default function ProductDetails() {
@@ -22,6 +23,7 @@ export default function ProductDetails() {
   const [saveCount, setSaveCount] = useState(0);
 
   const {data: product, isLoading} = useFetchProductDetailsQuery(id ? +id : 0) /* + symbol casts it into a number */
+  const {data: user} = useUserInfoQuery();
   const [saveProduct] = useSaveProductMutation();
   const [unsaveProduct] = useUnsaveProductMutation();
 
@@ -32,6 +34,9 @@ export default function ProductDetails() {
       setSaveCount(product.saveCount);
     }
   }, [product]);
+
+  // Check if the product belongs to the current user
+  const isOwnProduct = user && product && user.id === product.userId;
 
   if (!product || isLoading) return <div>Loading...</div>
 
@@ -68,9 +73,7 @@ export default function ProductDetails() {
   
   const productDetails = [
     {label: 'Name', value: product.name},    
-    {label: 'Description', value: product.description},
-    {label: 'Type', value: product.type},
-    {label: 'Quantity', value: product.quantityInStock}
+    {label: 'Description', value: product.description}
 /*
     {label: 'By', value: user.name}
 */
@@ -125,7 +128,9 @@ export default function ProductDetails() {
               <IconButton 
                 onClick={handleSaveToggle}
                 color={isSaved ? 'primary' : 'default'}
+                disabled={isOwnProduct}
                 sx={{ p: 1 }}
+                title={isOwnProduct ? "You cannot save your own products" : ""}
               >
                 {isSaved ? <Bookmark /> : <BookmarkBorder />}
               </IconButton>

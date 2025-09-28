@@ -7,7 +7,6 @@ public class Product
     public required string Description { get; set; }
     public required string PictureUrl { get; set; }
     public required string Type { get; set; }
-    public int QuantityInStock { get; set; }
     public string? PublicId { get; set; }
     public string? UserId { get; set; }
     public User? User { get; set; }

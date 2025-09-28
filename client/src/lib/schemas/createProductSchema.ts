@@ -17,12 +17,6 @@ export const createProductSchema = z
             .min(1, "Description is required")
             .min(10, "Description must be at least 10 characters"),
         type: z.string().min(1, "Type is required"),
-        quantityInStock: z
-            .coerce.number()
-            .refine((val) => val !== undefined && val !== null, {
-                message: "Quantity is required",
-            })
-            .min(1, "Quantity must be at least 1"),
         pictureUrl: z.string().optional(),
         file: fileSchema.optional(),
     })

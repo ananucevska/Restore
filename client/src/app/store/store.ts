@@ -4,7 +4,6 @@ import { catalogApi } from "../../features/catalog/catalogApi";
 import { uiSlice } from "../layout/uiSlice";
 import {catalogSlice} from "../../features/catalog/catalogSlice.ts";
 import {accountApi} from "../../features/account/accountApi.ts";
-import {orderApi} from "../../features/orders/orderApi.ts";
 import {adminApi} from "../../features/admin/adminApi.ts";
 import {messagesApi} from "../../features/messages/messagesApi.ts";
 import counterReducer from "../../features/contact/counterReducer.ts";
@@ -17,7 +16,6 @@ export const store = configureStore({
     reducer: {
         [catalogApi.reducerPath]: catalogApi.reducer,
         [accountApi.reducerPath]: accountApi.reducer,
-        [orderApi.reducerPath]: orderApi.reducer,
         [adminApi.reducerPath]: adminApi.reducer,
         [messagesApi.reducerPath]: messagesApi.reducer,
         ui: uiSlice.reducer,
@@ -27,7 +25,6 @@ export const store = configureStore({
         getDefaultMiddleware().concat(
             catalogApi.middleware, 
             accountApi.middleware,
-            orderApi.middleware,
             adminApi.middleware,
             messagesApi.middleware
         )

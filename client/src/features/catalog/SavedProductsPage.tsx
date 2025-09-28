@@ -51,11 +51,6 @@ export default function SavedProductsPage() {
 
     return (
         <Box sx={{ p: 3 }}>
-            <Typography variant="h4" sx={{ mb: 3, display: 'flex', alignItems: 'center', gap: 1 }}>
-                <Bookmark color="primary" />
-                Your Saved Products
-            </Typography>
-
             {data && data.items && data.items.length > 0 ? (
                 <>
                     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 3 }}>
@@ -130,10 +125,10 @@ export default function SavedProductsPage() {
                 <Paper sx={{ p: 4, textAlign: 'center' }}>
                     <Bookmark sx={{ fontSize: 64, color: 'text.secondary', mb: 2 }} />
                     <Typography variant="h6" color="text.secondary">
-                        No saved products yet
+                        Сè уште немате зачувано продукти
                     </Typography>
                     <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                        Start exploring products and save the ones you're interested in!
+                        Разгледајте ги достапните продукти и зачувајте ги оние за кои сте заинтересирани!
                     </Typography>
                     <Button
                         component={Link}
@@ -141,7 +136,7 @@ export default function SavedProductsPage() {
                         variant="contained"
                         sx={{ mt: 2 }}
                     >
-                        Browse Products
+                        Пребарај Продукти
                     </Button>
                 </Paper>
             )}

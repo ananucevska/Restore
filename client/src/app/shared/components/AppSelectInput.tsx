@@ -4,7 +4,7 @@ import {FormControl, FormHelperText, InputLabel, MenuItem, Select} from "@mui/ma
 type Props<T extends FieldValues> = {
     label: string
     name: keyof T
-    items: string[]
+    items: string[] | { value: string; label: string }[]
 } & UseControllerProps<T>
 
 export default function AppSelectInput<T extends FieldValues>(props: Props<T>) {
@@ -17,9 +17,13 @@ export default function AppSelectInput<T extends FieldValues>(props: Props<T>) {
                 label={props.label}
                 onChange={field.onChange}
             >
-                {props.items.map((item: string, index: number) => (
-                    <MenuItem value={item} key={index}>{item}</MenuItem>
-                ))}
+                {props.items.map((item: string | { value: string; label: string }, index: number) => {
+                    const value = typeof item === 'string' ? item : item.value;
+                    const label = typeof item === 'string' ? item : item.label;
+                    return (
+                        <MenuItem value={value} key={index}>{label}</MenuItem>
+                    );
+                })}
             </Select>
             <FormHelperText>{fieldState.error?.message}</FormHelperText>
         </FormControl>

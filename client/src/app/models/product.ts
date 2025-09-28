@@ -4,7 +4,6 @@
     description: string
     pictureUrl: string
     type: string
-    quantityInStock: number
     userId?: string
     creatorName?: string
     creatorCity?: string

@@ -1,5 +1,4 @@
-﻿import {ShippingAddress} from "../app/models/order.ts";
-import {FieldValues, Path, UseFormSetError} from "react-hook-form";
+﻿import {FieldValues, Path, UseFormSetError} from "react-hook-form";
 
 export function currencyFormat(amount: number): string {
     return '$' + (amount / 100).toFixed(2)
@@ -14,9 +13,6 @@ export function filterEmptyValues(values: object) {
     )
 }
 
-export const formatAddressString = (address: ShippingAddress) => {
-    return `${address?.name}, ${address?.line1}, ${address?.city}, ${address?.state}, ${address?.postal_code}, ${address?.country}`;
-}
 
 export function handleApiError<T extends FieldValues>(
     error: unknown,
