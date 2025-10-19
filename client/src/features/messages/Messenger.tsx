@@ -12,10 +12,8 @@ import {
     Paper,
     Badge,
 } from '@mui/material';
-import { Send, Message as MessageIcon, Refresh } from '@mui/icons-material';
+import { Send, Message as MessageIcon } from '@mui/icons-material';
 import { useFetchConversationsQuery, useFetchMessagesQuery, useSendMessageMutation } from './messagesApi';
-import ProductCard from './ProductCard';
-import { Product } from '../../app/models/product';
 import { useUserInfoQuery } from '../account/accountApi';
 
 export default function Messenger() {
@@ -147,7 +145,7 @@ export default function Messenger() {
     return (
         <Box sx={{ 
             width: '100%', 
-            height: '600px',
+            height: 'calc(100vh - 200px)',
             display: 'grid',
             gridTemplateColumns: '300px 1fr',
             gap: 2,
@@ -160,15 +158,8 @@ export default function Messenger() {
                 flexDirection: 'column',
                 overflow: 'hidden'
             }}>
-                <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider', flexShrink: 0, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Typography variant="h6">Messages</Typography>
-                    <IconButton 
-                        size="small" 
-                        onClick={() => refetchConversations()}
-                        title="Refresh conversations"
-                    >
-                        <Refresh />
-                    </IconButton>
+                <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider', flexShrink: 0 }}>
+                    <Typography variant="h6">Пораки</Typography>
                 </Box>
                 <List sx={{ flex: 1, overflow: 'auto', p: 0 }}>
                     {conversations.length === 0 ? (
@@ -225,7 +216,7 @@ export default function Messenger() {
                                             </Typography>
                                             {conversation.productName && (
                                                 <Typography variant="caption" color="primary" noWrap>
-                                                    About: {conversation.productName}
+                                                    За: {conversation.productName}
                                                 </Typography>
                                             )}
                                         </Box>
@@ -256,7 +247,7 @@ export default function Messenger() {
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 {selectedConversationData?.otherUserCity && 
-                                    `from ${selectedConversationData.otherUserCity}`
+                                    `од ${selectedConversationData.otherUserCity}`
                                 }
                             </Typography>
                         </Box>
@@ -265,27 +256,37 @@ export default function Messenger() {
                         {selectedConversationData?.productId && (
                             <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
                                 <Typography variant="subtitle2" gutterBottom>
-                                    Product being discussed:
+                                    Производ:
                                 </Typography>
-                                <ProductCard 
-                                    product={{
-                                        id: selectedConversationData.productId,
-                                        name: selectedConversationData.productName || '',
-                                        pictureUrl: selectedConversationData.productPictureUrl || '',
-                                        creatorName: selectedConversationData.otherUserName || '',
-                                        type: '',
-                                        description: '',
-                                        quantityInStock: 0,
-                                        userId: selectedConversationData.otherUserId || '',
-                                        creatorCity: selectedConversationData.otherUserCity || '',
-                                        creatorMunicipality: '',
-                                        creatorNeighborhood: '',
-                                        createdDate: '', // Will be handled gracefully by ProductCard
-                                        isSaved: false,
-                                        saveCount: 0
-                                    } as Product}
-                                    compact
-                                />
+                                <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+                                    <Paper sx={{ 
+                                        p: 2, 
+                                        display: 'flex', 
+                                        alignItems: 'center', 
+                                        gap: 2,
+                                        backgroundColor: '#f5f5f5',
+                                        maxWidth: 'fit-content',
+                                        borderRadius: 2,
+                                        boxShadow: 1
+                                    }}>
+                                        {selectedConversationData.productPictureUrl && (
+                                            <Box
+                                                component="img"
+                                                src={selectedConversationData.productPictureUrl}
+                                                alt={selectedConversationData.productName || 'Product'}
+                                                sx={{
+                                                    width: 60,
+                                                    height: 60,
+                                                    objectFit: 'cover',
+                                                    borderRadius: 1
+                                                }}
+                                            />
+                                        )}
+                                        <Typography variant="body1" sx={{ fontWeight: 'medium' }}>
+                                            {selectedConversationData.productName || 'Unknown Product'}
+                                        </Typography>
+                                    </Paper>
+                                </Box>
                             </Box>
                         )}
 
@@ -299,7 +300,7 @@ export default function Messenger() {
                                 <Typography>Loading messages...</Typography>
                             ) : messages.length === 0 ? (
                                 <Typography color="text.secondary" align="center">
-                                    No messages yet. Start the conversation!
+                                   Немате пораки. 
                                 </Typography>
                             ) : (
                                 messages.map((message) => (
@@ -374,9 +375,9 @@ export default function Messenger() {
                         gridRow: '1 / -1'
                     }}>
                         <MessageIcon sx={{ fontSize: 64, mb: 2 }} />
-                        <Typography variant="h6">Select a conversation</Typography>
+                        <Typography variant="h6">Изберете разговор од листата</Typography>
                         <Typography variant="body2">
-                            Choose a conversation from the list to start messaging
+                            Избраниот разговор ќе се појави овде.
                         </Typography>
                     </Box>
                 )}

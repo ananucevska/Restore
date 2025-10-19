@@ -26,7 +26,7 @@ export default function LoginForm() {
         <Box display='flex' flexDirection='column' alignItems='center' marginTop='8'>
             <LockOutlined sx={{mt: 3, color: 'secondary.main', fontSize: 40 }} />
             <Typography variant="h5">
-                Sign in
+                Најава
             </Typography>
             <Box 
                 component='form'
@@ -39,7 +39,7 @@ export default function LoginForm() {
             >
                 <TextField 
                     fullWidth
-                    label="Email"
+                    label="Емаил"
                     autoFocus
                     {...register('email')}
                     error={!!errors.email}
@@ -47,19 +47,19 @@ export default function LoginForm() {
                 />
                 <TextField
                     fullWidth
-                    label="Password"
+                    label="Лозинка"
                     type="password"
                     {...register('password')}
                     error={!!errors.password}
                     helperText={errors.password?.message}
                 />
                 <Button disabled={isLoading} variant="contained" type='submit'>
-                    Sign in
+                    Најави се
                 </Button>
                 <Typography sx={{ textAlign: 'center' }}>
-                    Dont have an account?
+                    Сè уште немаш профил?
                     <Typography sx={{ml: 2}} component={Link} to='/register' color='primary'>
-                        Sign up
+                        Креирај профил
                     </Typography>
                 </Typography>
             </Box>

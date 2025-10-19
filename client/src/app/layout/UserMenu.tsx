@@ -79,13 +79,13 @@ export default function UserMenu({ user }: Props) {
                     <ListItemIcon>
                         <Inventory />
                     </ListItemIcon>
-                    <ListItemText>Мои продукти</ListItemText>
+                    <ListItemText>Мои производи</ListItemText>
                 </MenuItem>
                 <MenuItem component={Link} to='/saved-products'>
                     <ListItemIcon>
                         <Bookmark />
                     </ListItemIcon>
-                    <ListItemText>Зачувани продукти</ListItemText>
+                    <ListItemText>Зачувани производи</ListItemText>
                 </MenuItem>
                 <Divider />
                 <MenuItem onClick={logout}>

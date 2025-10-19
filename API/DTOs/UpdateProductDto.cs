@@ -5,7 +5,8 @@ namespace API.DTOs;
 
 public class UpdateProductDto
 {
-    public int Id { get; set; }
+    [Required]
+    public string Id { get; set; } = string.Empty;
 
     [Required]
     public string Name { get; set; } = string.Empty;
@@ -15,7 +16,22 @@ public class UpdateProductDto
 
 
     public IFormFile? File { get; set; }
+    public IFormFile? File2 { get; set; }
+    public IFormFile? File3 { get; set; }
+    public IFormFile? File4 { get; set; }
+    public IFormFile? File5 { get; set; }
+    public IFormFile? File6 { get; set; }
+    public IFormFile? File7 { get; set; }
+    public IFormFile? File8 { get; set; }
+    public IFormFile? File9 { get; set; }
+    public IFormFile? File10 { get; set; }
 
     [Required]
     public required string Type { get; set; }
+    
+    [Required]
+    public bool CargoDelivery { get; set; } = false;
+    
+    public string? Condition { get; set; }
+    public string? Delivery { get; set; } // JSON array of delivery options
 }

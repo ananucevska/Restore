@@ -20,7 +20,7 @@ export default function AppPagination({metadata, onPageChange}: Props) {
           marginTop={3}
       >
           <Typography>
-              Displaying {startItem}-{endItem} of {totalCount} items
+              Прикажани се {startItem}-{endItem} од {totalCount} производи
           </Typography>
           <Pagination
               color="secondary"

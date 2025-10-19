@@ -5,13 +5,14 @@ import Filters from "./Filters";
 import ActiveTags from "../../app/shared/components/ActiveTags";
 import { useAppDispatch, useAppSelector } from "../../app/store/store";
 import AppPagination from "../../app/shared/components/AppPagination";
-import { setPageNumber, toggleCategoryTag, removeSelectedCategory } from "./catalogSlice";
+import { setPageNumber, toggleCategoryTag, removeSelectedCategory, setSelectedCategories } from "./catalogSlice";
 
 export default function Catalog() {
     const productParams = useAppSelector(state => state.catalog);
     const {data, isLoading} = useFetchProductsQuery(productParams);
     const {data: filtersData, isLoading: filtersLoading} = useFetchFiltersQuery();
     const dispatch = useAppDispatch();
+
 
     const handleTagRemove = (categoryId: string, tagValue: string) => {
         if (tagValue === '') {
@@ -30,17 +31,27 @@ export default function Catalog() {
         }
     };
 
-    if (isLoading || !data || filtersLoading || !filtersData) return <div>Loading...</div>
+    const handleResetFilters = () => {
+        // Only clear tags from selected categories, keep the main categories
+        const resetCategories = productParams.selectedCategories.map(category => ({
+            ...category,
+            tags: []
+        }));
+        dispatch(setSelectedCategories(resetCategories));
+    };
+
+    if (isLoading || !data || filtersLoading || !filtersData) return null
 
     return (
         <Grid container spacing={4}>
             <Grid size={3}>
-                <Filters filtersData={filtersData} />
+                <Filters />
             </Grid>
             <Grid size={9}>
                 <ActiveTags 
                     selectedCategories={productParams.selectedCategories}
                     onTagRemove={handleTagRemove}
+                    onResetFilters={handleResetFilters}
                 />
                 {data.items && data.items.length > 0 ? (
                     <>

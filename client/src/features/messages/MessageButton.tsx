@@ -79,7 +79,7 @@ export default function MessageButton({ product, variant = 'contained', size = '
                 disabled={!product.userId || !user}
                 title={!product.userId ? 'No product owner' : !user ? 'Please log in' : 'Send message'}
             >
-                Message
+                Испрати порака
             </Button>
 
             <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>

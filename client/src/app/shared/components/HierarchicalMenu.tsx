@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Box,
   Paper,
@@ -12,10 +12,14 @@ import {
 } from '@mui/material';
 import {
   ExpandLess,
-  ExpandMore,
   ChevronRight,
 } from '@mui/icons-material';
 import { CategoryItem, SelectedCategory } from '../../models/category';
+
+// Function to sort Macedonian text alphabetically
+const sortMacedonian = (a: string, b: string): number => {
+  return a.localeCompare(b, 'mk', { sensitivity: 'base' });
+};
 
 interface HierarchicalMenuProps {
   categories: CategoryItem[];
@@ -31,13 +35,18 @@ export default function HierarchicalMenu({
   onCategoryDeselect,
 }: HierarchicalMenuProps) {
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
+  const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null);
 
   const toggleExpanded = (itemId: string) => {
     const newExpanded = new Set(expandedItems);
     if (newExpanded.has(itemId)) {
       newExpanded.delete(itemId);
+      // Clear selected subcategory when collapsing a category
+      setSelectedSubcategory(null);
     } else {
       newExpanded.add(itemId);
+      // Clear selected subcategory when expanding a different category
+      setSelectedSubcategory(null);
     }
     setExpandedItems(newExpanded);
   };
@@ -46,7 +55,7 @@ export default function HierarchicalMenu({
     return selectedCategories.some(
       (selected) =>
         selected.categoryId === categoryId &&
-        (!subcategoryId || selected.subcategoryId === subcategoryId)
+        selected.subcategoryId === subcategoryId
     );
   };
 
@@ -58,10 +67,6 @@ export default function HierarchicalMenu({
     );
   };
 
-  const getSelectedTags = (categoryId: string) => {
-    const selected = selectedCategories.find((cat) => cat.categoryId === categoryId);
-    return selected?.tags || [];
-  };
 
   const handleCategoryClick = (category: CategoryItem, subcategory?: CategoryItem) => {
     const categoryId = category.id;
@@ -70,6 +75,10 @@ export default function HierarchicalMenu({
     if (isCategorySelected(categoryId, subcategoryId)) {
       // If clicking on the same category/subcategory, deselect it
       onCategoryDeselect(categoryId, subcategoryId);
+      // Clear selected subcategory if deselecting
+      if (subcategoryId) {
+        setSelectedSubcategory(null);
+      }
     } else {
       // Always select with empty tags array - users will choose tags individually
       onCategorySelect({
@@ -77,16 +86,18 @@ export default function HierarchicalMenu({
         subcategoryId,
         tags: [],
       });
+      // Set selected subcategory to show its tags
+      if (subcategoryId) {
+        setSelectedSubcategory(subcategoryId);
+      }
     }
   };
 
 
   const renderCategoryItem = (category: CategoryItem, level: number = 0) => {
     const hasSubcategories = category.subcategories && category.subcategories.length > 0;
-    const hasTags = category.tags && category.tags.length > 0;
     const isExpanded = expandedItems.has(category.id);
     const isSelected = isMainCategorySelected(category.id);
-    const selectedTags = getSelectedTags(category.id);
 
     return (
       <Box key={category.id}>
@@ -128,29 +139,98 @@ export default function HierarchicalMenu({
         {hasSubcategories && (
           <Collapse in={isExpanded} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              {category.subcategories!.map((subcategory) => {
+              {category.subcategories!
+                .sort((a, b) => sortMacedonian(a.label, b.label))
+                .map((subcategory) => {
                 const isSubSelected = isCategorySelected(category.id, subcategory.id);
+                const isSubcategorySelected = selectedSubcategory === subcategory.id;
+                const hasTags = subcategory.tags && subcategory.tags.length > 0;
+                
                 return (
-                  <ListItem key={subcategory.id} disablePadding>
-                    <ListItemButton
-                      onClick={() => handleCategoryClick(category, subcategory)}
-                      sx={{
-                        pl: 4 + level * 2,
-                        backgroundColor: isSubSelected ? 'primary.light' : 'transparent',
-                        '&:hover': {
-                          backgroundColor: isSubSelected ? 'primary.light' : 'action.hover',
-                        },
-                      }}
-                    >
-                      <ListItemText
-                        primary={
-                          <Typography variant="body2" fontWeight={isSubSelected ? 'bold' : 'normal'}>
-                            {subcategory.label}
-                          </Typography>
-                        }
-                      />
-                    </ListItemButton>
-                  </ListItem>
+                  <Box key={subcategory.id}>
+                    <ListItem disablePadding>
+                      <ListItemButton
+                        onClick={() => {
+                          if (hasTags) {
+                            // If subcategory has tags, toggle expansion instead of selecting
+                            toggleExpanded(subcategory.id);
+                          } else {
+                            // If no tags, select the subcategory directly
+                            handleCategoryClick(category, subcategory);
+                          }
+                        }}
+                        sx={{
+                          pl: 4 + level * 2,
+                          backgroundColor: isSubSelected ? 'primary.light' : 'transparent',
+                          '&:hover': {
+                            backgroundColor: isSubSelected ? 'primary.light' : 'action.hover',
+                          },
+                        }}
+                      >
+                        <ListItemText
+                          primary={
+                            <Typography variant="body2" fontWeight={isSubSelected ? 'bold' : 'normal'}>
+                              {subcategory.label}
+                            </Typography>
+                          }
+                        />
+                        {hasTags && (
+                          <Box>
+                            {expandedItems.has(subcategory.id) ? <ExpandLess /> : <ChevronRight />}
+                          </Box>
+                        )}
+                      </ListItemButton>
+                    </ListItem>
+                    
+                    {/* Tags for this subcategory when it's expanded or has selected tags */}
+                    {hasTags && (expandedItems.has(subcategory.id) || isSubcategorySelected) && (
+                      <Collapse in={true} timeout="auto" unmountOnExit>
+                        <List component="div" disablePadding>
+                          {subcategory.tags!.map((tag) => {
+                            const isTagSelected = isCategorySelected(category.id, subcategory.id) && 
+                              selectedCategories.find(cat => cat.categoryId === category.id && cat.subcategoryId === subcategory.id)?.tags?.includes(tag.id);
+                            
+                            return (
+                              <ListItem key={tag.id} disablePadding>
+                                <ListItemButton
+                                  onClick={() => {
+                                    if (isTagSelected) {
+                                      // Remove tag
+                                      onCategoryDeselect(category.id, subcategory.id);
+                                    } else {
+                                      // Add category with subcategory and tag
+                                      onCategorySelect({
+                                        categoryId: category.id,
+                                        subcategoryId: subcategory.id,
+                                        tags: [tag.id],
+                                      });
+                                      // Set selected subcategory to show its tags
+                                      setSelectedSubcategory(subcategory.id);
+                                    }
+                                  }}
+                                  sx={{
+                                    pl: 8 + level * 2,
+                                    backgroundColor: isTagSelected ? 'primary.light' : 'transparent',
+                                    '&:hover': {
+                                      backgroundColor: isTagSelected ? 'primary.light' : 'action.hover',
+                                    },
+                                  }}
+                                >
+                                  <ListItemText
+                                    primary={
+                                      <Typography variant="body2" fontWeight={isTagSelected ? 'bold' : 'normal'}>
+                                        {tag.label}
+                                      </Typography>
+                                    }
+                                  />
+                                </ListItemButton>
+                              </ListItem>
+                            );
+                          })}
+                        </List>
+                      </Collapse>
+                    )}
+                  </Box>
                 );
               })}
             </List>
@@ -159,9 +239,13 @@ export default function HierarchicalMenu({
 
 
 
+
       </Box>
     );
   };
+
+  // Sort categories alphabetically by Macedonian alphabet
+  const sortedCategories = [...categories].sort((a, b) => sortMacedonian(a.label, b.label));
 
   return (
     <Paper sx={{ p: 2 }}>
@@ -170,7 +254,7 @@ export default function HierarchicalMenu({
       </Typography>
       <Divider sx={{ mb: 2 }} />
       <List component="nav" disablePadding>
-        {categories.map((category) => renderCategoryItem(category))}
+        {sortedCategories.map((category) => renderCategoryItem(category))}
       </List>
     </Paper>
   );

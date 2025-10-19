@@ -15,7 +15,6 @@ public class ProductWithCreatorDto
     public string Description { get; set; } = string.Empty;
     public string PictureUrl { get; set; } = string.Empty;
     public string Type { get; set; } = string.Empty;
-    public int QuantityInStock { get; set; }
     public string? PublicId { get; set; }
     public string? UserId { get; set; }
     public string? CreatorName { get; set; }
@@ -25,4 +24,8 @@ public class ProductWithCreatorDto
     public DateTime CreatedDate { get; set; }
     public bool IsSaved { get; set; }
     public int SaveCount { get; set; }
+    public bool CargoDelivery { get; set; }
+    public string? Condition { get; set; }
+    public string? Delivery { get; set; }
+    public List<ProductImageDto> Images { get; set; } = new List<ProductImageDto>();
 }

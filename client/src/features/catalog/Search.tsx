@@ -18,7 +18,7 @@ export default function Search() {
     }, 500);
   return (
       <TextField
-          label='Search Products'
+          label='Пребарај производи'
           variant="outlined"
           fullWidth
           type='search'

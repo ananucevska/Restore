@@ -12,72 +12,36 @@ export default function FAQPage() {
         <Box sx={{ mt: 4 }}>
           <Accordion>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography variant="h6">Како можам да направам нарачка?</Typography>
+              <Typography variant="h6">Како можам да донирам производ?</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                За да направите нарачка, прво мора да се регистрирате и да се најавите на нашата веб-страница. 
-                Потоа изберете го производот што го сакате, додајте го во кошничката и следете ги чекорите за завршување на нарачката.
+                За да донирате производ, прво мора да се регистрирате и да се најавите на нашата платформа. 
+                Потоа кликнете на "Додај нов производ" и пополнете ги сите потребни информации за производот што сакате да го донирате.
               </Typography>
             </AccordionDetails>
           </Accordion>
 
           <Accordion>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography variant="h6">Колку време треба за испорака?</Typography>
+              <Typography variant="h6">Како можам да добијам дониран производ?</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                Стандардната испорака трае 3-5 работни дена. За брза испорака (1-2 дена) има дополнителна надомест. 
-                Времето на испорака може да се разликува во зависност од локацијата.
+                За да добиете дониран производ, пребарајте го во каталогот и кликнете на производот што ве интересира. 
+                Потоа користете го копчето "Испрати порака" за да се контактирате со донаторот и да се договорите за подигнување.
               </Typography>
             </AccordionDetails>
           </Accordion>
 
           <Accordion>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography variant="h6">Дали примате враќање на пари?</Typography>
+              <Typography variant="h6">Дали донирањето е бесплатно?</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                Да, примаме враќање на пари во рок од 14 дена од примањето на нарачката, под услов производот 
-                да биде во оригинална состојба и да не е користен.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-
-          <Accordion>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography variant="h6">Кои се начините на плаќање?</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                Примаме плаќање со кредитни карти, дебитни карти, банкарски трансфер и плаќање при испорака. 
-                Сите плаќања се безбедни и заштитени.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-
-          <Accordion>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography variant="h6">Како можам да го следам статусот на мојата нарачка?</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                Можете да го следите статусот на вашата нарачка во вашиот профил, во секцијата "Мои нарачки". 
-                Ќе добиете и е-маил известувања за секоја промена во статусот.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-
-          <Accordion>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography variant="h6">Дали имате клиентска поддршка?</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                Да, нашата клиентска поддршка е достапна 24/7 преку е-маил, телефон и живиот чат на нашата веб-страница. 
-                Ќе ви одговориме во најкраток можен рок.
+                Да, апсолутно! Нашата платформа е целосно бесплатна. Сите производи се донирани без надомест, 
+                а корисниците не плаќаат никакви такси за користење на платформата.
               </Typography>
             </AccordionDetails>
           </Accordion>
@@ -89,7 +53,7 @@ export default function FAQPage() {
             <AccordionDetails>
               <Typography>
                 За да се регистрирате, кликнете на "Регистрирај се" во горниот дел од страницата и пополнете го 
-                формуларот со вашите лични податоци. Ќе добиете потврда на вашата е-маил адреса.
+                формуларот со вашите лични податоци.
               </Typography>
             </AccordionDetails>
           </Accordion>
@@ -100,8 +64,33 @@ export default function FAQPage() {
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                Апсолутно. Ги користиме најновите безбедносни протоколи за да ги заштитиме вашите лични податоци. 
+                Апсолутно! Ги користиме најновите безбедносни протоколи за да ги заштитиме вашите лични податоци. 
                 Вашите податоци никогаш не се споделуваат со трети страни без ваша согласност.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+
+          <Accordion>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography variant="h6">Како функционира комуникацијата меѓу донатори и приматели?</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                Кога некој сака да добие дониран производ, може да испрати порака до донаторот преку вградениот систем за пораки. 
+                Донаторот и примателот можат да се договорат за време и место за подигнување на производот.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+
+          <Accordion>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography variant="h6">Дали донаторот може да достави производ по карго?</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                Да, донаторот може да одбере да достави производот по карго. Кога додавате нов производ, 
+                можете да изберете "Можност за испорака по карго" како опција за доставување. 
+                Во овој случај, донаторот и примателот се договорат за деталите на испораката.
               </Typography>
             </AccordionDetails>
           </Accordion>
@@ -113,7 +102,7 @@ export default function FAQPage() {
           </Typography>
           <Typography variant="body1">
             Контактирајте не директно преку нашата <a href="/contact" style={{ color: 'inherit', textDecoration: 'underline' }}>контакт страница</a> 
-            или испратете ни е-маил на support@example.com
+            или испратете ни е-маил на ana.nucevska@students.finki.ukim.mk
           </Typography>
         </Box>
       </Paper>

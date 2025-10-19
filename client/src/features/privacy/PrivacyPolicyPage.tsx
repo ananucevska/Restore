@@ -9,12 +9,9 @@ export default function PrivacyPolicyPage() {
         </Typography>
         
         <Box sx={{ mt: 4 }}>
-          <Typography variant="h5" gutterBottom>
-            Вовед
-          </Typography>
           <Typography variant="body1" paragraph>
-            Оваа политика на приватност опишува како ги собираме, користиме и заштитуваме вашите лични податоци 
-            кога користите нашата веб-страница. Вашата приватност е важна за нас и се обврзуваме да ги заштитиме 
+            Овој сегмент опишува како ги собираме, користиме и заштитуваме вашите лични податоци 
+            кога ја користите нашата платформа за донирање. Вашата приватност е важна за нас и се обврзуваме да ги заштитиме 
             вашите лични податоци.
           </Typography>
 
@@ -26,8 +23,8 @@ export default function PrivacyPolicyPage() {
           </Typography>
           <Typography variant="body1" component="ul" sx={{ pl: 2 }}>
             <li>Лични информации (име, е-маил адреса, телефонски број)</li>
-            <li>Информации за нарачки и купување</li>
-            <li>Информации за користење на веб-страницата</li>
+            <li>Информации за донираните предмети</li>
+            <li>Информации за користење на платформата</li>
             <li>Cookies и слични технологии</li>
           </Typography>
 
@@ -38,9 +35,9 @@ export default function PrivacyPolicyPage() {
             Вашите лични податоци ги користиме за:
           </Typography>
           <Typography variant="body1" component="ul" sx={{ pl: 2 }}>
-            <li>Обработка и испорака на нарачки</li>
-            <li>Комуникација со вас за вашите нарачки</li>
-            <li>Подобрување на нашите услуги</li>
+            <li>Организирање на донирање на предмети</li>
+            <li>Комуникација меѓу донатори и приматели</li>
+            <li>Подобрување на нашата платформа</li>
             <li>Соодветни правни и регулаторни барања</li>
           </Typography>
 
@@ -72,12 +69,7 @@ export default function PrivacyPolicyPage() {
             Ако имате прашања за оваа политика на приватност, ве молиме контактирајте не на:
           </Typography>
           <Typography variant="body1">
-            Е-маил: privacy@example.com<br />
-            Телефон: +389 XX XXX XXX
-          </Typography>
-
-          <Typography variant="body2" sx={{ mt: 4, fontStyle: 'italic' }}>
-            Последна ажурирана: {new Date().toLocaleDateString('mk-MK')}
+            Е-маил: ana.nucevska@students.finki.ukim.mk
           </Typography>
         </Box>
       </Paper>

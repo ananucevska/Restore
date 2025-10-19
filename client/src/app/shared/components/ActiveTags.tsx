@@ -1,13 +1,15 @@
-import { Box, Chip, Typography, Stack } from '@mui/material';
+import { Box, Chip, Typography, Stack, IconButton, Tooltip } from '@mui/material';
+import { Refresh } from '@mui/icons-material';
 import { SelectedCategory } from '../../models/category';
 import { categoryMenu } from '../../data/categories';
 
 interface ActiveTagsProps {
   selectedCategories: SelectedCategory[];
   onTagRemove: (categoryId: string, tagValue: string) => void;
+  onResetFilters?: () => void;
 }
 
-export default function ActiveTags({ selectedCategories, onTagRemove }: ActiveTagsProps) {
+export default function ActiveTags({ selectedCategories, onTagRemove, onResetFilters }: ActiveTagsProps) {
   // Get all active filters - only show what's actually selected
   const activeFilters = selectedCategories.flatMap(cat => {
     const category = categoryMenu.categories.find(c => c.id === cat.categoryId);
@@ -85,6 +87,9 @@ export default function ActiveTags({ selectedCategories, onTagRemove }: ActiveTa
     return category?.tags && category.tags.length > 0;
   });
 
+  // Check if there are any selected tags to reset
+  const hasSelectedTags = selectedCategories.some(cat => cat.tags && cat.tags.length > 0);
+
   if (!hasCategoriesWithTags) return null;
 
   return (
@@ -92,7 +97,7 @@ export default function ActiveTags({ selectedCategories, onTagRemove }: ActiveTa
       <Typography variant="subtitle2" gutterBottom>
         Филтри:
       </Typography>
-      <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+      <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap alignItems="center">
         {allFilters.map((filter, index) => {
           if (filter.type === 'tag-option' && 'tagValue' in filter) {
             return (
@@ -121,6 +126,18 @@ export default function ActiveTags({ selectedCategories, onTagRemove }: ActiveTa
           }
           return null;
         })}
+        {onResetFilters && hasSelectedTags && (
+          <Tooltip title="Ресетирај филтри">
+            <IconButton 
+              onClick={onResetFilters}
+              color="primary"
+              size="small"
+              sx={{ mb: 1 }}
+            >
+              <Refresh />
+            </IconButton>
+          </Tooltip>
+        )}
       </Stack>
     </Box>
   );

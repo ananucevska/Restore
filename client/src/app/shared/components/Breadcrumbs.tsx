@@ -17,13 +17,11 @@ export default function Breadcrumbs() {
       case 'profile':
         return 'Профил';
       case 'saved-products':
-        return 'Зачувани продукти';
+        return 'Зачувани производи';
       case 'messages':
         return 'Пораки';
       case 'inventory':
-        return 'Мои продукти';
-      case 'about':
-        return 'За нас';
+        return 'Мои производи';
       case 'contact':
         return 'Контакт';
       case 'privacy':

@@ -2,17 +2,21 @@ import { useUpdateProfileMutation, useUserInfoQuery } from "./accountApi.ts";
 import { useForm } from "react-hook-form";
 import { profileSchema, ProfileSchema } from "../../lib/schemas/profileSchema.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, Container, Paper, TextField, CircularProgress } from "@mui/material";
+import { Box, Button, Container, Paper, TextField, CircularProgress, FormControl, InputLabel, Select, MenuItem, FormHelperText, Typography } from "@mui/material";
 import { useEffect } from "react";
+import { macedonianCities } from "../../app/data/cities";
+import { skopjeMunicipalities } from "../../app/data/municipalities";
 
 export default function ProfileForm() {
     const [updateProfile] = useUpdateProfileMutation();
     const { data: user, isLoading } = useUserInfoQuery();
     
-    const { register, handleSubmit, setValue, setError, formState: { errors, isValid, isSubmitting } } = useForm<ProfileSchema>({
+    const { register, handleSubmit, setValue, setError, watch, formState: { errors, isValid, isSubmitting } } = useForm<ProfileSchema>({
         mode: 'onTouched',
         resolver: zodResolver(profileSchema)
     });
+    
+    const selectedCity = watch('city');
 
     // Populate form with user data when it loads
     useEffect(() => {
@@ -56,63 +60,91 @@ export default function ProfileForm() {
     }
     
     return (
-        <Container component={Paper} maxWidth="sm" sx={{ borderRadius: 3, mt: 4 }}>
-            <Box display='flex' flexDirection='column' alignItems='center' marginTop='8'>
-                <Box
-                    component='form'
-                    onSubmit={handleSubmit(onSubmit)}
-                    width='100%'
-                    display='flex'
-                    flexDirection='column'
-                    gap={3}
-                    marginY={3}
-                >
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '80vh', py: 4 }}>
+            <Typography variant="h2" component="h1" sx={{ mb: 4, fontWeight: 'bold' }}>
+                Профил
+            </Typography>
+            <Container component={Paper} maxWidth="sm" sx={{ borderRadius: 3, p: 4 }}>
+                <Box display='flex' flexDirection='column' alignItems='center'>
+                    <Box
+                        component='form'
+                        onSubmit={handleSubmit(onSubmit)}
+                        width='100%'
+                        display='flex'
+                        flexDirection='column'
+                        gap={3}
+                    >
                     <TextField
                         fullWidth
-                        label="Email"
+                        label="Емаил"
                         value={user?.email || ''}
                         disabled
-                        helperText="Email cannot be changed"
                     />
                     <TextField
                         fullWidth
-                        label="Name"
+                        label="Име"
                         autoFocus
                         {...register('name')}
                         error={!!errors.name}
                         helperText={errors.name?.message}
                     />
+                    <FormControl fullWidth error={!!errors.city}>
+                        <InputLabel>Град</InputLabel>
+                        <Select
+                            {...register('city')}
+                            label="Град"
+                            value={watch('city') || ''}
+                        >
+                            {macedonianCities.map((city) => (
+                                <MenuItem key={city} value={city}>
+                                    {city}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                        {errors.city && (
+                            <FormHelperText>{errors.city.message}</FormHelperText>
+                        )}
+                    </FormControl>
+                    {selectedCity === 'Скопје' && (
+                        <FormControl fullWidth error={!!errors.municipality}>
+                            <InputLabel>Општина (Опционално)</InputLabel>
+                            <Select
+                                {...register('municipality')}
+                                label="Општина (Опционално)"
+                                value={watch('municipality') || ''}
+                            >
+                                <MenuItem value="">
+                                    <em>Избери општина</em>
+                                </MenuItem>
+                                {skopjeMunicipalities.map((municipality) => (
+                                    <MenuItem key={municipality} value={municipality}>
+                                        {municipality}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                            {errors.municipality && (
+                                <FormHelperText>{errors.municipality.message}</FormHelperText>
+                            )}
+                        </FormControl>
+                    )}
                     <TextField
                         fullWidth
-                        label="City"
-                        {...register('city')}
-                        error={!!errors.city}
-                        helperText={errors.city?.message}
-                    />
-                    <TextField
-                        fullWidth
-                        label="Municipality (Optional)"
-                        {...register('municipality')}
-                        error={!!errors.municipality}
-                        helperText={errors.municipality?.message}
-                    />
-                    <TextField
-                        fullWidth
-                        label="Neighborhood (Optional)"
+                        label="Населба (Опционално)"
                         {...register('neighborhood')}
                         error={!!errors.neighborhood}
                         helperText={errors.neighborhood?.message}
                     />
-                    <Button 
-                        disabled={isSubmitting || !isValid} 
-                        variant="contained" 
-                        type='submit'
-                        sx={{ mt: 2 }}
-                    >
-                        {isSubmitting ? 'Updating...' : 'Update Profile'}
-                    </Button>
+                        <Button 
+                            disabled={isSubmitting || !isValid} 
+                            variant="contained" 
+                            type='submit'
+                            sx={{ mt: 2 }}
+                        >
+                            {isSubmitting ? 'Се ажурира...' : 'Ажурирај профил'}
+                        </Button>
+                    </Box>
                 </Box>
-            </Box>
-        </Container>
+            </Container>
+        </Box>
     );
 }

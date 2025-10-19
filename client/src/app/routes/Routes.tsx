@@ -2,7 +2,6 @@
 import App from "../layout/App";
 import Catalog from "../../features/catalog/Catalog";
 import ProductDetails from "../../features/catalog/ProductDetails";
-import AboutPage from "../../features/about/AboutPage";
 import ContactPage from "../../features/contact/ContactPage";
 import PrivacyPolicyPage from "../../features/privacy/PrivacyPolicyPage";
 import FAQPage from "../../features/faq/FAQPage";
@@ -26,8 +25,7 @@ export const router = createBrowserRouter([
             ]},
             {path: 'inventory', element: <InventoryPage/>},
             {path: '', element: <Catalog />},
-            {path: ':id', element: <ProductDetails />},
-            {path: 'about', element: <AboutPage />},
+            {path: 'product/:id', element: <ProductDetails />},
             {path: 'contact', element: <ContactPage />},
             {path: 'privacy', element: <PrivacyPolicyPage />},
             {path: 'faq', element: <FAQPage />},

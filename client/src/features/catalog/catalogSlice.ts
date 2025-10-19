@@ -1,5 +1,4 @@
 ﻿import {ProductParams} from "../../app/models/productParams.ts";
-import {SelectedCategory} from "../../app/models/category.ts";
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialState: ProductParams = {
@@ -8,7 +7,11 @@ const initialState: ProductParams = {
     types: [],
     searchTerm: '',
     orderBy: 'name', // Always alphabetical
-    selectedCategories: []
+    selectedCategories: [],
+    selectedFilters: {
+        condition: [],
+        delivery: []
+    }
 }
 
 export const catalogSlice = createSlice({
@@ -40,8 +43,22 @@ export const catalogSlice = createSlice({
             state.pageNumber = 1;
         },
         removeSelectedCategory(state, action) {
-            // For single selection, clear all categories when deselecting
-            state.selectedCategories = [];
+            const { categoryId, subcategoryId } = action.payload || {};
+            
+            if (!categoryId) {
+                // If no categoryId provided, clear all categories
+                state.selectedCategories = [];
+            } else if (subcategoryId) {
+                // Remove specific subcategory
+                state.selectedCategories = state.selectedCategories.filter(
+                    cat => !(cat.categoryId === categoryId && cat.subcategoryId === subcategoryId)
+                );
+            } else {
+                // Remove entire category
+                state.selectedCategories = state.selectedCategories.filter(
+                    cat => cat.categoryId !== categoryId
+                );
+            }
             state.pageNumber = 1;
         },
         toggleCategoryTag(state, action) {
@@ -70,9 +87,39 @@ export const catalogSlice = createSlice({
             // If category doesn't exist, it's an error state - don't create it
             state.pageNumber = 1;
         },
-        resetParams() {
-            return initialState;  
-        }
+        setSelectedFilters(state, action) {
+            state.selectedFilters = action.payload;
+            state.pageNumber = 1;
+        },
+        updateFilter(state, action) {
+            const { filterType, value, checked } = action.payload;
+            if (!state.selectedFilters) {
+                state.selectedFilters = {};
+            }
+            
+            const currentValues = state.selectedFilters[filterType as keyof typeof state.selectedFilters] || [];
+            
+            if (checked) {
+                if (!currentValues.includes(value)) {
+                    (state.selectedFilters as any)[filterType] = [...currentValues, value];
+                }
+            } else {
+                (state.selectedFilters as any)[filterType] = currentValues.filter((v: string) => v !== value);
+            }
+            
+            state.pageNumber = 1;
+        },
+        removeFilter(state, action) {
+            const { filterType, value } = action.payload;
+            if (state.selectedFilters && (state.selectedFilters as any)[filterType]) {
+                (state.selectedFilters as any)[filterType] = (state.selectedFilters as any)[filterType].filter((v: string) => v !== value);
+            }
+            state.pageNumber = 1;
+        },
+        clearAllFilters(state) {
+            state.selectedFilters = {};
+            state.pageNumber = 1;
+        },
     }
 });
 
@@ -81,9 +128,12 @@ export const {
     setPageSize, 
     setSearchTerm, 
     setTypes, 
-    setSelectedCategories,
-    addSelectedCategory,
-    removeSelectedCategory,
+    setSelectedCategories, 
+    addSelectedCategory, 
+    removeSelectedCategory, 
     toggleCategoryTag,
-    resetParams 
+    setSelectedFilters,
+    updateFilter,
+    removeFilter,
+    clearAllFilters
 } = catalogSlice.actions;

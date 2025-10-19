@@ -17,6 +17,10 @@ export const catalogApi = createApi({
                 if (params.selectedCategories && params.selectedCategories.length > 0) {
                     (params as any).selectedCategories = JSON.stringify(params.selectedCategories);
                 }
+                // Serialize selectedFilters to JSON string
+                if (params.selectedFilters) {
+                    (params as any).selectedFilters = JSON.stringify(params.selectedFilters);
+                }
                 return {
                     url: 'products',
                     params: filterEmptyValues(params)
@@ -79,6 +83,10 @@ export const catalogApi = createApi({
                 // Serialize selectedCategories to JSON string
                 if (params.selectedCategories && params.selectedCategories.length > 0) {
                     (params as any).selectedCategories = JSON.stringify(params.selectedCategories);
+                }
+                // Serialize selectedFilters to JSON string
+                if (params.selectedFilters) {
+                    (params as any).selectedFilters = JSON.stringify(params.selectedFilters);
                 }
                 return {
                     url: 'products/saved',

@@ -1,4 +1,11 @@
-﻿export type Product = {
+﻿export type ProductImage = {
+    id: number
+    url: string
+    publicId?: string
+    order: number
+}
+
+export type Product = {
     id: number
     name: string
     description: string
@@ -12,4 +19,8 @@
     createdDate: string
     isSaved: boolean
     saveCount: number
+    cargoDelivery: boolean
+    condition?: string
+    delivery?: string
+    images: ProductImage[]
 }

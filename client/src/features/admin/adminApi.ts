@@ -8,6 +8,7 @@ import {filterEmptyValues} from "../../lib/util.ts";
 export const adminApi = createApi({
     reducerPath: 'adminApi',
     baseQuery: baseQueryWithErrorHandling,
+    tagTypes: ['Product', 'MyProducts'],
     endpoints: (builder) => ({
         getMyProducts: builder.query<{items: Product[], pagination: Pagination}, ProductParams>({
             query: (productParams) => ({
@@ -18,7 +19,8 @@ export const adminApi = createApi({
                 const paginationHeader = meta?.response?.headers.get('Pagination');
                 const pagination = paginationHeader ? JSON.parse(paginationHeader) : null;
                 return {items, pagination}
-            }
+            },
+            providesTags: ['MyProducts']
         }),
         createProduct: builder.mutation<Product, FormData>({
             query: (data: FormData) => {
@@ -27,7 +29,8 @@ export const adminApi = createApi({
                     method: 'POST',
                     body: data
                 }
-            }
+            },
+            invalidatesTags: ['Product', 'MyProducts']
         }),
         updateProduct: builder.mutation<void, {id: number, data: FormData}>({
             query: ({id, data}) => {
@@ -38,7 +41,8 @@ export const adminApi = createApi({
                     method: 'PUT',
                     body: data
                 }
-            }
+            },
+            invalidatesTags: ['Product', 'MyProducts']
         }),
         deleteProduct: builder.mutation<void, number>({
             query: (id: number) => {
@@ -46,7 +50,8 @@ export const adminApi = createApi({
                     url: `products/${id}`,
                     method: 'DELETE'
                 }
-            }
+            },
+            invalidatesTags: ['Product', 'MyProducts']
         })
     })
 });

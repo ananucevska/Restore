@@ -2,16 +2,20 @@
 import {useForm} from "react-hook-form";
 import {registerSchema, RegisterSchema} from "../../lib/schemas/registerSchema.ts";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {Box, Button, Container, Paper, TextField, Typography} from "@mui/material";
+import {Box, Button, Container, Paper, TextField, Typography, FormControl, InputLabel, Select, MenuItem, FormHelperText} from "@mui/material";
 import {LockOutlined} from "@mui/icons-material";
 import {Link} from "react-router-dom";
+import {macedonianCities} from "../../app/data/cities";
+import {skopjeMunicipalities} from "../../app/data/municipalities";
 
 export default function RegisterForm() {
     const [registerUser] = useRegisterMutation();
-    const {register, handleSubmit, setError, formState: {errors, isValid, isLoading}} = useForm<RegisterSchema>({
+    const {register, handleSubmit, setError, watch, formState: {errors, isLoading}} = useForm<RegisterSchema>({
         mode: 'onTouched',
         resolver: zodResolver(registerSchema)
     })
+    
+    const selectedCity = watch('city');
     
     const onSubmit = async (data: RegisterSchema) => {
         try {
@@ -47,7 +51,7 @@ export default function RegisterForm() {
             <Box display='flex' flexDirection='column' alignItems='center' marginTop='8'>
                 <LockOutlined sx={{mt: 3, color: 'secondary.main', fontSize: 40 }} />
                 <Typography variant="h5">
-                    Register
+                    Регистрација
                 </Typography>
                 <Box
                     component='form'
@@ -60,7 +64,7 @@ export default function RegisterForm() {
                 >
                     <TextField
                         fullWidth
-                        label="Name"
+                        label="Име"
                         autoFocus
                         {...register('name')}
                         error={!!errors.name}
@@ -68,14 +72,14 @@ export default function RegisterForm() {
                     />
                     <TextField
                         fullWidth
-                        label="Email"
+                        label="Емаил"
                         {...register('email')}
                         error={!!errors.email}
                         helperText={errors.email?.message}
                     />
                     <TextField
                         fullWidth
-                        label="Password"
+                        label="Лозинка"
                         type="password"
                         {...register('password')}
                         error={!!errors.password}
@@ -83,40 +87,65 @@ export default function RegisterForm() {
                     />
                     <TextField
                         fullWidth
-                        label="Confirm Password"
+                        label="Потврди лозинка"
                         type="password"
                         {...register('confirmPassword')}
                         error={!!errors.confirmPassword}
                         helperText={errors.confirmPassword?.message}
                     />
+                    <FormControl fullWidth error={!!errors.city}>
+                        <InputLabel>Град</InputLabel>
+                        <Select
+                            {...register('city')}
+                            label="Град"
+                            value={watch('city') || ''}
+                        >
+                            {macedonianCities.map((city) => (
+                                <MenuItem key={city} value={city}>
+                                    {city}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                        {errors.city && (
+                            <FormHelperText>{errors.city.message}</FormHelperText>
+                        )}
+                    </FormControl>
+                    {selectedCity === 'Скопје' && (
+                        <FormControl fullWidth error={!!errors.municipality}>
+                            <InputLabel>Општина (Опционално)</InputLabel>
+                            <Select
+                                {...register('municipality')}
+                                label="Општина (Опционално)"
+                                value={watch('municipality') || ''}
+                            >
+                                <MenuItem value="">
+                                    <em>Избери општина</em>
+                                </MenuItem>
+                                {skopjeMunicipalities.map((municipality) => (
+                                    <MenuItem key={municipality} value={municipality}>
+                                        {municipality}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                            {errors.municipality && (
+                                <FormHelperText>{errors.municipality.message}</FormHelperText>
+                            )}
+                        </FormControl>
+                    )}
                     <TextField
                         fullWidth
-                        label="City"
-                        {...register('city')}
-                        error={!!errors.city}
-                        helperText={errors.city?.message}
-                    />
-                    <TextField
-                        fullWidth
-                        label="Municipality (Optional)"
-                        {...register('municipality')}
-                        error={!!errors.municipality}
-                        helperText={errors.municipality?.message}
-                    />
-                    <TextField
-                        fullWidth
-                        label="Neighborhood (Optional)"
+                        label="Населба (Опционално)"
                         {...register('neighborhood')}
                         error={!!errors.neighborhood}
                         helperText={errors.neighborhood?.message}
                     />
-                    <Button disabled={isLoading || !isValid} variant="contained" type='submit'>
-                        Register
+                    <Button disabled={isLoading} variant="contained" type='submit'>
+                        Регистрирај се
                     </Button>
                     <Typography sx={{ textAlign: 'center' }}>
-                        Already have an account?
-                        <Typography sx={{ml: 2}} component={Link} to='/register' color='primary'>
-                            Sign in here
+                        Веќе имаш профил?{' '}
+                        <Typography sx={{ml: 2}} component={Link} to='/login' color='primary'>
+                            Најави се
                         </Typography>
                     </Typography>
                 </Box>

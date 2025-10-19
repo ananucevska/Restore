@@ -9,6 +9,7 @@ namespace API.Data;
 public class StoreContext(DbContextOptions options) : IdentityDbContext<User>(options)
 {
     public required DbSet<Product> Products { get; set; }
+    public required DbSet<ProductImage> ProductImages { get; set; }
     public required  DbSet<Order> Orders { get; set; }
     public required DbSet<Save> Saves { get; set; }
     public required DbSet<Conversation> Conversations { get; set; }
@@ -28,6 +29,12 @@ public class StoreContext(DbContextOptions options) : IdentityDbContext<User>(op
             .WithMany()
             .HasForeignKey(p => p.UserId)
             .OnDelete(DeleteBehavior.SetNull);
+
+        builder.Entity<ProductImage>()
+            .HasOne(pi => pi.Product)
+            .WithMany(p => p.Images)
+            .HasForeignKey(pi => pi.ProductId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.Entity<Save>()
             .HasOne(s => s.User)

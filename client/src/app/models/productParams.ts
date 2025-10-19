@@ -1,4 +1,4 @@
-﻿import { SelectedCategory } from './category';
+﻿import { SelectedCategory, SelectedFilters } from './category';
 
 export type ProductParams = {
     orderBy: string;
@@ -7,4 +7,5 @@ export type ProductParams = {
     pageNumber: number;
     pageSize: number;
     selectedCategories: SelectedCategory[];
+    selectedFilters?: SelectedFilters;
 }

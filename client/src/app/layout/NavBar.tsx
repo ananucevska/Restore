@@ -1,87 +1,138 @@
-﻿import {AppBar, Box, IconButton, LinearProgress, List, ListItem, Toolbar, Typography} from "@mui/material";
+﻿import {AppBar, Box, IconButton, Toolbar, Typography} from "@mui/material";
 import { DarkMode, LightMode } from '@mui/icons-material';
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector } from "../store/store";
 import { setDarkMode } from "./uiSlice";
+import { setSelectedCategories } from "../../features/catalog/catalogSlice";
+import { catalogApi } from "../../features/catalog/catalogApi";
 import UserMenu from "./UserMenu.tsx";
 import {useUserInfoQuery} from "../../features/account/accountApi.ts";
 
 const midLinks = [
-    { title: 'home', path: '/' },
-    { title: 'about', path: '/about' },
-    { title: 'contact', path: '/contact' },
+    { title: 'Почетна', path: '/' },
+    { title: 'Контакт', path: '/contact' },
 ]
 
 const rightLinks = [
-    { title: 'login', path: '/login' },
-    { title: 'register', path: '/register' }
+    { title: 'Најава', path: '/login' },
+    { title: 'Регистрација', path: '/register' }
 ]
 
-const navStyles = {
-    color: 'inherit',
-    typography: 'h6',
-    textDecoration: 'none',
-    '&:hover': {
-        color: 'grey.500'
-    },
-    '&.active': {
-        color: '#baecf9'
-    }
-}
 
 export default function NavBar() {
     const {data: user} = useUserInfoQuery();
-    const {isLoading, darkMode} = useAppSelector(state => state.ui);
+    const {darkMode} = useAppSelector(state => state.ui);
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    
+    const handleHomeClick = () => {
+        // Clear selected categories when navigating to homepage
+        dispatch(setSelectedCategories([]));
+        // Invalidate the products cache to force a refetch
+        dispatch(catalogApi.util.invalidateTags(['Product']));
+        navigate('/');
+    };
     
     return (
         <AppBar position="fixed">
-            <Toolbar sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                <Box display='flex' alignItems='center'>
-                    <Typography component={NavLink} sx={navStyles} to='/' variant="h6">Дај, не фрлај</Typography>
-                    <IconButton onClick={() => dispatch(setDarkMode())}>
+            <Toolbar sx={{
+                display: 'flex', 
+                justifyContent: 'space-between', 
+                alignItems: 'center',
+                minHeight: '64px',
+                '& > *': {
+                    display: 'flex',
+                    alignItems: 'center',
+                    height: '64px'
+                }
+            }}>
+                <Box>
+                    <Typography 
+                        sx={{
+                            color: 'inherit',
+                            cursor: 'pointer',
+                            fontSize: '1.25rem',
+                            fontWeight: 500,
+                            lineHeight: '64px',
+                            height: '64px',
+                            display: 'inline-block',
+                            verticalAlign: 'top'
+                        }} 
+                        onClick={handleHomeClick}
+                    >
+                        Дај, не фрлај
+                    </Typography>
+                    <IconButton onClick={() => dispatch(setDarkMode())} sx={{ ml: 1, verticalAlign: 'middle' }}>
                         {darkMode ? <DarkMode /> : <LightMode sx={{ color: 'yellow' }} />}
                     </IconButton>
                 </Box>
 
-                <List sx={{ display: 'flex' }}>
+                <Box>
                     {midLinks.map(({ title, path }) => (
-                        <ListItem
+                        <Typography
                             component={NavLink}
                             to={path}
                             key={path}
-                            sx={navStyles}
+                            sx={{
+                                color: 'inherit',
+                                fontSize: '1.25rem',
+                                fontWeight: 500,
+                                px: 2,
+                                lineHeight: '64px',
+                                height: '64px',
+                                display: 'inline-block',
+                                verticalAlign: 'top',
+                                textDecoration: 'none',
+                                '&:hover': {
+                                    color: 'grey.500'
+                                },
+                                '&.active': {
+                                    color: '#baecf9'
+                                }
+                            }}
+                            onClick={path === '/' ? handleHomeClick : undefined}
                         >
                             {title.toUpperCase()}
-                        </ListItem>
+                        </Typography>
                     ))}
-                </List>
+                </Box>
 
-                <Box display='flex' alignItems='center'>
+                <Box>
                     {user ? (
                         <UserMenu user={user} />
                     ) : (
-                        <List sx={{ display: 'flex' }}>
+                        <>
                             {rightLinks.map(({ title, path }) => (
-                                <ListItem
+                                <Typography
                                     component={NavLink}
                                     to={path}
                                     key={path}
-                                    sx={navStyles}
+                                    sx={{
+                                        color: 'inherit',
+                                        fontSize: '1.25rem',
+                                        fontWeight: 500,
+                                        px: 2,
+                                        lineHeight: '64px',
+                                        height: '64px',
+                                        display: 'inline-block',
+                                        verticalAlign: 'top',
+                                        textDecoration: 'none',
+                                        '&:hover': {
+                                            color: 'grey.500'
+                                        },
+                                        '&.active': {
+                                            color: '#baecf9'
+                                        }
+                                    }}
                                 >
                                     {title.toUpperCase()}
-                                </ListItem>
+                                </Typography>
                             ))}
-                        </List>
+                        </>
                     )}
                 </Box>
 
             </Toolbar>
-            {isLoading && ( //ako e tocno isLoading toa so e posle && ke se izvrsi
-                <Box sx={{width: '100%'}}>
-                    <LinearProgress color="secondary" />
-                </Box>
-            )}
         </AppBar>
     )
 }

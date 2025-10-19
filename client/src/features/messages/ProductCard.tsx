@@ -9,12 +9,12 @@ type Props = {
 export default function ProductCard({ product, compact = false }: Props) {
     const formatDate = (dateString: string) => {
         if (!dateString || dateString === '') {
-            return 'Recently';
+            return 'Неодамна';
         }
         
         const date = new Date(dateString);
         if (isNaN(date.getTime())) {
-            return 'Recently';
+            return 'Неодамна';
         }
         
         return date.toLocaleDateString('en-US', {

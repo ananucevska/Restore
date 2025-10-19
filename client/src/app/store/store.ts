@@ -6,6 +6,7 @@ import {catalogSlice} from "../../features/catalog/catalogSlice.ts";
 import {accountApi} from "../../features/account/accountApi.ts";
 import {adminApi} from "../../features/admin/adminApi.ts";
 import {messagesApi} from "../../features/messages/messagesApi.ts";
+import {contactApi} from "../../features/contact/contactApi.ts";
 import counterReducer from "../../features/contact/counterReducer.ts";
 
 export function configureTheStore() {
@@ -18,6 +19,7 @@ export const store = configureStore({
         [accountApi.reducerPath]: accountApi.reducer,
         [adminApi.reducerPath]: adminApi.reducer,
         [messagesApi.reducerPath]: messagesApi.reducer,
+        [contactApi.reducerPath]: contactApi.reducer,
         ui: uiSlice.reducer,
         catalog: catalogSlice.reducer
     },
@@ -26,7 +28,8 @@ export const store = configureStore({
             catalogApi.middleware, 
             accountApi.middleware,
             adminApi.middleware,
-            messagesApi.middleware
+            messagesApi.middleware,
+            contactApi.middleware
         )
 });
 
