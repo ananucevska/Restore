@@ -1,5 +1,4 @@
 ﻿using API.Entities;
-using API.Entities.OrderAgregate;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +9,6 @@ public class StoreContext(DbContextOptions options) : IdentityDbContext<User>(op
 {
     public required DbSet<Product> Products { get; set; }
     public required DbSet<ProductImage> ProductImages { get; set; }
-    public required  DbSet<Order> Orders { get; set; }
     public required DbSet<Save> Saves { get; set; }
     public required DbSet<Conversation> Conversations { get; set; }
     public required DbSet<Message> Messages { get; set; }

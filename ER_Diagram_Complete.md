@@ -46,34 +46,6 @@ erDiagram
         int Order
     }
     
-    Order {
-        int Id PK
-        string BuyerEmail
-        datetime OrderDate
-        OrderStatus OrderStatus
-    }
-    
-    OrderItem {
-        int Id PK
-        int OrderId FK
-        int Quantity
-    }
-    
-    ProductItemOrdered {
-        int ProductId
-        string Name
-        string PictureUrl
-    }
-    
-    ShippingAddress {
-        string Name
-        string Line1
-        string Line2
-        string City
-        string State
-        string PostalCode
-        string Country
-    }
     
     Save {
         int Id PK
@@ -112,27 +84,6 @@ erDiagram
         string RoleId FK
     }
     
-    IdentityUserClaim {
-        int Id PK
-        string ClaimType
-        string ClaimValue
-        string UserId FK
-    }
-    
-    IdentityUserLogin {
-        string LoginProvider PK
-        string ProviderKey PK
-        string ProviderDisplayName
-        string UserId FK
-    }
-    
-    IdentityUserToken {
-        string UserId FK
-        string LoginProvider PK
-        string Name PK
-        string Value
-    }
-    
     %% Core Application Relationships
     User ||--o{ Product : "owns"
     User ||--o{ Save : "saves"
@@ -143,21 +94,12 @@ erDiagram
     Product ||--o{ ProductImage : "has"
     Product ||--o{ Save : "saved_by"
     Product ||--o{ Conversation : "discussed_in"
-    Product ||--o{ OrderItem : "ordered_as"
-    
-    Order ||--o{ OrderItem : "contains"
-    Order ||--|| ShippingAddress : "shipped_to"
-    
-    OrderItem ||--|| ProductItemOrdered : "references"
     
     Conversation ||--o{ Message : "contains"
     
     %% ASP.NET Identity Relationships
     User ||--o{ IdentityUserRole : "has_roles"
     IdentityRole ||--o{ IdentityUserRole : "assigned_to_users"
-    User ||--o{ IdentityUserClaim : "has_claims"
-    User ||--o{ IdentityUserLogin : "has_logins"
-    User ||--o{ IdentityUserToken : "has_tokens"
 ```
 
 ## 📊 **How to Use This ER Diagram**
@@ -206,14 +148,6 @@ User → Messages (1:Many)    - Users can send multiple messages
 Product → ProductImages (1:Many) - Products can have multiple images
 Product → Saves (1:Many)         - Products can be saved by multiple users
 Product → Conversations (1:Many)  - Products can have multiple conversations
-Product → OrderItems (1:Many)    - Products can be ordered multiple times
-```
-
-#### **Order Management:**
-```
-Order → OrderItems (1:Many)      - Orders contain multiple items
-Order → ShippingAddress (1:1)    - Each order has one shipping address
-OrderItem → ProductItemOrdered (1:1) - Each order item references a product snapshot
 ```
 
 #### **Messaging System:**
@@ -229,7 +163,7 @@ Conversation → User2 (Many:1)    - Conversations have a second user
 - **No Shopping Cart** - Users don't add items to baskets
 - **Direct Communication** - Buyers contact sellers via messaging
 - **Save/Wishlist** - Users can save products they're interested in
-- **Order Management** - Completed transactions are stored as Orders
+- **No Order System** - Transactions handled outside the application
 
 #### **ASP.NET Identity Integration:**
 - **User Management** - Built-in authentication and authorization
