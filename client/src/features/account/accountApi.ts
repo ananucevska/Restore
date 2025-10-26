@@ -38,7 +38,7 @@ export const accountApi = createApi({
             async onQueryStarted(_, {queryFulfilled}) {
                 try {
                     await queryFulfilled;
-                    toast.success('Успешна регистрација - сега може да се најавите!')
+                    toast.success('Успешна регистрација!')
                     router.navigate('/login')
                 } catch (error) {
                     console.log(error)
@@ -62,7 +62,7 @@ export const accountApi = createApi({
                 try {
                     await queryFulfilled;
                     dispatch(accountApi.util.invalidateTags(['UserInfo']));
-                    toast.success('Профилот беше успешно ажуриран!')
+                    toast.success('Профилот е успешно ажуриран!')
                 } catch(error) {
                     console.log(error);
                     throw error;

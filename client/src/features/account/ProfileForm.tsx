@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { profileSchema, ProfileSchema } from "../../lib/schemas/profileSchema.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Container, Paper, TextField, CircularProgress, FormControl, InputLabel, Select, MenuItem, FormHelperText, Typography } from "@mui/material";
+import { Person } from "@mui/icons-material";
 import { useEffect } from "react";
 import { macedonianCities } from "../../app/data/cities";
 import { skopjeMunicipalities } from "../../app/data/municipalities";
@@ -22,6 +23,7 @@ export default function ProfileForm() {
     useEffect(() => {
         if (user) {
             setValue('name', user.name);
+            setValue('email', user.email);
             setValue('city', user.city);
             setValue('municipality', user.municipality || '');
             setValue('neighborhood', user.neighborhood || '');
@@ -39,6 +41,8 @@ export default function ProfileForm() {
                 errorArray.forEach(e => {
                     if(e.includes('Name')) {
                         setError('name', {message: e})
+                    } else if (e.includes('Email')) {
+                        setError('email', {message: e})
                     } else if (e.includes('City')) {
                         setError('city', {message: e})
                     } else if (e.includes('Municipality')) {
@@ -61,29 +65,35 @@ export default function ProfileForm() {
     
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '80vh', py: 4 }}>
-            <Typography variant="h2" component="h1" sx={{ mb: 4, fontWeight: 'bold' }}>
-                Профил
-            </Typography>
-            <Container component={Paper} maxWidth="sm" sx={{ borderRadius: 3, p: 4 }}>
+            <Container component={Paper} maxWidth="md" sx={{ borderRadius: 3, p: 4 }}>
                 <Box display='flex' flexDirection='column' alignItems='center'>
+                    <Person sx={{ mt: 3, color: 'secondary.main', fontSize: 40 }} />
+                    <Typography variant="h5">
+                        Профил
+                    </Typography>
                     <Box
                         component='form'
                         onSubmit={handleSubmit(onSubmit)}
                         width='100%'
                         display='flex'
                         flexDirection='column'
-                        gap={3}
+                        gap={2}
+                        marginY={2}
                     >
                     <TextField
                         fullWidth
                         label="Емаил"
-                        value={user?.email || ''}
-                        disabled
+                        type="email"
+                        size="large"
+                        {...register('email')}
+                        error={!!errors.email}
+                        helperText={errors.email?.message}
                     />
                     <TextField
                         fullWidth
-                        label="Име"
+                        label="Корисничко име"
                         autoFocus
+                        size="large"
                         {...register('name')}
                         error={!!errors.name}
                         helperText={errors.name?.message}
@@ -130,6 +140,7 @@ export default function ProfileForm() {
                     <TextField
                         fullWidth
                         label="Населба (Опционално)"
+                        size="large"
                         {...register('neighborhood')}
                         error={!!errors.neighborhood}
                         helperText={errors.neighborhood?.message}

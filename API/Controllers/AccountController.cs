@@ -25,7 +25,7 @@ public class AccountController(SignInManager<User> signInManager) : BaseApiContr
             UserName = registerDto.Email, 
             Email = registerDto.Email, 
             City = registerDto.City, 
-            Name = registerDto.Name,
+            Name = registerDto.Username,
             Municipality = registerDto.Municipality,
             Neighborhood = registerDto.Neighborhood
         };

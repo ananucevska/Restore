@@ -19,9 +19,11 @@ import { useUserInfoQuery } from "../account/accountApi";
 import { useState, useEffect } from "react";
 import MessageButton from "../messages/MessageButton";
 import ImageCarousel from "../../app/shared/components/ImageCarousel";
+import ImageModal from "../../app/shared/components/ImageModal";
 export default function ProductDetails() {
   const {id} = useParams();
   const [isSaved, setIsSaved] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const {data: product, isLoading} = useFetchProductDetailsQuery(id ? +id : 0) /* + symbol casts it into a number */
   const {data: user} = useUserInfoQuery();
@@ -117,7 +119,12 @@ export default function ProductDetails() {
           {product.images && product.images.length > 0 ? (
             <ImageCarousel images={product.images} alt={product.name} />
           ) : (
-            <img src={product.pictureUrl} alt={product.name} style={{width:'100%'}} />
+            <img 
+              src={product.pictureUrl} 
+              alt={product.name} 
+              style={{width:'100%', cursor: 'pointer'}} 
+              onClick={() => setModalOpen(true)}
+            />
           )}
         </Grid>
         <Grid size={6}>
@@ -170,19 +177,31 @@ export default function ProductDetails() {
 
             <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
               <MessageButton product={product} />
-              <IconButton 
-                onClick={handleSaveToggle}
-                color={isSaved ? 'primary' : 'default'}
-                disabled={isOwnProduct}
-                sx={{ p: 1 }}
-                title={isOwnProduct ? "You cannot save your own products" : ""}
-              >
-                {isSaved ? <Bookmark /> : <BookmarkBorder />}
-              </IconButton>
+              {!isOwnProduct && (
+                <IconButton 
+                  onClick={handleSaveToggle}
+                  color={isSaved ? 'primary' : 'default'}
+                  sx={{ p: 1 }}
+                >
+                  {isSaved ? <Bookmark /> : <BookmarkBorder />}
+                </IconButton>
+              )}
             </Box>
             
           </Box>
         </Grid>
+        
+        {/* Image Modal for single images */}
+        {(!product.images || product.images.length === 0) && (
+          <ImageModal
+            open={modalOpen}
+            onClose={() => setModalOpen(false)}
+            images={[{ url: product.pictureUrl, order: 0 }]}
+            currentIndex={0}
+            onIndexChange={() => {}}
+            alt={product.name}
+          />
+        )}
       </Grid>
   )
 }

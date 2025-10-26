@@ -55,7 +55,17 @@ export default function HierarchicalMenu({
     return selectedCategories.some(
       (selected) =>
         selected.categoryId === categoryId &&
-        selected.subcategoryId === subcategoryId
+        selected.subcategoryId === subcategoryId &&
+        (!selected.tags || selected.tags.length === 0)
+    );
+  };
+
+  const isTagSelected = (categoryId: string, subcategoryId: string, tagId: string) => {
+    return selectedCategories.some(
+      (selected) =>
+        selected.categoryId === categoryId &&
+        selected.subcategoryId === subcategoryId &&
+        selected.tags?.includes(tagId)
     );
   };
 
@@ -63,7 +73,8 @@ export default function HierarchicalMenu({
     return selectedCategories.some(
       (selected) =>
         selected.categoryId === categoryId &&
-        !selected.subcategoryId
+        !selected.subcategoryId &&
+        (!selected.tags || selected.tags.length === 0)
     );
   };
 
@@ -187,14 +198,13 @@ export default function HierarchicalMenu({
                       <Collapse in={true} timeout="auto" unmountOnExit>
                         <List component="div" disablePadding>
                           {subcategory.tags!.map((tag) => {
-                            const isTagSelected = isCategorySelected(category.id, subcategory.id) && 
-                              selectedCategories.find(cat => cat.categoryId === category.id && cat.subcategoryId === subcategory.id)?.tags?.includes(tag.id);
+                            const isTagSelectedValue = isTagSelected(category.id, subcategory.id, tag.id);
                             
                             return (
                               <ListItem key={tag.id} disablePadding>
                                 <ListItemButton
                                   onClick={() => {
-                                    if (isTagSelected) {
+                                    if (isTagSelectedValue) {
                                       // Remove tag
                                       onCategoryDeselect(category.id, subcategory.id);
                                     } else {
@@ -210,15 +220,15 @@ export default function HierarchicalMenu({
                                   }}
                                   sx={{
                                     pl: 8 + level * 2,
-                                    backgroundColor: isTagSelected ? 'primary.light' : 'transparent',
+                                    backgroundColor: isTagSelectedValue ? 'primary.light' : 'transparent',
                                     '&:hover': {
-                                      backgroundColor: isTagSelected ? 'primary.light' : 'action.hover',
+                                      backgroundColor: isTagSelectedValue ? 'primary.light' : 'action.hover',
                                     },
                                   }}
                                 >
                                   <ListItemText
                                     primary={
-                                      <Typography variant="body2" fontWeight={isTagSelected ? 'bold' : 'normal'}>
+                                      <Typography variant="body2" fontWeight={isTagSelectedValue ? 'bold' : 'normal'}>
                                         {tag.label}
                                       </Typography>
                                     }

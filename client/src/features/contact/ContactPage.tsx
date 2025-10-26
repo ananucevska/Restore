@@ -1,19 +1,30 @@
 ﻿import { Container, Typography, Box, Paper, TextField, Button, Alert, Snackbar } from "@mui/material";
+import { Email } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { contactSchema, ContactSchema } from "../../lib/schemas/contactSchema";
 import { useSendContactMessageMutation } from "./contactApi";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useUserInfoQuery } from "../account/accountApi";
 
 export default function ContactPage() {
   const [sendContactMessage, { isLoading }] = useSendContactMessageMutation();
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
+  const { data: user } = useUserInfoQuery();
 
-  const { control, handleSubmit, reset, formState: { errors } } = useForm<ContactSchema>({
+  const { control, handleSubmit, reset, setValue, watch, formState: { errors } } = useForm<ContactSchema>({
     resolver: zodResolver(contactSchema),
     mode: 'onTouched'
   });
+
+  // Auto-fill form with user data when available
+  useEffect(() => {
+    if (user) {
+      setValue('username', user.name);
+      setValue('email', user.email);
+    }
+  }, [user, setValue]);
 
   const onSubmit = async (data: ContactSchema) => {
     try {
@@ -29,47 +40,55 @@ export default function ContactPage() {
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-        <Paper elevation={3} sx={{ p: 4, maxWidth: 600, width: '100%' }}>
+        <Paper elevation={3} sx={{ p: 4, maxWidth: 800, width: '100%' }}>
           <Typography variant="h5" gutterBottom>
             Често поставувани прашања
           </Typography>
           <Typography variant="body1" paragraph>
             Ако имате некое прашање, проверете ја нашата <a href="/faq" style={{ color: 'inherit', textDecoration: 'underline' }}>FAQ страница</a> каде ќе најдете одговори на најчестите прашања. Доколку не го пронајдете одговорот таму, пополнете ја формата и ние ќе ви одговориме во најбрз можен рок.
           </Typography>
-          <Typography variant="h4" gutterBottom>
-            Испратете ни порака
-          </Typography>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
+            <Email sx={{ mt: 3, color: 'secondary.main', fontSize: 40 }} />
+            <Typography variant="h5">
+              Испратете ни порака
+            </Typography>
+          </Box>
           
-          <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3, display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 2, display: 'flex', flexDirection: 'column', gap: 1.5 }}>
             <TextField
               fullWidth
-              label="Име"
+              label="Корисничко име"
               variant="outlined"
-              {...control.register('firstName')}
-              error={!!errors.firstName}
-              helperText={errors.firstName?.message}
-            />
-            <TextField
-              fullWidth
-              label="Презиме"
-              variant="outlined"
-              {...control.register('lastName')}
-              error={!!errors.lastName}
-              helperText={errors.lastName?.message}
+              size="large"
+              {...control.register('username')}
+              value={watch('username') || ''}
+              error={!!errors.username}
+              helperText={errors.username?.message}
+              disabled={!!user}
+              InputProps={{
+                readOnly: !!user
+              }}
             />
             <TextField
               fullWidth
               label="Е-маил"
               type="email"
               variant="outlined"
+              size="large"
               {...control.register('email')}
+              value={watch('email') || ''}
               error={!!errors.email}
               helperText={errors.email?.message}
+              disabled={!!user}
+              InputProps={{
+                readOnly: !!user
+              }}
             />
             <TextField
               fullWidth
               label="Предмет"
               variant="outlined"
+              size="large"
               {...control.register('subject')}
               error={!!errors.subject}
               helperText={errors.subject?.message}
@@ -78,8 +97,9 @@ export default function ContactPage() {
               fullWidth
               label="Порака"
               multiline
-              rows={4}
+              rows={6}
               variant="outlined"
+              size="large"
               {...control.register('message')}
               error={!!errors.message}
               helperText={errors.message?.message}

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, IconButton } from '@mui/material';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 import { ProductImage } from '../../models/product';
+import ImageModal from './ImageModal';
 
 interface ImageCarouselProps {
   images: ProductImage[];
@@ -10,6 +11,7 @@ interface ImageCarouselProps {
 
 export default function ImageCarousel({ images, alt }: ImageCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [modalOpen, setModalOpen] = useState(false);
 
   if (!images || images.length === 0) {
     return null;
@@ -30,15 +32,35 @@ export default function ImageCarousel({ images, alt }: ImageCarouselProps) {
     );
   };
 
+  const handleImageClick = () => {
+    setModalOpen(true);
+  };
+
   if (sortedImages.length === 1) {
     return (
-      <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-        <img 
-          src={sortedImages[0].url} 
-          alt={alt} 
-          style={{ width: '100%', maxHeight: '500px', objectFit: 'contain' }}
+      <>
+        <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+          <img 
+            src={sortedImages[0].url} 
+            alt={alt} 
+            style={{ 
+              width: '100%', 
+              maxHeight: '500px', 
+              objectFit: 'contain',
+              cursor: 'pointer'
+            }}
+            onClick={handleImageClick}
+          />
+        </Box>
+        <ImageModal
+          open={modalOpen}
+          onClose={() => setModalOpen(false)}
+          images={sortedImages}
+          currentIndex={0}
+          onIndexChange={setCurrentIndex}
+          alt={alt}
         />
-      </Box>
+      </>
     );
   }
 
@@ -58,8 +80,10 @@ export default function ImageCarousel({ images, alt }: ImageCarouselProps) {
             width: '100%', 
             height: '500px', 
             objectFit: 'contain',
-            display: 'block'
+            display: 'block',
+            cursor: 'pointer'
           }}
+          onClick={handleImageClick}
         />
         
         {/* Navigation Arrows */}
@@ -128,6 +152,15 @@ export default function ImageCarousel({ images, alt }: ImageCarouselProps) {
           ))}
         </Box>
       </Box>
+      
+      <ImageModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        images={sortedImages}
+        currentIndex={currentIndex}
+        onIndexChange={setCurrentIndex}
+        alt={alt}
+      />
     </Box>
   );
 }

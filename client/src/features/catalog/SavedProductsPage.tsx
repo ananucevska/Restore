@@ -4,6 +4,7 @@ import {
     Box,
     Paper,
     Typography,
+    Grid,
     Card,
     CardContent,
     CardMedia,
@@ -37,49 +38,58 @@ export default function SavedProductsPage() {
         <Box sx={{ p: 3 }}>
             {data && data.items && data.items.length > 0 ? (
                 <>
-                    <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 3 }}>
+                    <Grid container spacing={3}>
                         {data.items.map((product) => (
-                            <Card key={product.id} sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                                <CardMedia
-                                    component="img"
-                                    height="200"
-                                    image={product.pictureUrl}
-                                    alt={product.name}
-                                    sx={{ objectFit: 'cover' }}
-                                />
-                                <CardContent sx={{ flexGrow: 1, p: 2.5 }}>
-                                    <Typography gutterBottom variant="h6" component="div">
-                                        {product.name}
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                                        {product.description.length > 100 
-                                            ? `${product.description.substring(0, 100)}...` 
-                                            : product.description
-                                        }
-                                    </Typography>
-                                </CardContent>
-                                <CardActions sx={{ justifyContent: 'space-between', p: 2.5, mt: -1 }}>
-                                    <Button
-                                        component={Link}
-                                        to={`/product/${product.id}`}
-                                        startIcon={<Visibility />}
-                                        variant="contained"
-                                        size="small"
-                                    >
-                                        Прегледај производ
-                                    </Button>
-                                    <IconButton
-                                        onClick={() => handleUnsave(product.id)}
-                                        color="primary"
-                                        size="small"
-                                        title="Remove from saved"
-                                    >
-                                        <Bookmark />
-                                    </IconButton>
-                                </CardActions>
-                            </Card>
+                            <Grid size={4} display='flex' key={product.id}>
+                                <Card sx={{ 
+                                    width: 350, 
+                                    height: '100%',
+                                    display: 'flex', 
+                                    flexDirection: 'column', 
+                                    justifyContent: 'space-between',
+                                    position: 'relative'
+                                }}>
+                                    <CardMedia
+                                        component="img"
+                                        height="300"
+                                        image={product.pictureUrl}
+                                        alt={product.name}
+                                        sx={{ objectFit: 'cover' }}
+                                    />
+                                    <CardContent sx={{ flexGrow: 1, p: 2.5 }}>
+                                        <Typography gutterBottom variant="h6" component="div">
+                                            {product.name}
+                                        </Typography>
+                                        <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                                            {product.description.length > 100 
+                                                ? `${product.description.substring(0, 100)}...` 
+                                                : product.description
+                                            }
+                                        </Typography>
+                                    </CardContent>
+                                    <CardActions sx={{ justifyContent: 'space-between', p: 2.5, mt: -1 }}>
+                                        <Button
+                                            component={Link}
+                                            to={`/product/${product.id}`}
+                                            startIcon={<Visibility />}
+                                            variant="contained"
+                                            size="small"
+                                        >
+                                            Прегледај производ
+                                        </Button>
+                                        <IconButton
+                                            onClick={() => handleUnsave(product.id)}
+                                            color="primary"
+                                            size="small"
+                                            title="Remove from saved"
+                                        >
+                                            <Bookmark />
+                                        </IconButton>
+                                    </CardActions>
+                                </Card>
+                            </Grid>
                         ))}
-                    </Box>
+                    </Grid>
                     <Box sx={{ mt: 3, display: 'flex', justifyContent: 'center' }}>
                         {data.pagination && (
                             <AppPagination

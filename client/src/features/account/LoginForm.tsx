@@ -22,7 +22,7 @@ export default function LoginForm() {
     }
     
   return (
-    <Container component={Paper} maxWidth="sm" sx={{ borderRadius: 3 }}>
+    <Container component={Paper} maxWidth="md" sx={{ borderRadius: 3, p: 4 }}>
         <Box display='flex' flexDirection='column' alignItems='center' marginTop='8'>
             <LockOutlined sx={{mt: 3, color: 'secondary.main', fontSize: 40 }} />
             <Typography variant="h5">
@@ -34,13 +34,14 @@ export default function LoginForm() {
                 width='100%'
                 display='flex'
                 flexDirection='column'
-                gap={3}
-                marginY={3}
+                gap={2}
+                marginY={2}
             >
                 <TextField 
                     fullWidth
                     label="Емаил"
                     autoFocus
+                    size="large"
                     {...register('email')}
                     error={!!errors.email}
                     helperText={errors.email?.message}
@@ -49,6 +50,7 @@ export default function LoginForm() {
                     fullWidth
                     label="Лозинка"
                     type="password"
+                    size="large"
                     {...register('password')}
                     error={!!errors.password}
                     helperText={errors.password?.message}

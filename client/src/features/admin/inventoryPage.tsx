@@ -56,56 +56,73 @@ export default function inventoryPage() {
         switch (category) {
             case 'Furniture': return 'Мебел';
             case 'Appliances & Electronics': return 'Апарати и електроника';
-            case 'Sports & Outdoors': return 'Спорт и надворешни активности';
-            case 'Books & Media': return 'Книги и медиуми';
-            case 'Baby & Kids': return 'Бебиња и деца';
+            case 'Home & Kitchen': return 'Дом и кујна';
             case 'Clothing & Accessories': return 'Облека и додатоци';
-            case 'Technology & Electronics': return 'Технологија и електроника';
-            case 'Home & Garden': return 'Дом и градина';
-            case 'Health & Beauty': return 'Здравје и убавина';
-            case 'Automotive': return 'Автомобили';
+            case 'Baby & Kids': return 'Бебиња и деца';
+            case 'Books & Media': return 'Книги и медиуми';
+            case 'Sports & Outdoors': return 'Спорт и активности на отворено';
+            case 'Tools & DIY': return 'Алати и занаетчиство';
+            case 'Miscellaneous / Other': return 'Разно / Друго';
             default: return category;
         }
     };
     
     const translateSubcategory = (subcategory: string) => {
         switch (subcategory) {
+            // Furniture
             case 'Chairs': return 'Столици';
             case 'Tables': return 'Маси';
             case 'Sofas': return 'Каучи';
             case 'Beds': return 'Кревети';
             case 'Wardrobes': return 'Гардеробери';
             case 'Shelves': return 'Полици';
+            
+            // Appliances & Electronics
             case 'Kitchen Appliances': return 'Кујнски апарати';
-            case 'Home Electronics': return 'Домашна електроника';
-            case 'Exercise Equipment': return 'Спортска опрема';
-            case 'Bicycles': return 'Велосипеди';
-            case 'Camping Gear': return 'Камп опрема';
-            case 'Books': return 'Книги';
-            case 'Movies & TV': return 'Филмови и ТВ';
-            case 'Music': return 'Музика';
+            case 'Home Appliances': return 'Апарати за домот';
+            case 'Electronics': return 'Електроника';
+            case 'Computer components': return 'Компјутерски компоненти';
+            
+            // Home & Kitchen
+            case 'Pans': return 'Тави';
+            case 'Pots': return 'Тенџериња';
+            case 'Dishes': return 'Чинии';
+            case 'Cutlery': return 'Прибор за јадење';
+            case 'Bedding': return 'Постелнина';
+            case 'Pillows': return 'Перници';
+            case 'Curtains': return 'Завеси';
+            case 'Carpets': return 'Теписи';
+            
+            // Clothing & Accessories
+            case 'Clothing': return 'Облека';
+            case 'Shoes': return 'Чевли';
+            case 'Bags': return 'Ташни';
+            case 'Accessories': return 'Додатоци';
+            
+            // Baby & Kids
             case 'Toys': return 'Играчки';
             case 'Strollers': return 'Колички';
             case 'Cribs': return 'Кревети за бебе';
             case 'Kids Clothes': return 'Детска облека';
             case 'Baby Clothes': return 'Бебешка облека';
-            case 'Clothing': return 'Облека';
-            case 'Shoes': return 'Чевли';
-            case 'Bags': return 'Торби';
-            case 'Accessories': return 'Додатоци';
-            case 'Computers': return 'Компјутери';
-            case 'Phones': return 'Телефони';
-            case 'Audio': return 'Аудио';
-            case 'TV': return 'ТВ';
-            case 'Garden Tools': return 'Градинарски алатки';
-            case 'Plants': return 'Растенија';
-            case 'Outdoor Furniture': return 'Надворешен мебел';
-            case 'Skincare': return 'Нега на кожата';
-            case 'Makeup': return 'Шминка';
-            case 'Hair Care': return 'Нега на косата';
-            case 'Cars': return 'Автомобили';
-            case 'Motorcycles': return 'Мотоцикли';
-            case 'Auto Parts': return 'Авто делови';
+            case 'School Supplies': return 'Школски материјали';
+            
+            // Books & Media
+            case 'Books': return 'Книги';
+            case 'Magazines': return 'Списанија';
+            case 'Board Games': return 'Друштвени игри';
+            case 'CDs/DVDs': return 'CD/DVD';
+            
+            // Sports & Outdoors
+            case 'Bicycles': return 'Велосипеди';
+            case 'Exercise Equipment': return 'Опрема за вежбање';
+            case 'Camping Gear': return 'Опрема за кампување';
+            
+            // Tools & DIY
+            case 'Hand Tools': return 'Рачни алати';
+            case 'Gardening Tools': return 'Градинарски алати';
+            case 'Construction Equipment': return 'Градежна опрема';
+            
             default: return subcategory;
         }
     };

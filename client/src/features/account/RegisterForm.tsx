@@ -18,16 +18,19 @@ export default function RegisterForm() {
     const selectedCity = watch('city');
     
     const onSubmit = async (data: RegisterSchema) => {
+        console.log('Registration data:', data);
         try {
             await registerUser(data).unwrap();
+            console.log('Registration successful');
         } catch (error) {
+            console.error('Registration error:', error);
             const apiError = error as { message: string };
             if (apiError.message && typeof apiError.message === 'string') {
                 const errorArray = apiError.message.split(',');
                 
                 errorArray.forEach(e => {
-                    if(e.includes('Name')) {
-                        setError('name', {message: e})
+                    if(e.includes('Name') || e.includes('Username')) {
+                        setError('username', {message: e})
                     } else if(e.includes('Password')) {
                         setError('password', {message: e})
                     } else if (e.includes('Email')) {
@@ -47,7 +50,7 @@ export default function RegisterForm() {
     }
     
     return (
-        <Container component={Paper} maxWidth="sm" sx={{ borderRadius: 3 }}>
+        <Container component={Paper} maxWidth="md" sx={{ borderRadius: 3, p: 4 }}>
             <Box display='flex' flexDirection='column' alignItems='center' marginTop='8'>
                 <LockOutlined sx={{mt: 3, color: 'secondary.main', fontSize: 40 }} />
                 <Typography variant="h5">
@@ -59,20 +62,22 @@ export default function RegisterForm() {
                     width='100%'
                     display='flex'
                     flexDirection='column'
-                    gap={3}
-                    marginY={3}
+                    gap={2}
+                    marginY={2}
                 >
                     <TextField
                         fullWidth
-                        label="Име"
+                        label="Корисничко име"
                         autoFocus
-                        {...register('name')}
-                        error={!!errors.name}
-                        helperText={errors.name?.message}
+                        size="large"
+                        {...register('username')}
+                        error={!!errors.username}
+                        helperText={errors.username?.message}
                     />
                     <TextField
                         fullWidth
                         label="Емаил"
+                        size="large"
                         {...register('email')}
                         error={!!errors.email}
                         helperText={errors.email?.message}
@@ -81,6 +86,7 @@ export default function RegisterForm() {
                         fullWidth
                         label="Лозинка"
                         type="password"
+                        size="large"
                         {...register('password')}
                         error={!!errors.password}
                         helperText={errors.password?.message}
@@ -89,6 +95,7 @@ export default function RegisterForm() {
                         fullWidth
                         label="Потврди лозинка"
                         type="password"
+                        size="large"
                         {...register('confirmPassword')}
                         error={!!errors.confirmPassword}
                         helperText={errors.confirmPassword?.message}
@@ -135,6 +142,7 @@ export default function RegisterForm() {
                     <TextField
                         fullWidth
                         label="Населба (Опционално)"
+                        size="large"
                         {...register('neighborhood')}
                         error={!!errors.neighborhood}
                         helperText={errors.neighborhood?.message}

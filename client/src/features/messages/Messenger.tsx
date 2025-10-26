@@ -165,8 +165,7 @@ export default function Messenger() {
                     {conversations.length === 0 ? (
                         <ListItem>
                             <ListItemText 
-                                primary="No conversations yet"
-                                secondary="Start a conversation by messaging a product owner"
+                                primary="Се уште немате разговори"
                             />
                         </ListItem>
                     ) : (
@@ -297,7 +296,7 @@ export default function Messenger() {
                             minHeight: 0
                         }}>
                             {messagesLoading ? (
-                                <Typography>Loading messages...</Typography>
+                                <Typography>Се вчитуваат пораките...</Typography>
                             ) : messages.length === 0 ? (
                                 <Typography color="text.secondary" align="center">
                                    Немате пораки. 
@@ -348,7 +347,7 @@ export default function Messenger() {
                                     fullWidth
                                     multiline
                                     maxRows={2}
-                                    placeholder="Type your message..."
+                                    placeholder="Напишете порака..."
                                     value={newMessage}
                                     onChange={(e) => setNewMessage(e.target.value)}
                                     onKeyPress={handleKeyPress}

@@ -23,7 +23,7 @@ export default function ProductCard({product}: Props) {
             to={`/product/${product.id}`}
             elevation={3} 
             sx={{
-                width: 280, 
+                width: 350, 
                 borderRadius: 2,
                 display: "flex", 
                 flexDirection: "column", 
@@ -34,9 +34,8 @@ export default function ProductCard({product}: Props) {
         >
             <CardMedia 
                 sx={{
-                    height: 240, 
-                    backgroundSize: "cover",
-                    cursor: 'pointer'
+                    height: 300, 
+                    backgroundSize: "cover"
                 }}
                 image={product.pictureUrl}
                 title={product.name}
