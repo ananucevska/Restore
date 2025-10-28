@@ -23,7 +23,8 @@ export default function ProductCard({product}: Props) {
             to={`/product/${product.id}`}
             elevation={3} 
             sx={{
-                width: 350, 
+                width: '100%', 
+                height: '100%',
                 borderRadius: 2,
                 display: "flex", 
                 flexDirection: "column", 

@@ -17,9 +17,6 @@ public class StoreContext(DbContextOptions options) : IdentityDbContext<User>(op
     {
         base.OnModelCreating(builder);
 
-        // Remove IdentityRoleClaim from the model
-        builder.Ignore<Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>>();
-
         builder.Entity<IdentityRole>()
             .HasData(
                 new IdentityRole {Id = "7c8a27aa-05b5-4bfd-ae31-23fe20c3ddc0", Name = "Member", NormalizedName = "MEMBER" }
