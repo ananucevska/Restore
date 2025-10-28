@@ -8,8 +8,8 @@ erDiagram
         string Email
         string City
         string Name
-        string Municipality
-        string Neighborhood
+        string? Municipality
+        string? Neighborhood
         string PasswordHash
         string SecurityStamp
         string ConcurrencyStamp
@@ -30,18 +30,18 @@ erDiagram
         string Description
         string PictureUrl
         string Type
-        string PublicId
-        string UserId FK
+        string? PublicId
+        string? UserId FK
         datetime CreatedDate
         boolean CargoDelivery
-        string Condition
-        string Delivery
+        string? Condition
+        string? Delivery
     }
     
     ProductImage {
         int Id PK
         string Url
-        string PublicId
+        string? PublicId
         int ProductId FK
         int Order
     }
@@ -58,7 +58,7 @@ erDiagram
         int Id PK
         string User1Id FK
         string User2Id FK
-        int ProductId FK
+        int? ProductId FK
         datetime CreatedAt
         datetime LastMessageAt
     }
@@ -66,7 +66,7 @@ erDiagram
     Message {
         int Id PK
         int ConversationId FK
-        string SenderId FK
+        string? SenderId FK
         string Content
         datetime SentAt
         boolean IsRead

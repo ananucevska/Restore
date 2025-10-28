@@ -44,56 +44,12 @@ public class DbInitializer
         if (context.Products.Any()) return; // if there is any, return them
         var products = new List<Product> //create list of products adn save to database -- do it before app gets started vo program.cs so DbInitializer
         {
-            // Бебиња и деца - Детска облека - Машка
-            new()
-            {
-                Name = "Nike детска мајца - Машка",
-                Description = "Комфортна детска мајца од Nike за активни момчиња. 100% памук, лесна за перење.",
-                PictureUrl = "/images/products/sb-ang1.png",
-                Type = "Baby & Kids - Kids Clothes - Male",
-                Condition = "Like New",
-                CargoDelivery = true,
-                Delivery = "[\"Pick up only\", \"Can deliver\"]"
-            },
-            // Бебиња и деца - Детска облека - Женска
-            new()
-            {
-                Name = "Adidas детска фустан - Женска",
-                Description = "Убава детска фустан од Adidas за активни девојчиња. Современ дизајн и удобност.",
-                PictureUrl = "/images/products/sb-ang2.png",
-                Type = "Baby & Kids - Kids Clothes - Female",
-                Condition = "Good",
-                CargoDelivery = false,
-                Delivery = "[\"Pick up only\"]"
-            },
-            // Бебиња и деца - Бебешка облека - Машка
-            new()
-            {
-                Name = "H&M бебешка комбинезон - Машка",
-                Description = "Мека бебешка комбинезон за новороденчиња. Органски памук, без штетни хемикалии.",
-                PictureUrl = "/images/products/sb-core1.png",
-                Type = "Baby & Kids - Baby Clothes - Male",
-                Condition = "Like New",
-                CargoDelivery = true,
-                Delivery = "[\"Can deliver\"]"
-            },
-            // Облека и додатоци - Облека - Машка
-            new()
-            {
-                Name = "Levi's фармерки - Машка",
-                Description = "Класични Levi's фармерки за мажи. 501 модел, сина боја, размер 32/34.",
-                PictureUrl = "/images/products/sb-core2.png",
-                Type = "Clothing & Accessories - Clothing - Male",
-                Condition = "Good",
-                CargoDelivery = true,
-                Delivery = "[\"Pick up only\", \"Can deliver\"]"
-            },
             // Облека и додатоци - Облека - Женска
             new()
             {
                 Name = "Zara фустан - Женска",
                 Description = "Елегантен летен фустан од Zara. Црна боја, размер M, перфектен за официјални настани.",
-                PictureUrl = "/images/products/sb-react1.png",
+                PictureUrl = "/images/products/Jacket.jpg",
                 Type = "Clothing & Accessories - Clothing - Female",
                 Condition = "Like New",
                 CargoDelivery = true,
@@ -121,49 +77,15 @@ public class DbInitializer
                 CargoDelivery = true,
                 Delivery = "[\"Pick up only\", \"Can deliver\"]"
             },
-            // Технологија и електроника - Компјутери
-            new()
-            {
-                Name = "Dell Laptop Inspiron 15",
-                Description = "Моќен лаптоп Dell Inspiron 15 за работа и забава. Intel i7 процесор, 16GB RAM, 512GB SSD.",
-                PictureUrl = "/images/products/hat-react1.png",
-                Type = "Technology & Electronics - Computers",
-                Condition = "Like New",
-                CargoDelivery = false,
-                Delivery = "[\"Pick up only\"]"
-            },
-            // Технологија и електроника - Телефони
             new()
             {
                 Name = "iPhone 15 Pro",
                 Description = "Најнов iPhone 15 Pro со најдобри камери и најбрз процесор. 256GB меморија, сина боја.",
-                PictureUrl = "/images/products/hat-react2.png",
-                Type = "Technology & Electronics - Phones",
+                PictureUrl = "/images/products/Smart_Watch.jpg",
+                Type = "Appliances & Electronics - Electronics",
                 Condition = "Like New",
                 CargoDelivery = true,
                 Delivery = "[\"Can deliver\"]"
-            },
-            // Дом и градина - Мебел
-            new()
-            {
-                Name = "IKEA кревет за спална соба",
-                Description = "Модерен кревет од IKEA за спална соба. Бела боја, размер 160x200cm, со полици.",
-                PictureUrl = "/images/products/glove-code1.png",
-                Type = "Home & Garden - Furniture",
-                Condition = "Good",
-                CargoDelivery = false,
-                Delivery = "[\"Pick up only\"]"
-            },
-            // Дом и градина - Домаќински апарати
-            new()
-            {
-                Name = "Bosch фрижидер",
-                Description = "Енергетски ефикасен фрижидер од Bosch. 300L капацитет, A+++ енергетска класа, сива боја.",
-                PictureUrl = "/images/products/glove-code2.png",
-                Type = "Home & Garden - Appliances",
-                Condition = "Functional",
-                CargoDelivery = true,
-                Delivery = "[\"Pick up only\", \"Can deliver\"]"
             },
             // Спорт и рекреација - Велосипеди
             new()
@@ -171,7 +93,7 @@ public class DbInitializer
                 Name = "Trek горски велосипед",
                 Description = "Професионален горски велосипед од Trek. 21 брзини, диск кочници, црна боја.",
                 PictureUrl = "/images/products/glove-react1.png",
-                Type = "Sports & Recreation - Bicycles",
+                Type = "Sports & Outdoors - Bicycles",
                 Condition = "Good",
                 CargoDelivery = false,
                 Delivery = "[\"Pick up only\"]"
@@ -182,7 +104,7 @@ public class DbInitializer
                 Name = "Bowflex тежински сет",
                 Description = "Комплетен тежински сет за дома. Вклучува гантели, штанга и клупи за сестрани вежби.",
                 PictureUrl = "/images/products/glove-react2.png",
-                Type = "Sports & Recreation - Exercise Equipment",
+                Type = "Sports & Outdoors - Exercise Equipment",
                 Condition = "Like New",
                 CargoDelivery = true,
                 Delivery = "[\"Can deliver\"]"
@@ -192,7 +114,7 @@ public class DbInitializer
             {
                 Name = "Хари Потер - Философски камен",
                 Description = "Класична книга Хари Потер и филозофскиот камен на македонски јазик. Тврди корици, одлично сочувана.",
-                PictureUrl = "/images/products/boot-redis1.png",
+                PictureUrl = "/images/products/Book.jpg",
                 Type = "Books & Media - Books",
                 Condition = "Good",
                 CargoDelivery = true,
@@ -204,7 +126,7 @@ public class DbInitializer
                 Name = "Toyota Corolla 2019",
                 Description = "Надежен автомобил Toyota Corolla 2019 година. 1.6L мотор, автоматска менувачка, сива боја.",
                 PictureUrl = "/images/products/boot-core2.png",
-                Type = "Cars & Motorcycles - Cars",
+                Type = "Miscellaneous / Other",
                 Condition = "Good",
                 CargoDelivery = false,
                 Delivery = "[\"Pick up only\"]"
@@ -215,7 +137,7 @@ public class DbInitializer
                 Name = "Ergonomic компјутерска столица",
                 Description = "Ергономска столица за долгорочна работа на компјутер. Регулабилна висина, поддршка за грб.",
                 PictureUrl = "/images/products/boot-core1.png",
-                Type = "Work & Career - Office Equipment",
+                Type = "Miscellaneous / Other",
                 Condition = "Like New",
                 CargoDelivery = true,
                 Delivery = "[\"Can deliver\"]"
