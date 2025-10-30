@@ -1,5 +1,4 @@
 export const skopjeMunicipalities = [
-    // Општини во Град Скопје
     'Аеродром',
     'Арачиново',
     'Бутел',
