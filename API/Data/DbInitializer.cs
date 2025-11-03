@@ -23,15 +23,6 @@ public class DbInitializer
     {
         context.Database.Migrate(); //sekad se povikuva
 
-        // One-time hard delete trigger: set FORCE_CLEAR_PRODUCTS=true to only clear products
-        var forceClearProducts = string.Equals(Environment.GetEnvironmentVariable("FORCE_CLEAR_PRODUCTS"), "true", StringComparison.OrdinalIgnoreCase);
-        if (forceClearProducts)
-        {
-            context.Products.RemoveRange(context.Products);
-            context.SaveChanges();
-            return; // do nothing else
-        }
-
         User? user = null;
         if (!userManager.Users.Any())
         {

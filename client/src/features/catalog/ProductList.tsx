@@ -14,12 +14,12 @@ export default function ProductList({products}: Props) {
                 gap: 3,
                 justifyContent: 'flex-start'
             }}
-        > 
+        >
             {products.map((product) => (
-                <Box 
+                <Box
                     key={product.id}
                     sx={{
-                        width: { xs: '100%', sm: 'calc(50% - 12px)', md: 'calc(33.333% - 20px)' },
+                        width: { xs: '100%', sm: 'calc(50% - 12px)', md: 'calc(33.333% - 16px)' },
                         flexShrink: 0
                     }}
                 >

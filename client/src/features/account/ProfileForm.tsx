@@ -139,7 +139,7 @@ export default function ProfileForm() {
                     )}
                     <TextField
                         fullWidth
-                        label="Населба (Опционално)"
+                        label="Населено место (Опционално)"
                         size="large"
                         {...register('neighborhood')}
                         error={!!errors.neighborhood}

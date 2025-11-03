@@ -141,7 +141,7 @@ export default function RegisterForm() {
                     )}
                     <TextField
                         fullWidth
-                        label="Населба (Опционално)"
+                        label="Населено место (Опционално)"
                         size="large"
                         {...register('neighborhood')}
                         error={!!errors.neighborhood}

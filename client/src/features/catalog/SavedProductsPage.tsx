@@ -40,7 +40,7 @@ export default function SavedProductsPage() {
                 <>
                     <Grid container spacing={3}>
                         {data.items.map((product) => (
-                            <Grid size={4} display='flex' key={product.id}>
+                            <Grid size={3} display='flex' key={product.id}>
                                 <Card sx={{ 
                                     width: 350, 
                                     height: '100%',
