@@ -178,14 +178,20 @@ export default function Messenger() {
                                     borderBottom: 1, 
                                     borderColor: 'divider',
                                     backgroundColor: conversation.id === selectedConversation 
-                                        ? 'primary.light' 
+                                        ? (theme) => theme.palette.mode === 'dark' 
+                                            ? theme.palette.action.selected
+                                            : 'primary.light'
                                         : conversation.hasUnreadMessages 
-                                            ? '#f5f5f5' 
+                                            ? (theme) => theme.palette.mode === 'dark' 
+                                                ? 'rgba(255, 255, 255, 0.05)' 
+                                                : 'rgba(0, 0, 0, 0.04)'
                                             : 'transparent',
                                     cursor: 'pointer',
                                     '&:hover': {
                                         backgroundColor: conversation.id === selectedConversation 
-                                            ? 'primary.light' 
+                                            ? (theme) => theme.palette.mode === 'dark' 
+                                                ? theme.palette.action.selected
+                                                : 'primary.light'
                                             : 'action.hover'
                                     }
                                 }}
@@ -198,11 +204,31 @@ export default function Messenger() {
                                 <ListItemText
                                     primary={
                                         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                            <Typography variant="subtitle2" noWrap>
+                                            <Typography 
+                                                variant="subtitle2" 
+                                                noWrap
+                                                sx={{
+                                                    color: conversation.id === selectedConversation 
+                                                        ? (theme) => theme.palette.mode === 'dark' 
+                                                            ? theme.palette.primary.light 
+                                                            : undefined
+                                                        : undefined
+                                                }}
+                                            >
                                                 {conversation.otherUserName || 'Unknown User'}
                                             </Typography>
                                             {conversation.lastMessageAt && (
-                                                <Typography variant="caption" color="text.secondary">
+                                                <Typography 
+                                                    variant="caption" 
+                                                    color={conversation.id === selectedConversation ? undefined : "text.secondary"}
+                                                    sx={{
+                                                        color: conversation.id === selectedConversation 
+                                                            ? (theme) => theme.palette.mode === 'dark' 
+                                                                ? 'rgba(255, 255, 255, 0.8)' 
+                                                                : undefined
+                                                            : undefined
+                                                    }}
+                                                >
                                                     {formatDate(conversation.lastMessageAt)}
                                                 </Typography>
                                             )}
@@ -210,11 +236,34 @@ export default function Messenger() {
                                     }
                                     secondary={
                                         <Box>
-                                            <Typography variant="body2" color="text.secondary" noWrap>
+                                            <Typography 
+                                                variant="body2" 
+                                                color={conversation.id === selectedConversation ? undefined : "text.secondary"} 
+                                                noWrap
+                                                sx={{
+                                                    color: conversation.id === selectedConversation 
+                                                        ? (theme) => theme.palette.mode === 'dark' 
+                                                            ? 'rgba(255, 255, 255, 0.9)' 
+                                                            : undefined
+                                                        : undefined
+                                                }}
+                                            >
                                                 {conversation.lastMessageContent || 'No messages yet'}
                                             </Typography>
                                             {conversation.productName && (
-                                                <Typography variant="caption" color="primary" noWrap>
+                                                <Typography 
+                                                    variant="caption" 
+                                                    color={conversation.id === selectedConversation ? undefined : "primary"} 
+                                                    noWrap
+                                                    sx={{ 
+                                                        fontWeight: conversation.id === selectedConversation ? 600 : 400,
+                                                        color: conversation.id === selectedConversation 
+                                                            ? (theme) => theme.palette.mode === 'dark' 
+                                                                ? theme.palette.primary.light 
+                                                                : theme.palette.primary.main
+                                                            : undefined
+                                                    }}
+                                                >
                                                     За: {conversation.productName}
                                                 </Typography>
                                             )}
@@ -263,7 +312,9 @@ export default function Messenger() {
                                         display: 'flex', 
                                         alignItems: 'center', 
                                         gap: 2,
-                                        backgroundColor: '#f5f5f5',
+                                        backgroundColor: (theme) => theme.palette.mode === 'dark' 
+                                            ? 'rgba(255, 255, 255, 0.08)' 
+                                            : 'rgba(0, 0, 0, 0.04)',
                                         maxWidth: 'fit-content',
                                         borderRadius: 2,
                                         boxShadow: 1
@@ -315,7 +366,11 @@ export default function Messenger() {
                                             sx={{
                                                 p: 2,
                                                 maxWidth: '70%',
-                                                backgroundColor: message.senderId === user?.id ? 'primary.main' : '#f5f5f5',
+                                                backgroundColor: message.senderId === user?.id 
+                                                    ? 'primary.main' 
+                                                    : (theme) => theme.palette.mode === 'dark' 
+                                                        ? 'rgba(255, 255, 255, 0.08)' 
+                                                        : 'rgba(0, 0, 0, 0.04)',
                                                 color: message.senderId === user?.id ? 'white' : 'text.primary'
                                             }}
                                         >

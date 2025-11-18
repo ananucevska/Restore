@@ -24,8 +24,8 @@ export const createProductSchema = z
         pictureUrl: z.string().optional(),
         files: z.array(z.any()).optional(),
         hasFiles: z.boolean().optional(),
-        condition: z.string().optional(),
-        delivery: z.array(z.string()).optional(),
+        condition: z.string().min(1, "Состојбата е задолжителна"),
+        delivery: z.array(z.string()).min(1, "Изберете најмалку една опција за достава"),
     })
     .refine((data) => {
         // Check if hasFiles is true (files are uploaded)

@@ -84,34 +84,34 @@ export default function MessageButton({ product, variant = 'contained', size = '
 
             <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
                 <DialogTitle>
-                    Message {product.creatorName || 'the seller'}
+                    Испрати порака на {product.creatorName || 'огласувачот'}
                 </DialogTitle>
                 <DialogContent>
                     <Box sx={{ mb: 2 }}>
                         <Typography variant="body2" color="text.secondary">
-                            About: {product.name}
+                            За: {product.name}
                         </Typography>
                     </Box>
                     <TextField
                         autoFocus
                         margin="dense"
-                        label="Your message"
+                        label="Вашата порака"
                         fullWidth
                         multiline
                         rows={4}
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
-                        placeholder="Hi! I'm interested in this product..."
+                        placeholder="Здраво, заинтересиран/а сум за производот..."
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={handleClose}>Откажи</Button>
                     <Button 
                         onClick={handleSendMessage} 
                         variant="contained"
                         disabled={!message.trim() || isLoading}
                     >
-                        {isLoading ? 'Sending...' : 'Send Message'}
+                        {isLoading ? 'Се испраќа...' : 'Испрати порака'}
                     </Button>
                 </DialogActions>
             </Dialog>

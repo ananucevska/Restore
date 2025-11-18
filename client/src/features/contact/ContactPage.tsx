@@ -45,7 +45,7 @@ export default function ContactPage() {
             Често поставувани прашања
           </Typography>
           <Typography variant="body1" paragraph>
-            Ако имате некое прашање, проверете ја нашата <a href="/faq" style={{ color: 'inherit', textDecoration: 'underline' }}>FAQ страница</a> каде ќе најдете одговори на најчестите прашања. Доколку не го пронајдете одговорот таму, пополнете ја формата и ние ќе ви одговориме во најбрз можен рок.
+            Ако имате некое прашање, проверете ја нашата <a href="/faq" style={{ color: 'inherit', textDecoration: 'underline' }}>ЧПП страница</a> каде ќе најдете одговори на најчестите прашања. Доколку не го пронајдете одговорот таму, пополнете ја формата и ние ќе ви одговориме во најбрз можен рок.
           </Typography>
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
             <Email sx={{ mt: 3, color: 'secondary.main', fontSize: 40 }} />

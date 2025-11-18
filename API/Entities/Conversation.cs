@@ -10,8 +10,6 @@ public class Conversation
     public int? ProductId { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? LastMessageAt { get; set; }
-    
-    // Navigation properties
     public User? User1 { get; set; }
     public User? User2 { get; set; }
     public Product? Product { get; set; }

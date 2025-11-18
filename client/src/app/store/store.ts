@@ -1,4 +1,4 @@
-﻿import {configureStore, legacy_createStore} from "@reduxjs/toolkit";
+﻿import {configureStore} from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import { catalogApi } from "../../features/catalog/catalogApi";
 import { uiSlice } from "../layout/uiSlice";
@@ -7,11 +7,6 @@ import {accountApi} from "../../features/account/accountApi.ts";
 import {adminApi} from "../../features/admin/adminApi.ts";
 import {messagesApi} from "../../features/messages/messagesApi.ts";
 import {contactApi} from "../../features/contact/contactApi.ts";
-import counterReducer from "../../features/contact/counterReducer.ts";
-
-export function configureTheStore() {
-    return legacy_createStore(counterReducer)
-}
 
 export const store = configureStore({
     reducer: {

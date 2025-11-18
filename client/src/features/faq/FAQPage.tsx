@@ -101,7 +101,7 @@ export default function FAQPage() {
             Не најдовте одговор на вашето прашање?
           </Typography>
           <Typography variant="body1">
-            Контактирајте не директно преку нашата <a href="/contact" style={{ color: 'inherit', textDecoration: 'underline' }}>контакт страница</a> 
+            Контактирајте не директно преку нашата <a href="/contact" style={{ color: 'inherit', textDecoration: 'underline' }}>контакт страница </a> 
             или испратете ни е-маил на ana.nucevska@students.finki.ukim.mk
           </Typography>
         </Box>

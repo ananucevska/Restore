@@ -1,7 +1,7 @@
 import {createProductSchema, CreateProductSchema} from "../../lib/schemas/createProductSchema.ts";
 import {FieldValues, useForm, Controller} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {Box, Button, Paper, Typography, FormControlLabel, Checkbox} from "@mui/material";
+import {Box, Button, Paper, Typography, FormControlLabel, Checkbox, FormHelperText} from "@mui/material";
 import Grid from "@mui/material/Grid";
 import AppTextInput from "../../app/shared/components/AppTextInput.tsx";
 import AppSelectInput from "../../app/shared/components/AppSelectInput.tsx";
@@ -112,16 +112,12 @@ export default function ProductForm({setEditMode, product, refetch, setSelectedP
     formData.append('description', items.description);
     formData.append('type', items.type);
     
-    // Add condition if provided
-    if (items.condition) {
-      formData.append('condition', items.condition);
-    }
+    // Add condition (required)
+    formData.append('condition', items.condition);
     
-    // Add delivery options as JSON array if provided
-    if (items.delivery && Array.isArray(items.delivery) && items.delivery.length > 0) {
-      const deliveryJson = JSON.stringify(items.delivery);
-      formData.append('delivery', deliveryJson);
-    }
+    // Add delivery options as JSON array (required)
+    const deliveryJson = JSON.stringify(items.delivery);
+    formData.append('delivery', deliveryJson);
     
     // Handle files array - get from ref instead of form data
     const files = filesRef.current;
@@ -205,7 +201,7 @@ export default function ProductForm({setEditMode, product, refetch, setSelectedP
                 name="delivery"
                 control={control}
                 defaultValue={[]}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <>
                     <FormControlLabel
                       control={
@@ -239,6 +235,11 @@ export default function ProductForm({setEditMode, product, refetch, setSelectedP
                       }
                       label="Можност за испорака по карго"
                     />
+                    {fieldState.error && (
+                      <FormHelperText error sx={{ pl: 2 }}>
+                        {fieldState.error.message}
+                      </FormHelperText>
+                    )}
                   </>
                 )}
               />

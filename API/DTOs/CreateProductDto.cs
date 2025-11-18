@@ -28,6 +28,9 @@ public class CreateProductDto
     [Required]
     public bool CargoDelivery { get; set; } = false;
     
-    public string? Condition { get; set; }
-    public string? Delivery { get; set; } // JSON array of delivery options
+    [Required]
+    public string Condition { get; set; } = string.Empty;
+    
+    [Required]
+    public string Delivery { get; set; } = string.Empty; // JSON array of delivery options
 }
